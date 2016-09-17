@@ -9,7 +9,7 @@ SambaEdu4 est l'évolution de SambaEdu3.
 * Intégration automatisée de postes Windows 7 et 10, de postes Linux,
 * serveur de fichiers SMB, avec gestion des instantanés (shadow copy) basé sur ZFS
 * serveur d'impression SMB/CUPS, avec intégration possible avec la solution de gestion centralisée PaperCut (payante)
-* mise à jour centralisée des logiciels WPKG et Wsusoffline
+* déploiement et mises à jour centralisée des logiciels à l'aide de WPKG et Wsusoffline
 * solution de clonage
 
 Techniquement, le  serveur est construit sur debian Jessie, avec Samba 4.4.x et ZFSonLinux. Les paquets sont construits en respectant le standard Debian pour pouvoir être mis à jour facilement, et donc suivre les versions Debian. 
