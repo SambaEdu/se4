@@ -25,7 +25,9 @@ https://wiki.samba.org/index.php/Samba4/Winbind
 ##Structure de l'annuaire
 En fait il possible de conserver un schéma contenant les attributs Posix ( uid, unixhomedirectory...), et donc on devrait pouvoir continuer à utiliser tel quel les applis extérieures type LCS sans changement. Avec toutefois une nuance de taille : en AD, les utilisateurs, groupes et machines ne sont pas rangés dans des branches, ils peuvent être n'importe où, c'est même le principe des GPO : on déplace les objets vers un OU, et il hérite des GPO de celui-ci.
 
-Dans l'absolu, cela veut dire qu'une requête ldapsearch -b ou=people,dc=truc "(uid=toto)"  devrait être ldapsearch "(&(objectclass=user)(uid=toto))"
+Dans l'absolu, cela veut dire qu'une requête ldapsearch -b ou=people,dc=truc "(uid=toto)"  devrait être ldapsearch             
+
+    "(&(objectclass=user)(uid=toto))"
 
 Mais on peut ruser : en pratique, rien n'empêche de créer les OU des gpo dans OU=people : les utilisateurs resteront donc bien toujours dans ou=people, et une recherche avec SCOPE_SUBTREE aboutira toujours.
 
@@ -40,9 +42,9 @@ Pour les GPO, si un groupe doit avoir une config particulière, le plus simple e
 exemple : on veut que les BTS aient une GPO spécifique
 
  - on crée ou=BTS,ou=People,
-     - on met dedans tous les groupes classes des BTS
-     ou
-     - on crée un groupe BTS et on met dedans tous les groupes classes de BTS
+ - on met dedans tous les groupes classes des BTS
+ ou
+ - on crée un groupe BTS et on met dedans tous les groupes classes de BTS
 
 on veut en plus que les BTS_CIM1 et 2 aient un paramétrage de Solidworks :
 
@@ -60,9 +62,13 @@ généralisation : on crée une OU et un groupe à chaque fois que l'on a une no
 Pour la consultation ldap, la meilleure solution serait de rendre les filtres ldap de se3 utilisables aussi bien en AD qu'en se3. Ceci permettrait une migration en douceur.
 
 * pour les utilisateurs : 
- (|(&(objectclass=person)(uid=toto))(&(objectclass=user)(cn=toto))
+
+    (|(&(objectclass=person)(uid=toto))(&(objectclass=user)(cn=toto))
+
 * pour les groupes :
- (|(&(objectclass=posixgroup)(cn=groupe))(&(objectclass=group)(cn=groupe)) 
+
+    (|(&(objectclass=posixgroup)(cn=groupe))(&(objectclass=group)(cn=groupe)) 
+
 * pour les machines : 
  
 Pour l'ecriture, on utilise samba-tool
@@ -75,11 +81,12 @@ on a donc : $rightsRdn=ou=rights,ou=people
 
 pour les machines  : idem, on peut faire ce que l'on veut, et donc en particulier créer les parcs sous ou=computers. En revanche, la structure des parcs devient hiérarchique, une machine ne pouvant appartenir qu'à une ou, il faut les ranger de façon arborescente :
 
- ou=computers-+-ou=parcs-+-ou=physique+-salle201
-              |          |            +-salle203
-              |          +-ou=maths---+-salle101
-              |                       +-salle110
-              +-cn=machinesansparc
+     ou=computers-+-ou=parcs-+-ou=physique+-salle201
+                  |          |            +-salle203
+                  |          +-ou=maths---+-salle101
+                  |                       +-salle110
+                  +-cn=machinesansparc
+                  
 ou alors structure à plat, auquel cas il faut créer un groupe par parc.
 
 ##migration
