@@ -1,7 +1,7 @@
-=Samba 4 (SE4)=
+#Samba 4 (SE4)
 Notes concernant la faisabilité du passage de SE3 en contrôleur AD samba4. 
 
-==Base de travail==
+##Base de travail
 une distrib Debian Wheezy fraîchement installée avec SE3 branche trunk à jour, et un annuaire complet d'un lycée de façon à avoir une vraie base d'utilisateur à migrer. 
 Une ou deux machines XP et Seven sont mises au domaine.
 
@@ -22,7 +22,7 @@ http://en.gentoo-wiki.com/wiki/Samba4_as_Active_Directory_Server#Example_for_app
 
 https://wiki.samba.org/index.php/Samba4/Winbind
 
-==Structure de l'annuaire==
+##Structure de l'annuaire
 En fait il possible de conserver un schéma contenant les attributs Posix ( uid, unixhomedirectory...), et donc on devrait pouvoir continuer à utiliser tel quel les applis extérieures type LCS sans changement. Avec toutefois une nuance de taille : en AD, les utilisateurs, groupes et machines ne sont pas rangés dans des branches, ils peuvent être n'importe où, c'est même le principe des GPO : on déplace les objets vers un OU, et il hérite des GPO de celui-ci.
 
 Dans l'absolu, cela veut dire qu'une requête ldapsearch -b ou=people,dc=truc "(uid=toto)"  devrait être ldapsearch "(&(objectclass=user)(uid=toto))"
@@ -56,14 +56,14 @@ plus compliqué : on veut en plus une config particulière pour tous les élève
 
 généralisation : on crée une OU et un groupe à chaque fois que l'on a une nouvelle GPO, afin de ne pas devoir bouger les groupes et utilisateurs existants ?
 
-===Filtres ldap===
+###Filtres ldap
 Pour la consultation ldap, la meilleure solution serait de rendre les filtres ldap de se3 utilisables aussi bien en AD qu'en se3. Ceci permettrait une migration en douceur.
 
-*pour les utilisateurs : 
+* pour les utilisateurs : 
  (|(&(objectclass=person)(uid=toto))(&(objectclass=user)(cn=toto))
-*pour les groupes :
+* pour les groupes :
  (|(&(objectclass=posixgroup)(cn=groupe))(&(objectclass=group)(cn=groupe)) 
-*pour les machines : 
+* pour les machines : 
  
 Pour l'ecriture, on utilise samba-tool
 
@@ -82,8 +82,8 @@ pour les machines  : idem, on peut faire ce que l'on veut, et donc en particulie
               +-cn=machinesansparc
 ou alors structure à plat, auquel cas il faut créer un groupe par parc.
 
-==migration==
-===Etape 1 : préparation de l'annuaire===
+##migration
+###Etape 1 : préparation de l'annuaire===
 L'annuaire samba4 a une structure différente  : 
 
 utilisateurs: uid devient cn. C'est le gros changement.
@@ -104,7 +104,7 @@ imprimantes : pas testé.
 rights : les groupes deviennent des ou, idem pour les parcs
 cn=truc_is_admin -> ou=truc
 
-===Script de migration===
+###Script de migration===
 * script préparatoire
 
 ** réallouer les doublons sambaSID
@@ -126,7 +126,7 @@ on configure bind9+dlz
 
 On laisse le serveur de fichiers en samba3.
 
-==Tests==
+##Tests==
 Voici mes premières constatations :
 
 - la migration de l'annuaire passe bien, à condition d'avoir supprimé les doublons des SID, et les enregistrements invalides. On récupère bien les utilisateurs, les groupes, et les machines. En revanche les OU parcs, imprimantes et droits ne sont pas importés c'est logique car ce ne sont pas des objets samba. Il faudra donc prévoir un script maison pour cela.
