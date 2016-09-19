@@ -94,14 +94,19 @@ ou alors structure à plat, auquel cas il faut créer un groupe par parc.
 L'annuaire samba4 a une structure différente  : 
 
 utilisateurs: uid devient cn. C'est le gros changement.
+
 branche : ou=People -> cn=Users
+
 dn : uid=,ou=People,dc -> cn=,cn=Users,dc
+
 uid : prenom.nom -> cn
+
 cn : Prenom Non -> displayName
 
 groupes :  les groupes sont dans la même gbranche que les utilisateurs : pas de différences notables, ils peuvent être imbriqués ( un groupe peut être membre d'un autre groupe ). Conséquence, un groupe ne peut pas avoir le nom d'un utilisateur !
 
 branche : ou=Groups -> cn=Users
+
 memberUid -> member
 
 machines : un seul enregistrement cn=poste,ou=Computers,dc=... Voir si on peut avoir les @mac et @IP pour dhcp ?
@@ -109,6 +114,7 @@ machines : un seul enregistrement cn=poste,ou=Computers,dc=... Voir si on peut a
 imprimantes : pas testé.
 
 rights : les groupes deviennent des ou, idem pour les parcs
+
 cn=truc_is_admin -> ou=truc
 
 ###Script de migration
