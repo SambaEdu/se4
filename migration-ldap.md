@@ -5,9 +5,9 @@
  * une OU peut contenir n'importe quel objet,
  * les GPO s'appliquent aux OU
  * les droits s'appliquent aux groupes
+
 ##Organisation
 les machines sont rangées dans ou=Computers
-On commence par faire un tri hierarchique des parcs existants, et on construit un arbre :
  * machines sans parc -> racine ou=Computers
  * machine dans parc, on crée un groupe + un OU 
 
