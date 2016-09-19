@@ -83,7 +83,7 @@ pour les machines  : idem, on peut faire ce que l'on veut, et donc en particulie
 ou alors structure à plat, auquel cas il faut créer un groupe par parc.
 
 ##migration
-###Etape 1 : préparation de l'annuaire===
+###Etape 1 : préparation de l'annuaire
 L'annuaire samba4 a une structure différente  : 
 
 utilisateurs: uid devient cn. C'est le gros changement.
@@ -104,30 +104,24 @@ imprimantes : pas testé.
 rights : les groupes deviennent des ou, idem pour les parcs
 cn=truc_is_admin -> ou=truc
 
-###Script de migration===
-* script préparatoire
+###Script de migration
+####script préparatoire
 
-** réallouer les doublons sambaSID
-** générer les ldifs pour ou=Rights compatibles avec nouvelle structure
-** génerer les ldifs pour ou=Parcs compatibles avec la nouvelle structure : mettre les machines correspondantes dans ou=sallexxx,ou=Parcs,dc=...
-** génerer les ldifs pour ou=Restrictions : analyser la table restrictions pour rechercher les groupes et users avec des restrictions, et créer une ou correspondante.
-** générer les ldifs pour ou=Templates : analyser les dossiers dans netlogon, et créer les ou correspondant aux templates
-** générer les ldifs correspondant aux imprimantes et les ajouter aux ou correspondant aux parcs.
+* réallouer les doublons sambaSID
+* générer les ldifs pour ou=Rights compatibles avec nouvelle structure
+* génerer les ldifs pour ou=Parcs compatibles avec la nouvelle structure : mettre les machines correspondantes dans ou=sallexxx,ou=Parcs,dc=...
+* génerer les ldifs pour ou=Restrictions : analyser la table restrictions pour rechercher les groupes et users avec des restrictions, et créer une ou correspondante.
+* générer les ldifs pour ou=Templates : analyser les dossiers dans netlogon, et créer les ou correspondant aux templates
+* générer les ldifs correspondant aux imprimantes et les ajouter aux ou correspondant aux parcs.
 
-* migration avec l'outil samba4
+####migration avec l'outil samba4
 
 * import des ldifs générés précédemment
-** import des GPO avec logonpy ?
+* import des GPO avec logonpy ?
 
 
-on compile Samba4 à partir du git
-on lance le script de migration
-on configure bind9+dlz
-
-On laisse le serveur de fichiers en samba3.
-
-##Tests==
-Voici mes premières constatations :
+##Tests
+Voici mes premières constatations (vieux !)
 
 - la migration de l'annuaire passe bien, à condition d'avoir supprimé les doublons des SID, et les enregistrements invalides. On récupère bien les utilisateurs, les groupes, et les machines. En revanche les OU parcs, imprimantes et droits ne sont pas importés c'est logique car ce ne sont pas des objets samba. Il faudra donc prévoir un script maison pour cela.
 
