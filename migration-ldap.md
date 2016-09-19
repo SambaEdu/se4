@@ -7,16 +7,23 @@
  * les droits s'appliquent aux groupes
 
 ##Organisation
-les machines sont rangées dans ou=Computers
- * machines sans parc -> racine ou=Computers
- * machine dans parc, on crée un groupe + un OU 
+les machines sont rangées dans cn=machines
 
+donc la branche cn=Computers contient les cn=nome_machine
+
+ou=Parcs qui contient les ou=nom_parc qui contient cn=nom_parc.
+
+* Les machines sont membres des groupes cn=nom_parc,ou=parcs
+* les GPO sont appliquées sur ou=nom_parc
+* 
 # migration des groupes et utilisateurs
 ##contraintes
 * un utilisateur ne peut être qu'à un seul endroit (ou)
 * un utilisateur ou un groupe peut être dans autant de groupes que l'on veut
 
 ##organisation
-les utilisateurs et groupes sont rangées dans un ou cn=users
+les utilisateurs  sont rangés dans cn=users
 
-lorsque on crée un groupe (classe, equipe ) on crée une OU et on les met dedans
+ou=groups contient ou=classe_truc,ou=Profs
+
+lorsque on crée un groupe (classe, equipe ) on crée une OU correspondant et on les met dedans
