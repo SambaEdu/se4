@@ -127,10 +127,10 @@ Voici mes premières constatations (vieux !)
 
 - la structure de l'annuaire change :
 
-    le dn utilisateur : uid=toto,ou=People,dc=truc,dc=org -> cn=toto,cn=Users,dc=truc,dc=org
-    le dn groupe: cn=bidule,ou=Groups,dc=truc,dc=org -> cn=bidule,cn=Users,dc=truc,dc=org
-    les membres sont tous en member=cn=toto,cn=Users,dc=truc,dc=org
-    le dn machine: uid=xptest$,ou=Computers,dc=truc,dc=org -> cn=xptest,cn=Computers,dc=truc,dc=org
+     le dn utilisateur : uid=toto,ou=People,dc=truc,dc=org -> cn=toto,cn=Users,dc=truc,dc=org
+     le dn groupe: cn=bidule,ou=Groups,dc=truc,dc=org -> cn=bidule,cn=Users,dc=truc,dc=org
+     les membres sont tous en member=cn=toto,cn=Users,dc=truc,dc=org
+     le dn machine: uid=xptest$,ou=Computers,dc=truc,dc=org -> cn=xptest,cn=Computers,dc=truc,dc=org
 
 pour les ou :
    cn=parc1,ou=parcs,dc=truc,dc=org -> ou=parc1,ou=parcs,dc=truc,dc=org
@@ -141,7 +141,6 @@ pour les ou :
 
 - samba4 intègre une conf automatique de bind9, et donc un service dns dynamique pour le domaine.
 
-- samba4 n'est pas pour le moment destiné à fournir le service de serveur de ficihers. c'est s3fs qui s'en charge, pour le moment il y a des soucis d'ACLs, mais cela devrait rentrer dans l'ordre assez vite. Il faudra probablement régénérer toutes les ACLS, car le mapping des utilisateurs change (les UID/GID fournis par winbind ne sont plus ceux que fournissait samba3/ldap)
 
 Il y a donc plusieurs points à régler :
 
@@ -170,12 +169,12 @@ Il y a donc plusieurs points à régler :
 
 correspondances : 
 
-ou=People et ou=machines : a conserver
-ou=groups : conserver les groupes samba (eleves, classes, equipes)
-ou=rights, parcs : chaque groupe devient une ou (principe d'AD). 
+    ou=People et ou=machines : a conserver
+    ou=groups : conserver les groupes samba (eleves, classes, equipes)
+    ou=rights, parcs : chaque groupe devient une ou (principe d'AD). 
 
 Analyser les modifs à apporter aux scripts de logon sur le serveur samba3 ( imprimantes, mkhome... )
-==libnss==
+##libnss
 
 La résolution des uid ne se fait plus en ldap mais avec winbind : 
 
@@ -183,17 +182,17 @@ Installing and configuring
 
 The current installation process put the library libnss_winbind.so in <PATH_TO_SAMBA>/lib (ie. /usr/local/samba/lib). Use a current checkout as described in Samba4/HOWTO.
 
- # ln -s /usr/local/samba/lib/libnss_winbind.so.2 /lib/libnss_winbind.so
- # ln -s /lib/libnss_winbind.so /lib/libnss_winbind.so.2
+     # ln -s /usr/local/samba/lib/libnss_winbind.so.2 /lib/libnss_winbind.so
+    # ln -s /lib/libnss_winbind.so /lib/libnss_winbind.so.2
 
 You need to instruct the system to use the nss winbind library when searching for users or groups. For this add the keywork winbind to the stanza passwd and group in /etc/nsswitch.conf.
 
 It should look like:
 
- passwd:          compat winbind
- group:           compat winbind
- shadow:          files
- ...
+     passwd:          compat winbind
+     group:           compat winbind
+     shadow:          files
+      ...
 
 il faut également ajouter 
         winbindd socket directory = /tmp/.winbindd
@@ -202,7 +201,7 @@ dans le smb.conf
 
 
  
-==Authentification de l'interface==
+##Authentification de l'interface
 
 On peut utiliser en priorité le module kerberos d'apache (voir plus haut) : avantage, on a une vraie SSO pour les postes windows. En secours, on s'authentifie en ldap
 
@@ -228,8 +227,8 @@ A minimal configuration might look like this:
 
 file: /etc/apache2/sites-available/default-ssl
 
-<IfModule mod_ssl.c>
-<VirtualHost _default_:443>
+    <IfModule mod_ssl.c>
+    <VirtualHost _default_:443>
     ServerAdmin webmaster@localhost
 
     DocumentRoot /var/www
@@ -295,7 +294,7 @@ tool named 'ldbedit' to modify AD data. To add a proper SPN to the service
 account type in the following command:
 
     # ldbedit -H /usr/local/samba/private/sam.ldb
-"(samaccountname=http-<hostname of dc>)" -e <your favourite editor>
+    "(samaccountname=http-<hostname of dc>)" -e <your favourite editor>
 
 This will open up the specified account for manipulation. the '-e' option
 lets you specify an editor to use (nano in my case). Just add the required
