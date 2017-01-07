@@ -7,12 +7,18 @@ SambaEdu4 est l'évolution de SambaEdu3.
 
 * contrôleur de domaine AD, pouvant soit fonctionner de façon isolée en important directement les utilisateurs depuis les bases Siecle/STS, soit être intégré dans une infrastructure fédératrice AD gérée au niveau des rectorats ou nationale.
 * Intégration automatisée de postes Windows 7 et 10, de postes Linux,
-* serveur de fichiers SMB, avec gestion des instantanés (shadow copy) basé sur ZFS
+* serveur de fichiers SMB, avec gestion des instantanés (shadow copy) basé sur ZFS 
 * serveur d'impression SMB/CUPS, avec intégration possible avec la solution de gestion centralisée PaperCut (payante)
 * déploiement et mises à jour centralisée des logiciels à l'aide de WPKG et Wsusoffline
 * solution de clonage
 
-Techniquement, le  serveur est construit sur debian Jessie, avec Samba 4.4.x et ZFSonLinux. Les paquets sont construits en respectant le standard Debian pour pouvoir être mis à jour facilement, et donc suivre les versions Debian. 
+Techniquement, le  serveur est construit sur debian Jessie, avec Samba 4.4.x et eventuellement ZFSonLinux. Les paquets sont construits en respectant le standard Debian pour pouvoir être mis à jour facilement, et donc suivre les versions Debian. 
+
+## matériel et stockage
+Deux types de serveurs sont envisagés : 
+
+* serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
+* serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
 
 ## Attention !
 
