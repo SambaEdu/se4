@@ -26,7 +26,7 @@ Il y a probablement des trucs inutiles vu que j'ai cherché un peu, mais au fina
   390  nano /usr/bin/php5-cgi 
   391  nano /etc/php5/apache2/php.ini 
   393  nano /etc/apache2/suexec/www-se3
-  394  nano /etc/apache2/ports.conf 
+  394  nano /etc/apache2/ports.conf -> ajouter le port 909
   395  nano /etc/apache2/envvars 
   396  a2enmod suexec fcgid
   398  service apache2 restart
