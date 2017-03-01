@@ -39,9 +39,9 @@ D'abord on migre les comptes et groupes via `samba-tool migratedomain`
 Ensuite on mouline les groupes, parcs et droits pour créer les ou et groupes manquants avec `samba-tool`, ou direct en python (à voir)
 
 # migration des enregistrements dhcp
-AD comporte un service de DNS dynamique, ce qui fait qu'il n'est pas forcément utile de mettre des adresses reservées par dhcp, car tous les postes au domaines auront en pratique un enregistrement DNS.
+AD comporte un service de DNS dynamique, ce qui fait qu'il n'est pas forcément utile de mettre des adresses reservées par dhcp, car tous les postes au domaine auront en pratique un enregistrement DNS.
 
-**_On peut malgré tout on veut conserver la possibilité de réservation IP, mais ce n'est clairement pas une priorité_** 
+**_On peut malgré tout conserver la possibilité de réservation IP, mais ce n'est clairement pas une priorité_** 
 ## reservation ip dhcp
 le script makedhcpconf devra etre capable de : 
 
@@ -52,7 +52,9 @@ le script makedhcpconf devra etre capable de :
 A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux est nécessaire ( à moins qu'on puisse faire cela en zone DNS ?)
 
 ## postes non AD
-si on veut reserver l'ip de machines qui ne sont pas au domaine, peut-on stocker leur enregistrement dans AD ? oui a priori
+si on veut reserver l'ip de machines qui ne sont pas au domaine, peut-on stocker leur enregistrement dans AD ? oui a priori. Cela peut être utile pour des équipements pour lesquels on veut une ip stable, mais qui n'auront pas de lien direct avec le serveur AD.
+
+Pour les imprimantes IP, mettent-elles à jour leur enregistrement DNS dans AD ? *a verifier*
 
 ## fonctionnement 
 
