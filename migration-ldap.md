@@ -40,7 +40,8 @@ Ensuite on mouline les groupes, parcs et droits pour créer les ou et groupes ma
 
 # migration des enregistrements dhcp
 AD comporte un service de DNS dynamique, ce qui fait qu'il n'est pas forcément utile de mettre des adresses reservées par dhcp, car tous les postes au domaines auront en pratique un enregistrement DNS.
-On peut malgré tout on veut conserver la possibilité de réservation IP
+
+**_On peut malgré tout on veut conserver la possibilité de réservation IP, mais ce n'est clairement pas une priorité_** 
 ## reservation ip dhcp
 le script makedhcpconf devra etre capable de : 
 
