@@ -43,7 +43,9 @@ AD comporte un service de DNS dynamique, ce qui fait qu'il n'est pas forcément 
 
 **_On peut malgré tout conserver la possibilité de réservation IP, mais ce n'est clairement pas une priorité_** 
 
-Il existe la possibilité de configurer `isc-dhcp-server` pour qu'il mette à jour automatiquement les enregistrements DNS. Cela fonctionne-t-il avec le DNS Samba interne ? L'avantage c'est que *toutes* les machines auront un nom sur le réseau local.
+Il existe la possibilité de configurer `isc-dhcp-server` pour qu'il mette à jour automatiquement les enregistrements DNS.  L'avantage c'est que *toutes* les machines auront un nom sur le réseau local.
+
+https://wiki.archlinux.org/index.php/Samba/Active_Directory_domain_controller#DHCP
 
 ## reservation ip dhcp
 le script makedhcpconf devra etre capable de : 
@@ -53,6 +55,8 @@ le script makedhcpconf devra etre capable de :
 * stocker un attribut (TXT?) disant que l'ip est reservée ?
 
 A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux est nécessaire ( à moins qu'on puisse faire cela en zone DNS ?)
+
+
 
 ## postes non AD
 si on veut reserver l'ip de machines qui ne sont pas au domaine, peut-on stocker leur enregistrement dans AD ? oui a priori. Cela peut être utile pour des équipements pour lesquels on veut une ip stable, mais qui n'auront pas de lien direct avec le serveur AD.
