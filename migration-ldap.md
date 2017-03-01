@@ -42,6 +42,9 @@ Ensuite on mouline les groupes, parcs et droits pour créer les ou et groupes ma
 AD comporte un service de DNS dynamique, ce qui fait qu'il n'est pas forcément utile de mettre des adresses reservées par dhcp, car tous les postes au domaine auront en pratique un enregistrement DNS.
 
 **_On peut malgré tout conserver la possibilité de réservation IP, mais ce n'est clairement pas une priorité_** 
+
+Il existe la possibilité de configurer `isc-dhcp-server` pour qu'il mette à jour automatiquement les enregistrements DNS. Cela fonctionne-t-il avec le DNS Samba interne ? L'avantage c'est que *toutes* les machines auront un nom sur le réseau local.
+
 ## reservation ip dhcp
 le script makedhcpconf devra etre capable de : 
 
