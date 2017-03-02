@@ -4,17 +4,20 @@ Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ld
 ## fonctions de base
 On utilise l'outil CLI samba-tool, et on crée les fonctions php correspondant aux commandes samba-tool : samba-tool.inc.php
 
+Enormément de code et de fonctions disparaissent purement et simplement car directement implémentés dans l'API samba ! Les comptes ci dessous ne sont pas forcément très significatifs.
+
 ## fonctions spécifiques se4 : 
 
 samba-tool est un script python qui se base sur python-samba, qui fournit toutes l'API samba. Il est donc très simple d'ajouter des nouvelles commandes utilisables dans les différents langages. C'est ici qu'il faut implémenter les fonctions php actuelles.
 
 - si c'est suffisamment générique, on soumet les changements upstream
 
-- si c'est spécifique se3, on crée un nouvel outil se4-samba-tool avec les commandes supplémentaires, avec une lib étandant python-samba. 
+- si c'est spécifique se3, on crée un nouvel outil se4-samba-tool avec les commandes supplémentaires, avec une lib étendant python-samba. 
 
 on cree la lib php se4-samba-tool.php correspondante
 
 ## état du code php
+Il reste encore des fonctions à sortir des pages et à mettre dans les includes.
 
 * nombre de ldap_search : 21
 * nombre de ldap_modify : 11
@@ -22,6 +25,27 @@ on cree la lib php se4-samba-tool.php correspondante
 * nombre de ldap_add : 5
 * nombre de ldap_list : 13
 * nombre de ldap_read : 11
+
+## état des scripts shell
+Pas mal de simplifications à prévoir avec samba-tool
+
+* nombre de ldapsearch : 251
+* nombre de ldap_modify : 37
+* nombre de ldapdel : 11
+* nombre de ldapadd : 11
+
+## état des scripts perl
+Enormément de doublons avec le php ! on devrait pouvoir tout éliminer
+
+* nombre de ldap->search : 48
+* nombre de ldap->modify : 26
+* nombre de ldap->delete : 7
+* nombre de ldap->add : 4
+
+## etat de logonpy
+Il faut simplement utiliser les classes samba au lieu de ldap. 
+
+En théorie logonpy n'est plus nécessaire. Les GPO sont gérées nativement. Mais il faut mettre les fichiers dans SYSVOL, donc il faudra conserver Se3GPO qui oit permettre de générer les GPO côté serveur. En revanche il manque la gestion des fichiers templates .admx ( mais on peut passer par la console MS)
 
 # gestion des utilisateurs
 
