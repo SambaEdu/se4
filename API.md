@@ -1,4 +1,24 @@
 page destinée à lister les fonctions se4, leur correspondance se3 ou ldap et leur implémentation
+# Interface de communication AD
+Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ldb. 
+## fonctions de base
+On utilise l'outil CLI samba-tool, et on crée les fonctions php correspondant aux commandes samba-tool
+
+## fonctions spécifiques se4 : 
+
+samba-tool est un script python qui se base sur python-samba, qui fournit toutes l'API samba. Il est donc très simple d'ajouter des nouvelles commandes utilisables dans les différents langages. C'est ici qu'il faut implémenter les fonctions php actuelles.
+
+- si c'est suffisamment générique, on soumet les chagements upstream
+
+- si c'est spécifique se3, on crée un nouvel outil se4-tool avec les commandes supplémentaires, avec une lib étandant python-samba. 
+
+##état du code php
+* nombre de ldap_search : 21
+* nombre de ldap_modify : 11
+* nombre de ldap_delete : 3
+* nombre de ldap_add : 5
+* nombre de ldap_list : 13
+* nombre de ldap_read : 11
 # gestion des utilisateurs
 
 ## functions.inc.php
