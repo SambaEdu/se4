@@ -14,13 +14,15 @@ samba-tool est un script python qui se base sur python-samba, qui fournit toutes
 
 on cree la lib php se4-samba-tool.php correspondante
 
-##état du code php
+## état du code php
+
 * nombre de ldap_search : 21
 * nombre de ldap_modify : 11
 * nombre de ldap_delete : 3
 * nombre de ldap_add : 5
 * nombre de ldap_list : 13
 * nombre de ldap_read : 11
+
 # gestion des utilisateurs
 
 ## functions.inc.php
@@ -33,6 +35,7 @@ function ldap_get_right_search ($type,$search_filter,$ldap)
 function ldap_get_right($type,$login)
 
 function people_get_variables($uid, $mode)
+
 ## ldap.inc.php
 function people_get_variables($uid, $mode)
 
