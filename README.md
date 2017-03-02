@@ -27,7 +27,7 @@ Bien que la plupart du code soit repris de SE3, il ne s'agit pas d'une mise à j
 Dans un premier temps toutes les pages de l'interface faisant doublon avec les outils de la console AD GPO ne seront pas repris : seules les pages annuaire, importation, partages et parcs sont conservées. 
 
 ## Roadmap 
-* mettre à disposition des développeurs une VM stretch/samba4.5/SE3 avec un annuaire migré en AD servant de base de travail pour mettre le code se3 en compatibilité AD
+* mettre à disposition des développeurs une VM stretch/samba4.5/SE3 avec un annuaire migré en AD servant de base de travail pour mettre le code se3 en compatibilité AD **fait**
 * avoir une VM migrée AD fonctionnelle pour les pages principales : annuaire, import (siecle/sts), partages, parcs 
 * mise en place d'une arborescence permettant de générer des paquets.
 * travail sur l'interopérabilité : intégration des clients linux, SSO pour sites ou applis diverses...
