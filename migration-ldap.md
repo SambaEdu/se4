@@ -1,3 +1,5 @@
+
+page destinée aux notes concernant la migration d'un se3 existant
 # conformité de l'annuaire se3
 ## doublons
 aucun doublon de sambaSID, cn, displayname ne doit être présent dans l'annuaire. La page se3 permet de régler ce problème avant la migration
