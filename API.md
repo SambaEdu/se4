@@ -4,10 +4,15 @@ Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ld
 
 - Il existe une classe https://github.com/Adldap2/Adldap2 Mais est-ce une bonne idée ? Le problème c'est que on aura des outils différents pour le php et pour les scripts shell.
 
-- L'autre solution est d'utiliser samba-tool et éventuellement de l'étendre, c'est que l'on peut unifier quelque soit le langage. En revanche il faut écrire une classe php. 
+- L'autre solution est d'utiliser samba-tool et de l'étendre les classes python pour couvrir toutes les operations qui sont nécessaires.  On l'appelle de façon unifiée quelque soit le langage. 
 
-Dans le premier cas, on aura assez peu d'abstraction sur la structure ldap, et donc la manipulation des objets se fera dans les scripts. Dans le second cas, la manipulation des objets se fait au niveau des classes python, on ajoute toutes les méthodes nécesaires au se3 à ce niveau et donc les scripts finaux sont simplifiés quelque soit le langage.  
+Dans le premier cas, on aura assez peu d'abstraction sur la structure ldap, et donc la manipulation des objets se fera dans les scripts comme actuellement (avec quand même plus d'abstraction). Dans le second cas, la manipulation des objets se fait au niveau des classes python, on ajoute toutes les méthodes nécessaires au se3 à ce niveau et donc les scripts finaux sont simplifiés quelque soit le langage.  
 
+En gros la classe php Adldap2 est fonctionnellement équivalente à la classe python Samba. 
+
+# solution "adldap2"
+
+# solution "python samba"
 ## fonctions de base : classe php
 On utilise l'outil CLI samba-tool, et on crée les fonctions php correspondant aux commandes samba-tool : samba-tool.inc.php
 
@@ -22,6 +27,8 @@ samba-tool est un script python qui se base sur python-samba, qui fournit toutes
 - si c'est spécifique se3, on crée un nouvel outil se4-samba-tool avec les commandes supplémentaires, avec une lib étendant python-samba. 
 
 on cree la lib php se4-samba-tool.php correspondante
+
+# fonctions se3
 
 ## état du code php
 Il reste encore des fonctions à sortir des pages et à mettre dans les includes.
