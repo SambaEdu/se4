@@ -2,9 +2,11 @@ page destinée à lister les fonctions se4, leur correspondance se3 ou ldap et l
 # Interface de communication AD
 Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ldb. 
 
-Il existe une classe https://github.com/adldap/adLDAP Mais est-ce une bonne idée ? Le problème c'est que on aura des outils différents pour le php et pour les scripts shell.
+- Il existe une classe https://github.com/Adldap2/Adldap2 Mais est-ce une bonne idée ? Le problème c'est que on aura des outils différents pour le php et pour les scripts shell.
 
-L'avantage d'utiliser samba-tool et éventuellement de l'étendre, c'est que l'on peut unifier quelque soit le langage. En revanche il faut écrire une classe php. 
+- L'autre solution est d'utiliser samba-tool et éventuellement de l'étendre, c'est que l'on peut unifier quelque soit le langage. En revanche il faut écrire une classe php. 
+
+Dans le premier cas, on aura assez peu d'abstraction sur la structure ldap, et donc la manipulation des objets se fera dans les scripts. Dans le second cas, la manipulation des objets se fait au niveau des classes python, on ajoute toutes les méthodes nécesaires au se3 à ce niveau et donc les scripts finaux sont simplifiés quelque soit le langage.  
 
 ## fonctions de base : classe php
 On utilise l'outil CLI samba-tool, et on crée les fonctions php correspondant aux commandes samba-tool : samba-tool.inc.php
