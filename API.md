@@ -2,7 +2,7 @@ page destinée à lister les fonctions se4, leur correspondance se3 ou ldap et l
 # Interface de communication AD
 Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ldb. 
 
-- Il existe une classe https://github.com/Adldap2/Adldap2 Mais est-ce une bonne idée ? Le problème c'est que on aura des outils différents pour le php et pour les scripts shell. l'API est relativement complète, il manque les GPO et des méthodes pour les OU ?
+- Il existe une classe https://github.com/Adldap2/Adldap2 Mais est-ce une bonne idée ? Le problème c'est que on aura des outils différents pour le php et pour les scripts shell. l'API est relativement complète et bien documentée, il manque les GPO et des méthodes pour les OU ?
 
 - L'autre solution est d'utiliser samba-tool et de l'étendre les classes python pour couvrir toutes les operations qui sont nécessaires.  On l'appelle de façon unifiée quelque soit le langage. L'API est complète (normal !), en revanche les OU ne sont pas gérées par samba-tool (j'ai un patch).  
 
