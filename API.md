@@ -1,6 +1,10 @@
 page destinée à lister les fonctions se4, leur correspondance se3 ou ldap et leur implémentation
 # Interface de communication AD
 Afin de simplifier la programmation, on évite d'utiliser directement ldap ou ldb. 
+
+Il existe une classe https://github.com/adldap/adLDAP Est-ce une bonne idée ?
+
+
 ## fonctions de base
 On utilise l'outil CLI samba-tool, et on crée les fonctions php correspondant aux commandes samba-tool : samba-tool.inc.php
 
