@@ -33,7 +33,16 @@ samba-tool est un script python qui se base sur python-samba, qui fournit toutes
 
 on cree la lib php se4-samba-tool.php correspondante
 ## authentification 
-###Samba-tool
+### élévation des privilèges
+On crée un utilisateur web-admin, administrateur du domaine avec un password aléatoire.
+
+on exporte une clé avec la commande : 
+```
+samba-tool domain exportkeytab --principal=web-admin@SAMBAEDU.DOMAIN web-admin.keytab
+```
+si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur web-admin@SAMBAEDU.DOMAIN avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
+
+### auth pour samba-tool
 L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://ubndc01.example.com. Ne pas mettre l'IP d'un serveur !
 
 L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande -U <domain username>
