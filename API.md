@@ -32,6 +32,43 @@ samba-tool est un script python qui se base sur python-samba, qui fournit toutes
 - si c'est spécifique se3, on crée un nouvel outil se4-samba-tool avec les commandes supplémentaires, avec une lib étendant python-samba. 
 
 on cree la lib php se4-samba-tool.php correspondante
+## authentification 
+###Samba-tool
+L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://ubndc01.example.com. Ne pas mettre l'IP d'un serveur !
+
+L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande -U <domain username>
+```
+localuser@ubnwks01:~$ samba-tool user list -U Administrator -H ldap://ubndc01.example.com
+Password for [EXAMPLE\Administrator]:
+administrator
+krbtgt
+Guest
+```
+Ou sur base du ticket Kerberos en ajoutant en fin de commande -k yes pour un utilisateur du domaine correctement authentifié
+```
+administrator@ubnwks01:~$ samba-tool user list -k yes -H ldap://ubndc01.example.com
+administrator
+krbtgt
+Guest
+```
+
+Ou sur base du ticket Kerberos en ajoutant en fin de commande -k yes pour un utilisateur quelconque ayant demandé un ticket avec //kinit// pour le compte d'un utilisateur du domaine
+```
+localuser@ubnwks01:~$ kinit administrator@EXAMPLE.COM
+Password for administrator@EXAMPLE.COM: 
+localuser@ubnwks01:~$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: administrator@EXAMPLE.COM
+
+Valid starting       Expires              Service principal
+10/31/2014 15:41:37  11/01/2014 01:41:37  krbtgt/EXAMPLE.COM@EXAMPLE.COM
+        renew until 11/01/2014 15:41:31
+localuser@ubnwks01:~$ samba-tool user list -k yes -H ldap://ubndc01.example.com
+administrator
+krbtgt
+Guest
+localuser@ubnwks01:~$ kdestroy
+```
 
 # fonctions se3
 
