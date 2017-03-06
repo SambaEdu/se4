@@ -17,7 +17,9 @@ Description du modèle de données manipulé par SambaEdu
 - contient des données de configuration serveur, des données de session et des logs
 
 # Modèle
+
 ## utilisateur
+
 - role : prof, élève, administratif
 - login
 - nom 
@@ -30,28 +32,31 @@ Description du modèle de données manipulé par SambaEdu
  - description
  -password
  
- ## groupe
+## groupe
+ 
  - type : classe, equipe, matière, partie_classe, projet, regroupement
  - nom
  - description
  - membres : utilisateurs ou groupes
  
- ## machine
+## machine
+ 
  - nom 
  - description
  - os
  - ip
  
- ## imprimante
- - nom
- - description
- - url
- - driver ?
+## imprimante
+
+- nom
+- description
+- url
+- driver ?
  
- ## parc
- - nom
- - type : salle, matériel
- - description
- - membres : machines, imprimantes, parcs
- 
+## parc
+- nom
+- type : salle, matériel
+- description
+- membres : machines, imprimantes, parcs
+
  
