@@ -20,7 +20,7 @@ Description du modèle de données manipulé par SambaEdu
 
 ## utilisateur
 
-- role : prof, élève, administratif
+- role : prof, élève, administratif (ou)
 - login
 - nom 
 - prénom
@@ -30,7 +30,14 @@ Description du modèle de données manipulé par SambaEdu
 - email
  -photo
  - description
- -password
+ - password
+ - methodes
+  - add
+  - del 
+  - modify
+  - auth
+  - passwrd
+  - get
  
 ## groupe
  
@@ -38,7 +45,28 @@ Description du modèle de données manipulé par SambaEdu
  - nom
  - description
  - membres : utilisateurs ou groupes
- 
+ - methodes
+  - add
+  - del
+  - modify
+  - list
+  - is_member (member)
+  - remove_member (member)
+  - add_member(member)
+## droits (ou)
+ - nom
+ - description
+ - contient : utilisateurs, groupes
+ - GPO
+ - methodes
+  - add
+  - del
+  - modify
+  - list
+  - is_member (member)
+  - remove_member (member)
+  - add_member(member)
+
 ## machine
  
  - nom 
@@ -53,10 +81,23 @@ Description du modèle de données manipulé par SambaEdu
 - url
 - driver ?
  
-## parc
+## parc (ou)
 - nom
-- type : salle, matériel
+- description : config matérielle
+- contient : machines, parc
+- GPOs
+
+## wpkg (ou)
+- nom
+- description : config logicielle
+- contient : salles, wpkg
+- GPOs
+
+## salles (groupe)
+- nom 
 - description
-- membres : machines, imprimantes, parcs
+- membres : machines
+-
+
 
  
