@@ -29,3 +29,7 @@ A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle
 
 L'interface tourne avec www-se3, il faut donc lui configurer ldap : le problème c'est que le dossier /var/lib/samba/private/tls est privé...  il faut le mettre en 755 !
 
+dans includes/config.inc.php.in : 
+```
+$ldap_login_attr = "cn";
+```
