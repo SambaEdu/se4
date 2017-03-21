@@ -33,3 +33,16 @@ dans includes/config.inc.php.in :
 ```
 $ldap_login_attr = "cn";
 ```
+## structure
+On cherche à garder en gros la structure du ldap se3 :
+
+### cn=users
+contient les utilisateurs 
+### ou=Groups
+contient les groupes et les OU si besoin de gpo ( dans ce cas on met le groupe dans l'OU ) Imbrication possible
+### ou=Rights
+contient les groupes *_is_*  
+### ou=Parcs 
+contient les groupes de machines et les ou parcs ( 1 parc se3 = 1 ou contenant un groupe ) Imbrication possible !
+### cn=computers
+contient les machines
