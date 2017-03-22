@@ -25,6 +25,19 @@ ldapsearch -xLLL -D $bindDN -w $bindPW -b $baseDN -H ldaps://sambaedu3.maison "(
 ```
 A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle du DC. 
 
+## samba-tool
+
+www-se3 n'a pas les droits pour y accéder, il faut donc soit lui donner un ticket kerberos, soit passer les parametres d'auth admin : 
+```
+samba-tool user list  -H ldap://sambaedu3.maison  -U $admincn --password=$adminpasswd
+```
+C'est pas terrible car le mot de passe est en clair dans ps ax... La méthode kerberos est de loin meilleure.
+Il faut créer un utilisateur, créer son keytab, et le rendre accessible pour www-se3 (à détailler)
+
+```
+samba-tool user list  -H ldap://sambaedu3.maison  -k www-se3@SAMBAEDU.MAISON 
+```
+
 ### interface se3
 
 L'interface tourne avec www-se3, il faut donc lui configurer ldap : le problème c'est que le dossier /var/lib/samba/private/tls est privé...  il faut le mettre en 755 !
