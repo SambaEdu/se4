@@ -25,9 +25,11 @@ ldapsearch -xLLL -D $bindDN -w $bindPW -b $baseDN -H ldaps://sambaedu3.maison "(
 ```
 A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle du DC. 
 
+On peut peut-être aussi faire le bind ldap admin en mode kerberos (voir plus bas). Utiliser ldap_bind_sasl ? 
+
 ## samba-tool
 
-www-se3 n'a pas les droits pour y accéder, il faut donc soit lui donner un ticket kerberos, soit passer les parametres d'auth admin : 
+www-se3 n'a pas les droits pour accéder à la base , il faut donc soit lui donner un ticket kerberos, soit passer les parametres d'auth de l'admin : 
 ```
 samba-tool user list  -H ldap://sambaedu3.maison  -U $admincn --password=$adminpasswd
 ```
