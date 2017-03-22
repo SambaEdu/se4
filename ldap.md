@@ -49,15 +49,33 @@ dans includes/config.inc.php.in :
 $ldap_login_attr = "cn";
 ```
 ## structure
-On cherche à garder en gros la structure du ldap se3 :
+On cherche à garder en gros la structure du ldap se3. On fait en sorte d'utiliser les attributs standard AD, de façon à pouvoir tout administrer simplement depuis la console RSAT également. Bien que l'on puisse utiliser les atributs POSIX, il est préférable de ne pas le faire car cela pose des soucis pour y accéder depuis ADUC (manip compliquée)
+
+Pour les clients Linux, les attrbuts POSIX ne sont pas utiles car l'ouverture de session se fait en mode AD, avec winbind sur le client qui fera le mappage AD/Posix à la volée.
 
 ### cn=users
-contient les utilisateurs 
+contient les utilisateurs
+
+- uid -> cn
+- cn -> displayName : Prénom Nom
+- sn : nom
+- givenName : prénom
+- gecos (nom,premon,naissance,sexe) -> physicaldeliveryofficename (naissance,sexe)
+- employeeNumber -> title
+
 ### ou=Groups
 contient les groupes et les OU si besoin de gpo ( dans ce cas on met le groupe dans l'OU ) Imbrication possible
+
+- objectclass : group
+- memberUid -> member
+
 ### ou=Rights
 contient les groupes *_is_*  
 ### ou=Parcs 
 contient les groupes de machines et les ou parcs ( 1 parc se3 = 1 ou contenant un groupe ) Imbrication possible !
 ### cn=computers
 contient les machines
+
+## attributs
+
+Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos". 
