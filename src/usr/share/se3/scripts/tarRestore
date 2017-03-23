@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+## $Id$ ##
+
+
+# /bin/tar -c $*
+/bin/tar $*

@@ -1,0 +1,76 @@
+dn: uid=root,ou=#PEOPLE#,#BASEDN#
+uid: root
+sn: Se3
+cn: root Se3
+givenName: root
+initials: root
+gecos: root Se3,,,
+mail: root@#DOMAIN#
+loginShell: /bin/true
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+uidNumber: 0
+sambaPwdMustChange: 2147483647
+gidNumber: 0
+shadowLastChange: 1468229295
+homeDirectory: /root
+sambaSID: #SID#-0
+sambaPrimaryGroupSID: #SID#-0
+sambaLMPassword: FFB67A52AC531164AAD3B435B51404EE
+sambaNTPassword: 538388DFE2BF2556833682EABF77CB10
+sambaPasswordHistory: 00000000000000000000000000000000000000000000000000000000
+ 00000000
+userPassword:: e1NTSEF9UjYrYVpLZGU2RmVnak5uZGRENll4SWxualBIcDcxVis=
+sambaPwdLastSet: 1
+sambaAcctFlags: [DU         ]
+
+dn: uid=admin,ou=#PEOPLE#,#BASEDN#
+uid: admin
+cn: Administrateur SE3
+sn: SE3
+givenName: Admin
+initials: Admin
+gecos: Administrateur  Se3,00000000,M,N
+mail: admin@#DOMAIN#
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 5000
+gidNumber: #DEFAULTGID#
+homeDirectory: /home/admin
+userPassword: {crypt}g6QulIusKPB1s
+sambaSID: #SID#-11000
+sambaPrimaryGroupSID: #SID#-#GID1#
+sambaPwdMustChange: 2147483647
+sambaAcctFlags: [U          ]
+sambaNTPassword: 66FE68F5B1006745A5895E42A24B24AC
+sambaPwdLastSet: 1
+sambaLMPassword: 94F92844CDB823F709752A3293831D17
+
+dn: sambaDomainName=#NTDOM#,#BASEDN#
+sambaAlgorithmicRidBase: 1000
+gidNumber: 1000
+uidNumber: 1000
+objectClass: sambaDomain
+objectClass: sambaUnixIdPool
+sambaSID: #SID#
+sambaDomainName: #NTDOM#
+sambaLockoutThreshold: 0
+sambaMinPwdAge: 0
+sambaRefuseMachinePwdChange: 0
+sambaMinPwdLength: 5
+sambaLogonToChgPwd: 0
+sambaForceLogoff: -1
+sambaLockoutDuration: 30
+sambaLockoutObservationWindow: 30
+sambaMaxPwdAge: -1
+sambaPwdHistoryLength: 0
+sambaNextRid: 6752
