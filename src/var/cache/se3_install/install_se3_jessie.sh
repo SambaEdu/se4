@@ -53,7 +53,7 @@ clear
 echo -e "$COLTITRE"
 echo "*************************"
 echo "* SCRIPT D'INSTALLATION *"
-echo "*     DE SAMBAEDU3      *"
+echo "*     DE SAMBAEDU4      *"
 echo "*************************"
 
 # Il ne faut pas poursuivre l'installation si aucune carte réseau n'a été détectée:
@@ -148,18 +148,6 @@ fi
 DEBVER=`cat /etc/debian_version`
 echo -e "$COLINFO\c "
 case $DEBVER in
-    5.0*)
-	echo "Debian lenny detectee."
-	;;
-    6.0*)
-	echo "Debian squeeze detectee."
-	;;
-    7.*)
-	echo "Debian wheezy detectee."
-	;;
-    8.*)
-	echo "Debian jessie detectee."
-	;;
     9.*)
         echo "Debian stretch detectee."
         ;;
@@ -167,9 +155,6 @@ case $DEBVER in
 	echo "Version Debian inconnue"
 	;;
 esac
-#if [ "$DEBVER" = "5.0.4" ]; then
-#	echo "Debian lenny détectée."
-#fi
 
 
 ################# Detection de la disquette de conf auto ############
@@ -282,7 +267,9 @@ fi
 #
 # Configuration de SambaEdu
 #
-
+# on arrete ici pour le moment !
+exit 0
+#
 echo -e "$COLPARTIE"
 echo "Section 2: "
 echo "---------- "
@@ -416,18 +403,18 @@ if [ ! "$rep" = "n" ]; then
 
 	if [ "$rep" = "n" ]; then
 		echo -e "$COLTXT"
-		echo -e "Voulez-vous configurer l'annuaire LDAP ? (${COLCHOIX}O/n${COLTXT}) ${COLSAISIE}\c "
+		echo -e "Voulez-vous configurer l'annuaire AD ? (${COLCHOIX}O/n${COLTXT}) ${COLSAISIE}\c "
 		read rep
 	fi
 	if [ ! "$rep" = "n" ]; then
 		if [ "$CONFSE3" != "yes" ]; then
-			# Configuration de l'annuaire LDAP
+			# Configuration de l'annuaire AD
 
 			rep="o"
 			while [ "$rep" = "o" ]
 			do
 				echo -e "$COLTXT"
-				echo -e "Entrez l'adresse IP de l'annuaire LDAP [${COLDEFAUT}$SE3IP${COLTXT}] ${COLSAISIE}\c "
+				echo -e "Entrez le fdqn l'annuaire AD [${COLDEFAUT}$SE3IP${COLTXT}] ${COLSAISIE}\c "
 				read LDAPIP
 				if [ "$LDAPIP" == "" ]; then
 					LDAPIP="$SE3IP"
