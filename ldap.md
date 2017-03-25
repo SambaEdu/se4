@@ -79,3 +79,7 @@ contient les machines
 ## attributs
 
 Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos". 
+
+# Client linux
+
+http://www.supinfo.com/articles/single/324-installer-configuer-ajouter-une-machine-linux-debian-domaine-windows-ad
