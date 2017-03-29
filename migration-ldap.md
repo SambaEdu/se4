@@ -49,16 +49,21 @@ Il existe la possibilité de configurer `isc-dhcp-server` pour qu'il mette à jo
 
 https://wiki.archlinux.org/index.php/Samba/Active_Directory_domain_controller#DHCP
 
+L'attribut "macAddress" peut être ajouté dans l'entrée de la machine. Il est donc possible d'avoir une base de donnée unique. En revanche il est contre-productif de stocker l'adresse IP. Il vaut mieux laisser le dhcp se débrouiller...
+
+
 ## reservation ip dhcp
 le script makedhcpconf devra etre capable de : 
 
 * lire/créer/changer l'ip dans l'enregistrement DNS avec `samba-tool dns`
 * générer le fichier dhcp.conf à partir des données AD
 * stocker un attribut (TXT?) disant que l'ip est reservée ?
+* lire/ecrire/changer "macAddress" dans cn=poste : utile pour le clonage et le boot ipxe ?
+* lire/ecrire/changer "ipHostNumber" dans cn=postemac
 
-A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux est nécessaire ( à moins qu'on puisse faire cela en zone DNS ?)
+A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux est nécessaire 
 
-
+Il faut ajouter 'objectClass: ieee802Device' dans cn=poste
 
 ## postes non AD
 si on veut reserver l'ip de machines qui ne sont pas au domaine, peut-on stocker leur enregistrement dans AD ? oui a priori. Cela peut être utile pour des équipements pour lesquels on veut une ip stable, mais qui n'auront pas de lien direct avec le serveur AD.
@@ -76,4 +81,10 @@ cas d'une reservation : régénération de dhcp.conf
 * lecture dans DNS des enregistrements `TXT=reserved`
 * génération dhcpd.conf
 
+## reservation de plages ip
+
+Le filtrage de l'accès internet sur les routeurs se fait souvent par plages d'ip. En l'absence de Vlans, il faut pouvoir mettre les parcs de machines dans des plages d'ip. 
+
+* reserver une ip fixe pour un poste : parc->poste->mac->ip : il faut stocker l'ip dans le cn=poste
+* affecter une plage d'ip par parc : 
 
