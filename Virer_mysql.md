@@ -17,6 +17,16 @@ Avec AD, il n'est plus nécessaire de stocker les mots de passe en clair. On peu
 
 Ce fichier est lu par php, les scripts bash, le paquetage debian... Et par Ansible ?
 
+**Remarque de flaf :** pour info Ansible utilise déjà des fichiers YAML
+dans sa conf (ie dans `/etc/ansible/group_var/*.yaml`) pour définir ses
+variables et il est aussi capable de lire un fichier YAML externe pour
+définir d'autres variables. Donc le YAML peut être intéressant pour cela.
+Je trouve que ça a l'avantage d'être un format structuré (c'est standardisé,
+parsable dans beaucoup de langages), c'est typé (on peut mettre des tableaux,
+des dictionnaires, des chaînes de caractères, des entiers, des booléens)
+et c'est moins bavard et plus facile à lire que du json ou du xml (àmha).
+
+
 ## Dhcp
 
 Les infos de conf sont dans le fichier de conf.
