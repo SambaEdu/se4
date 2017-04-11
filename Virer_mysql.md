@@ -26,6 +26,7 @@ parsable dans beaucoup de langages), c'est typé (on peut mettre des tableaux,
 des dictionnaires, des chaînes de caractères, des entiers, des booléens)
 et c'est moins bavard et plus facile à lire que du json ou du xml (àmha).
 
+Le problème c'est les scripts shell, qui sont nombreux. lire le yaml est sûrement possible, mais un peu complexe, et j'ai moyennement confiance dans les parsers imbitables en awk/sed/grep que l'on trouve sur le net. Alors qu'un key = value est directement lisible en bash, en php avec parse_ini_file(), et probablement dans tous les autres langages.
 
 ## Dhcp
 
