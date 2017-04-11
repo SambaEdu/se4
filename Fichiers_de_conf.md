@@ -37,6 +37,20 @@ conf manuelle  post-installation par l'utilisateur
 configuration de parametres divers via l'interface
 
 
+# Impact sur le code actuel 
+
+## scripts shell
+
+Il existe déjà des fonctions qui lisent et ecrivent les fichiers de conf dans /etc/se3. Il faut juste les adapter pour la nouvelle arborescence. 
+
+De façon transitoire pour les paquets existants (3.0.x) on conserve la base sql, que l'on met à jour depuis /etc/se3. En revanche pour se4 on vire la base. 
+
+## php et autres 
+
+Il faut virer tout le code sql et aller chercher la conf dans /etc/se3
+de façon transitoire on peut garder la base sql, et donc n'avoir aucun changement à faire.
+
+
 
 
 
