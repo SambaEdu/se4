@@ -59,13 +59,14 @@ le script makedhcpconf devra etre capable de :
 * générer le fichier dhcp.conf à partir des données AD
 * stocker un attribut (TXT?) disant que l'ip est reservée ?
 * lire/ecrire/changer "macAddress" dans cn=poste : utile pour le clonage et le boot ipxe ?
-* lire/ecrire/changer "ipHostNumber" dans cn=postemac
+* lire/ecrire/changer "ipHostNumber" dans cn=poste
 
-A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux est nécessaire 
+A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux dans le fichier de conf est nécessaire 
 
-Il faut ajouter 'objectClass: ieee802Device' dans cn=poste
+_Il faut ajouter 'objectClass: ieee802Device' dans cn=poste
 
 ## postes non AD
+
 si on veut reserver l'ip de machines qui ne sont pas au domaine, peut-on stocker leur enregistrement dans AD ? oui a priori. Cela peut être utile pour des équipements pour lesquels on veut une ip stable, mais qui n'auront pas de lien direct avec le serveur AD.
 
 Pour les imprimantes IP, mettent-elles à jour leur enregistrement DNS dans AD ? *a verifier*
