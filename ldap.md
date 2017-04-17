@@ -27,6 +27,13 @@ A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle
 
 On peut peut-être aussi faire le bind ldap admin en mode kerberos (voir plus bas). Utiliser ldap_bind_sasl ? 
 
+IL faut ajouter la lib sasl : `apt-get install libsasl2-modules-gssapi-mit` Le bind se fait alors direct sans passwd : 
+``` 
+ldapsearch -LLL   -Y GSSAPI -H ldap://sambaedu3.maison "(cn=*)"
+```
+Attention, l'URI est ldap et non ldaps, GSSAPI fait le cryptage dans ce cas-là. Cela fonctionne aussi sans mettre d'URI !
+Il faut avoir un keytab valide pour l'utilisateur qui lance la commande...
+
 ## samba-tool
 
 www-se3 n'a pas les droits pour accéder à la base , il faut donc soit lui donner un ticket kerberos, soit passer les parametres d'auth de l'admin : 
@@ -37,7 +44,7 @@ C'est pas terrible car le mot de passe est en clair dans ps ax... La méthode ke
 Il faut créer un utilisateur, créer son keytab, et le rendre accessible pour www-se3 (à détailler)
 
 ```
-samba-tool user list  -H ldap://sambaedu3.maison  -k www-se3@SAMBAEDU.MAISON 
+samba-tool user list -H ldap://sambaedu3.maison  -k www-se3@SAMBAEDU.MAISON 
 ```
 
 ### interface se3
