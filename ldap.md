@@ -74,7 +74,7 @@ contient les groupes *_is_*
 ### ou=Parcs 
 contient les groupes de machines et les ou parcs ( 1 parc se3 = 1 ou contenant un groupe ) Imbrication possible !
 ### cn=computers
-contient les machines
+contient les machines. Il est probablement possible d'avoir un seul enregistrement pour tous les OS dans le cas d'une machine en multiboot. Il faut pour cela récupérer le keytab de la première instance mise au domaine et le recopier sur toutes les autres. L'enregistrement de la machine contient le type d'OS, il faudrait vérifier si il est mis à jour à la connexion.
 
 ## attributs
 
@@ -82,4 +82,6 @@ Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos".
 
 # Client linux
 
-http://www.supinfo.com/articles/single/324-installer-configuer-ajouter-une-machine-linux-debian-domaine-windows-ad
+Travail en cours... Prévoir la récupération du keytab pour enregistrement unique.
+
+
