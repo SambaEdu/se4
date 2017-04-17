@@ -4,17 +4,19 @@ page destinée aux notes concernant la migration d'un se3 existant
 ## doublons
 aucun doublon de sambaSID, cn, displayname ne doit être présent dans l'annuaire. La page se3 permet de régler ce problème avant la migration
 ## comptes spécifiques
+
 le compte root doit avoir un SID valable  avant la migration. Il sera mappé par AD vers Administrator 
 Attention, le compte admin est semble-t-il supprimé lors de la migration
+
 # migration des parcs
-##contraintes
+## Contraintes
  * une machine ou un groupe ne peut être qu'à un seul endroit (ou),
  * une machine ou groupe peut être dans autant de groupes que l'on veut,
  * une OU peut contenir n'importe quel objet,
  * les GPO s'appliquent aux OU
  * les droits s'appliquent aux groupes
 
-##Organisation
+## Organisation
 les machines sont rangées dans cn=machines
 
 donc la branche cn=Computers contient les cn=nome_machine
@@ -25,11 +27,11 @@ ou=Parcs qui contient les ou=nom_parc qui contient cn=nom_parc.
 * les GPO sont appliquées sur ou=nom_parc
 * 
 # migration des groupes et utilisateurs
-##contraintes
+## contraintes
 * un utilisateur ne peut être qu'à un seul endroit (ou)
 * un utilisateur ou un groupe peut être dans autant de groupes que l'on veut
 
-##organisation
+## organisation
 les utilisateurs  sont rangés dans cn=users
 
 ou=groups contient ou=classe_truc,ou=Profs
@@ -63,7 +65,7 @@ le script makedhcpconf devra etre capable de :
 
 A priori il n'est plus nécesssaire d'enregistrer les postes dans la table sql. Seul le paramétrage des sous réseaux dans le fichier de conf est nécessaire 
 
-_Il faut ajouter 'objectClass: ieee802Device' dans cn=poste
+*Il faut ajouter 'objectClass: ieee802Device' dans cn=poste* Doit-on le faire pour chaque enregistrement, ou de façon globale ?
 
 ## postes non AD
 
