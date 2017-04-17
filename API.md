@@ -39,18 +39,31 @@ samba-tool est un script python qui se base sur python-samba, qui fournit toutes
 on cree la lib php se4-samba-tool.php correspondante
 ## authentification 
 ### élévation des privilèges
-On crée un utilisateur web-admin, administrateur du domaine avec un password aléatoire.
+On crée un utilisateur www-se3, administrateur du domaine avec un password aléatoire. Ce compte permettra d'effectuer toutes les opérations ldap, samba-tool et rpc directement avec les droits admin, sans avoir besoin de sudo
 
 on exporte une clé avec la commande : 
 ```
-samba-tool domain exportkeytab --principal=web-admin@SAMBAEDU.DOMAIN web-admin.keytab
+samba-tool user create www-se3 --description="Utilisateur admin de l'interface web" --random-password
+samba-tool user setexpiry www-se3 --noxepiry
+samba-tool group addmembers "Domain Admins" www-se3
+samba-tool domain exportkeytab --principal=www-se3@SAMBAEDU.DOMAIN /var/remote_adm/www-se3.keytab
+chown www-se3 /var/remote_adm/www-se3.keytab
+chmod 600 /var/remote_adm/www-se3.keytab
 ```
-si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur web-admin@SAMBAEDU.DOMAIN avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
+si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur www-se3@SAMBAEDU.DOMAIN avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
+
+```
+su www-se3
+kinit -k -t /var/remote_adm/www-se3.keytab www-se3@SAMBAEDU3.MAISON
+```
+Ces commandes sont à lancer en cron toutes les heures pour renouveler le ticket.
 
 ### auth pour samba-tool
+
 L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://ubndc01.example.com. Ne pas mettre l'IP d'un serveur !
 
-L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande -U <domain username>
+L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande `-U <domain username>`
+
 ```
 localuser@ubnwks01:~$ samba-tool user list -U Administrator -H ldap://ubndc01.example.com
 Password for [EXAMPLE\Administrator]:
@@ -67,6 +80,7 @@ Guest
 ```
 
 Ou sur base du ticket Kerberos en ajoutant en fin de commande -k yes pour un utilisateur quelconque ayant demandé un ticket avec //kinit// pour le compte d'un utilisateur du domaine
+
 ```
 localuser@ubnwks01:~$ kinit administrator@EXAMPLE.COM
 Password for administrator@EXAMPLE.COM: 
@@ -83,6 +97,10 @@ krbtgt
 Guest
 localuser@ubnwks01:~$ kdestroy
 ```
+
+## Roles et droits (auth sur l'interface)
+
+Si on donne des droits restreints à certains groupes, et que l'on fait le bind des utilisateurs, alors on aura les droits correspondants sans devoir gérer cela au niveau du code php. *_A détailler_*
 
 # fonctions se3
 
