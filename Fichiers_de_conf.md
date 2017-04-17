@@ -13,12 +13,12 @@ L'arborescence est au standard Debian des fichiers de conf :
                      ....
 ```
 ## bash
-On peut directement evaluer les fichiers, à condition qu'il n'y ait pas d'espace autour du = !. Le mieux est d'avoir un script qui lise se3.conf, puis qui boucle sur se3.conf.d/*
+On peut directement evaluer les fichiers, à condition qu'il n'y ait pas d'espace autour du = !. Par sécurité, le mieux est d'avoir un script qui lise se3.conf, puis qui boucle sur se3.conf.d/*
 
 ```
 eval $(sed "s/\s*=\s*/=/" se3.conf*)
 ```
-Doit faire l'affaire
+Doit faire l'affaire. Pour optimiser on pourrait ecrire une fonction `get_conf module1...` modulen afin de ne pas tout lire à chaque fois ?
 
 ## php
 On utilise parse_ini_file()
