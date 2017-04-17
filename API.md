@@ -11,10 +11,15 @@ Dans le premier cas, on aura assez peu d'abstraction sur la structure ldap, et d
 En gros dans le premier cas on part sur une solution 100% php, dans le second on s'ouvre à tous les langages. 
 
 La question de l'authentification et de sa persistence se pose : dans le premier cas, c'est simple et propre (mais php uniquement !). Dans le second il faut le faire dans chaque langage, samba-tool permet soit une auth ldap, soit par ticket kerberos, il faut le gérer (soit c'est l'utilisateur authentifié, soit c'est www-se3).
+# PHP
+## solution "adldap2"
 
-# solution "adldap2"
-## php 
-adaptation directe du code existant, en remplaçant intelligemment les ldap\*. Pas mal de simplifications, bonne documentation de la classe.
+adaptation directe du code existant, en remplaçant intelligemment les ldap\*. Pas mal de simplifications, bonne documentation de la classe
+
+## ldap_*
+
+on modifie l'existant... cracra mais simple.
+
 ## autres langages
 On utilise samba-tool
 # solution "python samba"
