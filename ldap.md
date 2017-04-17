@@ -55,6 +55,17 @@ dans includes/config.inc.php.in :
 ```
 $ldap_login_attr = "cn";
 ```
+### Bind ldap en php
+
+il faut utiliser ldap_sasl_bind : il faut qu'un keytab permanent ait été configuré pour www-se3 
+
+``` 
+$ds = @ldap_connect($ldap_server, $ldap_port);
+if ($ds) {
+    $ret = ldap_sasl_bind($ds, null, null, 'GSSAPI');
+}
+```
+
 ## structure
 On cherche à garder en gros la structure du ldap se3. On fait en sorte d'utiliser les attributs standard AD, de façon à pouvoir tout administrer simplement depuis la console RSAT également. Bien que l'on puisse utiliser les atributs POSIX, il est préférable de ne pas le faire car cela pose des soucis pour y accéder depuis ADUC (manip compliquée)
 
