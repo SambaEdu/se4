@@ -17,8 +17,18 @@ Techniquement, le  serveur est construit sur debian 9 stretch, avec Samba 4.5.x 
 ## matériel et stockage
 Deux types de serveurs sont envisagés : 
 
-* serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
-* serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
+* Serveurs physiques :
+
+ * serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
+ * serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
+
+* Serveurs virtuels : 
+
+ * vm "AD" avec le serveur AD, l'interface web, dhcp, ipxe, `netlogon` et `sysvol`
+ * vm "NAS" avec les partages de fichiers samba
+
+L'équipe Samba recommande fortement la séparation du serveur AD du serveur de fichiers. La configuration virtualisées est donc probablement préférable. Le serveur de fichiers est une configuration complètement standard, et peut donc être un NAS externe. Il n'y a pas d'exigence particulière à respecter. Il est possible de répartir les serveurs de fichiers sur plusieurs machines. 
+Proxmox 5.x est une bonne base de virtualisation. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde.
 
 ## Attention !
 
