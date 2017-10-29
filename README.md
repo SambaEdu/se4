@@ -19,16 +19,18 @@ Deux types de serveurs sont envisagés :
 
 * Serveurs physiques :
 
- * serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
- * serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
+ - serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
+ - serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
 
 * Serveurs virtuels : 
 
- * vm "AD" avec le serveur AD, l'interface web, dhcp, ipxe, `netlogon` et `sysvol`
- * vm "NAS" avec les partages de fichiers samba
+ - vm "AD" avec le serveur AD, l'interface web, dhcp, ipxe, `netlogon` et `sysvol`
+ - vm "NAS" avec les partages de fichiers samba et le serveur d'impression
 
 L'équipe Samba recommande fortement la séparation du serveur AD du serveur de fichiers. La configuration virtualisées est donc probablement préférable. Le serveur de fichiers est une configuration complètement standard, et peut donc être un NAS externe. Il n'y a pas d'exigence particulière à respecter. Il est possible de répartir les serveurs de fichiers sur plusieurs machines. 
 Proxmox 5.x est une bonne base de virtualisation. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde.
+
+Le "NAS" doit pouvoir executer des scripts de manipulation de fichiers, soit via samba root preexec, soit à distance depuis l'interface : en gros les sudo actuels deviennent du ssh -> faire un paquet sambaedu-scripts à déployer sur les "NAS", ou déployer en scp ?
 
 ## Attention !
 
