@@ -49,7 +49,7 @@ De façon transitoire pour les paquets existants (3.0.x) on conserve la base sql
 
 Il faut virer tout le code sql et aller chercher la conf dans /etc/se3
 de façon transitoire on peut garder la base sql, et donc n'avoir aucun changement à faire.
-
+la lecture de la conf est faite dans l'entête des pages, il suffit donc de modifier cette page d'includes 
 
 
 
