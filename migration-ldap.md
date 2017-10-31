@@ -37,7 +37,13 @@ les utilisateurs  sont rangés dans cn=users
 ou=groups contient ou=classe_truc,ou=Profs
 
 lorsque on crée un groupe (classe, equipe ) on crée une OU correspondant et on les met dedans
-
+```
+ou=groups-+ou=TS1-+-cn=classe_TS1
+          |       +-cn=equipe_TS1
+          +ou=Profs-cn=Profs
+          +ou=Eleves-cn=eleves
+          +ou=Administratifs-cn=Administratifs
+```
 
 D'abord on migre les comptes et groupes via `samba-tool migratedomain`
 Ensuite on mouline les groupes, parcs et droits pour créer les ou et groupes manquants avec `samba-tool`, ou direct en python (à voir)
