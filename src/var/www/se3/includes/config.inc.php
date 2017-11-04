@@ -33,7 +33,7 @@ function get_config_se4 ($module = "base") {
 	$config=array();
 	if ($module == "all") {
 		$config = get_config_se4 ("base");
-		if ($handle = opendir('/etc/se4/se4.conf.d')) {
+		if ($handle = opendir('/etc/sambaedu/sambaedu.conf.d')) {
 			unset ($module);
 			while (false !== ($entry = readdir($handle))) {
 				if ($entry != "." && $entry != "..") {
@@ -47,7 +47,7 @@ function get_config_se4 ($module = "base") {
 		}
 		return ($config);
 	} elseif ($module == "base") {
-		$conf_file = "/etc/se4/se4.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf";
 		$config = parse_ini_file ($conf_file);
 		$config['adminDn'] = $config['adminRdn'].",".$config['ldap_base_dn'];
 		$config['dn']['people'] = $config['peopleRdn'].",".$config['ldap_base_dn'];
@@ -59,7 +59,7 @@ function get_config_se4 ($module = "base") {
 		$config['dn']['trash'] = $config['trashRdn'].",".$config['ldap_base_dn'];
 		
 	} else {
-		$conf_file = "/etc/se4/se4.conf.d/$module.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf.d/$module.conf";
 		$config = parse_ini_file ($conf_file);
 	}
 	return ($config);
@@ -81,9 +81,9 @@ function set_config_se4( $param, $valeur, $module = "base") {
 	}
 	//write it into file
 	if ($module == "base") {
-		$conf_file = "/etc/se4/se4.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf";
 	} else { 
-		$conf_file = "/etc/se4/se4.conf.d/$module.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf.d/$module.conf";
 	}
 	
 	if (!$handle = fopen($conf_file))
@@ -193,9 +193,9 @@ function set_config($param, $value, $module = "base") {
 	}
 	//write it into file
 	if ($module == "base") {
-		$conf_file = "/etc/se4/se4.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf";
 	} else {
-		$conf_file = "/etc/se4/se4.conf.d/$module.conf";
+		$conf_file = "/etc/sambaedu/sambaedu.conf.d/$module.conf";
 	}
 	apc_add('config_lock',1,60);
 	if (!$handle = fopen($conf_file)) {
