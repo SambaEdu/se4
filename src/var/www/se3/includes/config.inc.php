@@ -224,8 +224,8 @@ bindtextdomain("messages","./locale");
 textdomain("messages");
 
 # Paramètres LDAP
-get_config ();
-if ($config["version"] == "se3") {
+$config = get_config ();
+//if ($config["version"] == "se3") {
 	// compatibilité avec se3
 	foreach ($config as $key=>$value) {
 		$$key = $value;
@@ -241,5 +241,5 @@ if ($config["version"] == "se3") {
 	$dn["computers"] = "$computersRdn,$ldap_base_dn";
 	$dn["printers"] = "$printersRdn,$ldap_base_dn";
 	$dn["trash"] = "$trashRdn,$ldap_base_dn";
-}
+//}
 ?>
