@@ -6,8 +6,8 @@ Tous les fichiers sont sous la forme `key="value"`, afin d'être lisibles simple
 
 L'arborescence est au standard Debian des fichiers de conf :
 ```
-/etc/se3/+------------se3.conf
-         +se3.conf.d/+dhcp.conf
+/etc/sambaedu/+------------se4.conf
+         +se4.conf.d/+dhcp.conf
                      +ipxe.conf
                      +xxx.conf
                      ....
@@ -16,7 +16,7 @@ L'arborescence est au standard Debian des fichiers de conf :
 On peut directement evaluer les fichiers, à condition qu'il n'y ait pas d'espace autour du = !. Par sécurité, le mieux est d'avoir un script qui lise se3.conf, puis qui boucle sur se3.conf.d/*
 
 ```
-eval $(sed "s/\s*=\s*/=/" se3.conf*)
+eval $(sed "s|^\(.*\)\s*=\s*\(.*\)|config_\1=\2;\1=\2|" /etc/sambaedu/se4.conf*)
 ```
 Doit faire l'affaire. Pour optimiser on pourrait ecrire une fonction `get_conf module1...` modulen afin de ne pas tout lire à chaque fois ?
 
