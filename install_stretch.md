@@ -24,7 +24,8 @@ surtout rien d'autre ! cela plante tout.
 ## init
 on est en systemd : 
 
-̀```systemctl stop slapd
+```
+systemctl stop slapd
    systemctl enable samba-ad-dc
    systemctl disable samba
    systemctl start samba-ad-dc
@@ -37,6 +38,8 @@ conf kerberos de base : `ln -sf /var/lib/samba/private/krb5.conf /etc/krb5.conf`
 l'utilisateur "admin" est devenu "administrator"  (a changer ?) mdp admin du se3
 
 interface se3 :
+
+```
 https://wiki.samba.org/index.php/Authenticating_Apache_against_Active_Directory
        AuthType Kerberos
        AuthName "Network Login"
@@ -48,3 +51,4 @@ https://wiki.samba.org/index.php/Authenticating_Apache_against_Active_Directory
        KrbLocalUserMapping On
 
 apt-get install libapache2-mod-auth-kerb
+```
