@@ -3,6 +3,9 @@ On part d'une machine à jour avec se3master, se3-logonpy et se3-domain
 
 ce fichier décrit les chose à faire manuellement, à éliminer au fur et à mesure de la construction du paquet !
 
+source : 
+https://wiki.samba.org/index.php/Setting_up_Samba_as_an_Active_Directory_Domain_Controller
+
 ##dépendances
 
 verifier les ldb* sur une nouvelle install
