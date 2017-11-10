@@ -24,11 +24,11 @@ Deux types de serveurs sont envisagés :
 
 * Serveurs virtuels : 
 
- - vm "AD" avec le serveur AD, l'interface web, dhcp, ipxe, `netlogon` et `sysvol`
- - vm "NAS" avec les partages de fichiers samba et le serveur d'impression
+ - vm "AD" avec le serveur AD,  `netlogon` et `sysvol`
+ - vm "NAS" avec les partages de fichiers samba l'interface web, dhcp, ipxe, et le serveur d'impression
 
 L'équipe Samba recommande fortement la séparation du serveur AD du serveur de fichiers. La configuration virtualisées est donc probablement préférable. Le serveur de fichiers est une configuration complètement standard, et peut donc être un NAS externe. Il n'y a pas d'exigence particulière à respecter. Il est possible de répartir les serveurs de fichiers sur plusieurs machines. 
-Proxmox 5.x est une bonne base de virtualisation. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde.
+Proxmox 5.x est une bonne base de virtualisation. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde et de journalisation.
 
 Le "NAS" doit pouvoir executer des scripts de manipulation de fichiers, soit via samba root preexec, soit à distance depuis l'interface : en gros les sudo actuels deviennent du ssh -> faire un paquet sambaedu-scripts à déployer sur les "NAS", ou déployer en scp ?
 
