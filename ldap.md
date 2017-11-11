@@ -94,6 +94,8 @@ contient les groupes *_is_*
 contient les groupes de machines et les OU parcs ( 1 parc se3 = 1 ou contenant un groupe ) Imbrication possible !
 ### cn=computers
 contient les machines. Il est probablement possible d'avoir un seul enregistrement pour tous les OS dans le cas d'une machine en multiboot. Il faut pour cela récupérer le keytab de la première instance mise au domaine et le recopier sur toutes les autres. L'enregistrement de la machine contient le type d'OS, il faudrait vérifier si il est mis à jour à la connexion.
+### ou=trash 
+aucun changement
 
 **note**
 Le nom affiché de la machine est DisplayName. En cas de renommage, c'est lui seul qui change. Cela veut dire qu'il n'est pas nécessaire de renommer réellement les machines, il suffit de le faire sur AD. 
