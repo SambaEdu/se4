@@ -119,7 +119,7 @@ aucun changement
 
 ## attributs
 
-Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos". 
+Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos". On prend un chanp qui ne sert à rien  "physicaldeliveryofficename"
 
 # Client linux
 
