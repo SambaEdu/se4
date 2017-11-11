@@ -23,7 +23,7 @@ bindDN="CN=Administrator,CN=users,DC=sambaedu3,DC=maison"
 baseDN="CN=users,DC=sambaedu3,DC=maison"
 ldapsearch -xLLL -D $bindDN -w $bindPW -b $baseDN -H ldaps://sambaedu3.maison "(cn=*)"
 ```
-*A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle du DC. 
+*A noter que l'adresse du serveur est directement le nom du domaine AD, pas celle du DC.* 
 
 On peut peut-être aussi faire le bind ldap admin en mode kerberos (voir plus bas). Utiliser ldap_bind_sasl ? 
 
