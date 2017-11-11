@@ -8,9 +8,8 @@
 # Derniere modification: 10/2011
 
 
-### recup params 
-# /usr/share/se3/includes/config.inc.sh -l ----> marche pas avec le getops !!!
-. /etc/se3/config_l.cache.sh
+### recup config 
+. /usr/share/se3/includes/config.inc.sh 
 
 usage()
 {
@@ -75,8 +74,6 @@ do
 	esac
 done
 
-### recup params 
-# . /usr/share/se3/includes/config.inc.sh -mlv
 
 
 if [ "$TRASH" = "1" ]; then 

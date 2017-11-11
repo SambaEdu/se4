@@ -1,14 +1,11 @@
 <?php
 
   /**
-  * Lecture des variables dans la base MySQL
-
-  * @Version $Id: config.inc.php.in 9184 2016-02-21 00:58:01Z keyser $
+  * manipulation des parametres de conf
 
   * @Projet LCS / SambaEdu
 
-  * @Auteurs Equipe Tice académie de Caen
-  * @Auteurs « wawa »  olivier.lecluse@crdp.ac-caen.fr
+  * @Auteurs Equipe SambaEdu
 
   * @Note Ce fichier de fonction doit être appelé par un include dans entete.inc.php
   * @Note Ce fichier est complete a l'installation
@@ -18,21 +15,21 @@
 
    /**
 
-   * file: config.inc.php
+   * file: config.php
    * @Repertoire: includes/
    */
 
 
 /*
- * fonction pour récupérer la conf de se4 ou des modules de façon recursive dans /etc/se4/
- * @Parametres : "nom du module", "base" ou "all"
+ * fonction pour récupérer la conf de se4 ou des modules de façon recursive dans /etc/sambaedu/
+ * @Parametres : "nom du module", "sambaedu" ou "all"
  * @return array["parametre"]
  */
 
-function get_config_se4 ($module = "base") {
+function get_config_se4 ($module = "sambaedu") {
 	$config=array();
 	if ($module == "all") {
-		$config = get_config_se4 ("base");
+		$config = get_config_se4 ("sambaedu");
 		if ($handle = opendir('/etc/sambaedu/sambaedu.conf.d')) {
 			unset ($module);
 			while (false !== ($entry = readdir($handle))) {
@@ -46,7 +43,7 @@ function get_config_se4 ($module = "base") {
 			closedir($handle);
 		}
 		return ($config);
-	} elseif ($module == "base") {
+	} elseif ($module == "sambaedu") {
 		$conf_file = "/etc/sambaedu/sambaedu.conf";
 		$config = parse_ini_file ($conf_file);
 		$config['adminDn'] = $config['adminRdn'].",".$config['ldap_base_dn'];

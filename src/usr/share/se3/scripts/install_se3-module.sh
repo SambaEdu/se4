@@ -42,8 +42,7 @@ SE3MODULE="$1"
 M2="$2"
 M3="$3"
 
-. /etc/se3/config_m.cache.sh
-. /etc/se3/config_l.cache.sh
+. /usr/share/se3/includes/config.inc.sh
 
 if [ "$1" = "--help" -o "$1" = "" -o "$1" = "-h" ]
 then
@@ -85,19 +84,6 @@ fi
 
 
 WWWPATH="/var/www"
-if [ -e $WWWPATH/se3/includes/config.inc.php ]; then
-	dbhost=`cat $WWWPATH/se3/includes/config.inc.php | grep "dbhost=" | cut -d = -f 2 |cut -d \" -f 2`
-	dbname=`cat $WWWPATH/se3/includes/config.inc.php | grep "dbname=" | cut -d = -f 2 |cut -d \" -f 2`
-	dbuser=`cat $WWWPATH/se3/includes/config.inc.php | grep "dbuser=" | cut -d = -f 2 |cut -d \" -f 2`
-	dbpass=`cat $WWWPATH/se3/includes/config.inc.php | grep "dbpass=" | cut -d = -f 2 |cut -d \" -f 2`
-else
-	echo -e "$COLERREUR"
-	echo "Fichier de configuration $WWWPATH/se3/includes/config.inc.php inaccessible." | tee -a $REPORT_FILE
-	echo "Le script ne peut se poursuivre." | tee -a $REPORT_FILE
-	MAIL_REPORT
-	echo "</pre>"
-	exit 1
-fi
 
 # debug="0" #desactivation debug si =0
 [ -e /root/debug ] && debug="1"
@@ -246,7 +232,7 @@ se3-dhcp)
 		## descente de se3-dhcp
 		install_module
 		# Activation dans l'interfesse
-		mysql -h $dbhost -u $dbuser -p$dbpass -D $dbname -e "UPDATE params SET value='1' WHERE name='dhcp';"
+        set_config sambaedu dhcp 1
 
 		# restauration de l'etat precedent du dhcp si necessaire
 		# [ -e /root/dhcpd.conf ] && mv /root/dhcpd.conf /etc/dhcp3/dhcpd.conf
@@ -268,7 +254,7 @@ LINE_TEST
 # fi
 
 if [ -d /tftpboot ]; then
-	if [ -z "$(dpkg -s se3-dhcp | grep "Status: install ok")" ]; then
+	if [ -z "$(dpkg -s se3-dhcp | grep 'Status: install ok')" ]; then
 		echo -e "Presence de /tftpboot detectee, se3-clonage a renomme le repertoire en /tftpboot_${SE3MODULE}.sav" | tee -a $REPORT_FILE
 		mv /tftpboot /tftpboot_${SE3MODULE}.sav
 	fi
@@ -280,7 +266,7 @@ install_module
 /usr/share/se3/scripts/se3_tftp_boot_pxe.sh start
 
 # Activation dans l'interfesse
-mysql -h $dbhost -u $dbuser -p$dbpass -D $dbname -e "UPDATE params SET value='1' WHERE name='clonage';"
+set_config sambaedu clonage 1
 ;;
 
 se3-clamav)
@@ -298,12 +284,11 @@ install_module
 # DatabaseDirectory /var/lib/clamav/
 # DNSDatabaseInfo current.cvd.clamav.net" > /etc/clamav/freshclam.conf
 # 	chown clamav:adm /etc/clamav/freshclam.conf
-mysql -h $dbhost -u $dbuser -p$dbpass -D $dbname -e "UPDATE params SET value='1' WHERE name='antivirus';"
 
+set_config sambaedu antivirus 1
 
 
 # Activation dans l'interface
-# mysql -h $dbhost -u $dbuser -p$dbpass -D $dbname -e "UPDATE params SET value='1' WHERE name='clamav';"
 ;;
 
 se3-ocs)
@@ -355,23 +340,6 @@ se3-radius)
 install_module
 ;;
 
-# 
-# se3-seven) inutile sous squeeze !
-# echo "Installation ou MAJ du support seven (samba backport)" | tee -a $REPORT_FILE
-# LINE_TEST
-# TEST_LOCK
-# echo "deb http://backports.debian.org/debian-backports lenny-backports main" > /etc/apt/sources.list.d/smb_backport.list
-# echo "Mise a jour de la liste des paquets disponibles ....." | tee -a $REPORT_FILE
-# apt-get update -qq && (echo "Liste mise a jour avec succes" | tee -a $REPORT_FILE)
-# echo "" | tee -a $REPORT_FILE
-# 
-# echo "Installation du paquet Samba et de ses dependances" | tee -a $REPORT_FILE
-# echo "Dpkg::Options {\"--force-confnew\";}" > /etc/apt/apt.conf
-# apt-get -t lenny-backports install samba -y --force-yes $opt 2>&1 | tee -a $REPORT_FILE 
-# apt-get -t lenny-backports install samba-common-bin -y --force-yes $opt 2>&1 | tee -a $REPORT_FILE 
-# rm -f /etc/apt/apt.conf
-# MAIL_REPORT
-# ;;
 
 se3-fondecran)
 SE3MODULE="gsfonts"
@@ -463,6 +431,5 @@ esac
 echo "</pre>"
 echo "Installation terminee, suppression du fichier verrou" | tee -a $REPORT_FILE
 rm -f $fich_lock
-/usr/share/se3/scripts/refresh_cache_params.sh
 exit 0
 
