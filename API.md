@@ -44,13 +44,13 @@ On crée un utilisateur www-se3, administrateur du domaine avec un password alé
 on exporte une clé avec la commande : 
 ```
 samba-tool user create www-se3 --description="Utilisateur admin de l'interface web" --random-password
-samba-tool user setexpiry www-se3 --noxepiry
+samba-tool user setexpiry www-se3 --noexpiry
 samba-tool group addmembers "Domain Admins" www-se3
-samba-tool domain exportkeytab --principal=www-se3@SAMBAEDU.DOMAIN /var/remote_adm/www-se3.keytab
+samba-tool domain exportkeytab --principal=www-se3@SAMBAEDU3.MAISON /var/remote_adm/www-se3.keytab
 chown www-se3 /var/remote_adm/www-se3.keytab
 chmod 600 /var/remote_adm/www-se3.keytab
 ```
-si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur www-se3@SAMBAEDU.DOMAIN avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
+si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur www-se3@SAMBAEDU3.MAISON avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
 
 ```
 su www-se3
@@ -60,12 +60,12 @@ Ces commandes sont à lancer en cron toutes les heures pour renouveler le ticket
 
 ### auth pour samba-tool
 
-L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://ubndc01.example.com. Ne pas mettre l'IP d'un serveur !
+L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://se3.sambaedu3.maison. Ne pas mettre l'IP d'un serveur !
 
 L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande `-U <domain username>`
 
 ```
-localuser@ubnwks01:~$ samba-tool user list -U Administrator -H ldap://ubndc01.example.com
+samba-tool user list -U administrator -H ldap://se3.sambaedu3.maison
 Password for [EXAMPLE\Administrator]:
 administrator
 krbtgt
@@ -73,7 +73,8 @@ Guest
 ```
 Ou sur base du ticket Kerberos en ajoutant en fin de commande -k yes pour un utilisateur du domaine correctement authentifié
 ```
-administrator@ubnwks01:~$ samba-tool user list -k yes -H ldap://ubndc01.example.com
+su www-se3
+samba-tool user list -k yes -H ldap://se3.sambaedu3.maison
 administrator
 krbtgt
 Guest
@@ -97,6 +98,15 @@ krbtgt
 Guest
 localuser@ubnwks01:~$ kdestroy
 ```
+
+## Auth ldap 
+avec kerberos configuré
+```
+su www-se3
+kinit -k -t /var/remote_adm/www-se3.keytab www-se3@SAMBAEDU3.MAISON
+samba-tool user list -k yes -H ldap://se3.sambaedu3.maison
+```
+
 
 ## Roles et droits (auth sur l'interface)
 
