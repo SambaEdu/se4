@@ -100,12 +100,13 @@ localuser@ubnwks01:~$ kdestroy
 ```
 
 ## Auth ldap 
-avec kerberos configuré
+idem avec avec www-se3 et kerberos configuré
 ```
 su www-se3
 kinit -k -t /var/remote_adm/www-se3.keytab www-se3@SAMBAEDU3.MAISON
-samba-tool user list -k yes -H ldap://se3.sambaedu3.maison
+ldapsearch -LLL -Y gssapi -H ldap://se3.sambaedu3.maison "(cn=*)"
 ```
+On peut ne pas donner le nom du serveur dans l'URL et mettre juste le domaine.
 
 
 ## Roles et droits (auth sur l'interface)
