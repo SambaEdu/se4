@@ -1,0 +1,4 @@
+# dossiers du paquet sambadu-config
+# on les fait plutot en makefile ?
+etc/sambaedu/sambaedu.conf.d
+usr/lib/sambaedu
