@@ -1,9 +1,13 @@
 # Arborescence : 
 
 Le dépôt SE4 contient l'ensemble des sources SambaEdu. Sont exclus les modules optionnels.
+L'idée est de pouvoir remonter simplement le code sans interférences avec les modules optionnels dans un premier temps
+
+
 
 ## dossier sources 
 contient l'arborescence des ficihers tels qu'ils seront sur le serveur + le dossier debian
+
 ## dossier debian
 contient les scripts de construction et d'installation des paquets.
 
