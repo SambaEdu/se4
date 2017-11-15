@@ -90,7 +90,7 @@ $ldap_login_attr = "cn";
 il faut utiliser `ldap_sasl_bind()` : il faut qu'un keytab permanent ait été configuré pour www-se3 
 
 ``` 
-$ldap_serveur="ldap://sambaedu3.maison";
+$ldap_serveur="sambaedu3.maison";
 $ldap_port="389";
 $ds = @ldap_connect($ldap_server, $ldap_port);
 if ($ds) {
