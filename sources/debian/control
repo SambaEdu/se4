@@ -34,7 +34,7 @@ Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est
 
 Package: sambaedu-scripts
 Architecture: all
-Depends: sambaedu-fileserver
+Depends: sambaedu-fileserver, libsasl2-modules-gssapi-mit
 Description: scripts d'administration Sambaedu
 Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
 

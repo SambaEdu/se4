@@ -6,10 +6,52 @@ Samba4 permet plusieurs modes d'accès à l'annuaire AD :
 - ldb kerberos
 - samba-tool
 
+## élévation des privilèges
+On crée un utilisateur www-se3, administrateur du domaine avec un password aléatoire. Ce compte permettra d'effectuer toutes les opérations ldap, samba-tool et rpc directement avec les droits admin, sans avoir besoin de sudo
+
+on exporte une clé avec la commande : 
+```
+samba-tool user create www-se3 --description="Utilisateur admin de l'interface web" --random-password
+samba-tool user setexpiry www-se3 --noexpiry
+samba-tool group addmembers "Domain Admins" www-se3
+samba-tool domain exportkeytab --principal=www-se3@SAMBAEDU3.MAISON /var/remote_adm/www-se3.keytab
+chown www-se3 /var/remote_adm/www-se3.keytab
+chmod 600 /var/remote_adm/www-se3.keytab
+```
+si cette clé est accessible à www-se3, le code php ou les scripts peuvent générer un ticket pour l'utilisateur www-se3@SAMBAEDU3.MAISON avec kinit sans mot de passe, et donc faire les opérations ent tant qu'admin du domaine avec samba-tool.
+
+```
+su www-se3
+kinit -k -t /var/remote_adm/www-se3.keytab www-se3@SAMBAEDU3.MAISON
+```
+Ces commandes sont à lancer en cron toutes les heures pour renouveler le ticket.
+
+### auth pour samba-tool
+
+L'outil `samba-tool` peut être utilisé pour administrer à distance le domaine en ajoutant en fin de commande -H ldap://se3.sambaedu3.maison. Ne pas mettre l'IP d'un serveur !
+
+L'authentification peut se faire de façon traditionnelle pour tous les utilisateurs en ajoutant en fin de commande `-U <domain username>`
+C'est pas terrible car le mot de passe est en clair dans ps ax... La méthode kerberos est de loin meilleure.
+```
+samba-tool user list -U administrator -H ldap://se3.sambaedu3.maison
+Password for [EXAMPLE\Administrator]:
+administrator
+krbtgt
+Guest
+```
+Ou sur base du ticket Kerberos en ajoutant en fin de commande -k yes pour un utilisateur du domaine correctement authentifié
+```
+su www-se3
+samba-tool user list -k yes -H ldap://se3.sambaedu3.maison
+administrator
+krbtgt
+Guest
+```
+
 ## compatibilité avec l'existant 
 Le serveur ldap samba4 n'accepte de faire de bind simple (option -x) que en SSL. Il faut donc configurer correctement `/etc/ldap/ldap.conf` :
 ```
-HOST 192.168.122.95
+HOST 192.168.200.3
 BASE DC=sambaedu3,DC=maison
 TLS_REQCERT never
 TLS_CACERTDIR /var/lib/samba/private/tls
@@ -29,25 +71,13 @@ On peut peut-être aussi faire le bind ldap admin en mode kerberos (voir plus ba
 
 IL faut ajouter la lib sasl : `apt-get install libsasl2-modules-gssapi-mit` Le bind se fait alors direct sans passwd : 
 ``` 
-ldapsearch -LLL   -Y GSSAPI -H ldap://sambaedu3.maison "(cn=*)"
+ldapsearch -LLL -Y gssapi -H ldap://sambaedu3.maison "(cn=*)"
 ```
 Attention, l'URI est ldap et non ldaps, GSSAPI fait le cryptage dans ce cas-là. Cela fonctionne aussi sans mettre d'URI !
 Il faut avoir un keytab valide pour l'utilisateur qui lance la commande...
 
-## samba-tool
 
-www-se3 n'a pas les droits pour accéder à la base , il faut donc soit lui donner un ticket kerberos, soit passer les parametres d'auth de l'admin : 
-```
-samba-tool user list  -H ldap://sambaedu3.maison  -U $admincn --password=$adminpasswd
-```
-C'est pas terrible car le mot de passe est en clair dans ps ax... La méthode kerberos est de loin meilleure.
-Il faut créer un utilisateur, créer son keytab, et le rendre accessible pour www-se3 (à détailler)
-
-```
-samba-tool user list -H ldap://sambaedu3.maison  -k www-se3@SAMBAEDU.MAISON 
-```
-
-### interface se3
+### interface se3 existante
 
 L'interface tourne avec www-se3, il faut donc lui configurer ldap : le problème c'est que le dossier /var/lib/samba/private/tls est privé...  il faut le mettre en 755 !
 
@@ -55,7 +85,7 @@ dans includes/config.inc.php.in :
 ```
 $ldap_login_attr = "cn";
 ```
-### Bind ldap en php
+### Bind ldap en php avec kerberos
 
 il faut utiliser ldap_sasl_bind : il faut qu'un keytab permanent ait été configuré pour www-se3 
 
