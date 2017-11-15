@@ -21,7 +21,7 @@ On prefixe les scripts `bin/se-*` ou `bin/sambaedu-*` ?
 - Avantage : peu d'interférence avec le code se3, conformité Debian, path ok
 - Inconvénient : il faut tout déplacer
 
-# Découpage :
+# Découpage :
 
 L'idée est de construire des paquets par fonction avec un arbre de dépendance le plus simple possible. 
 La question à se poser est : peut-on mettre à jour ce sous ensemble sans interférence avec d'autres parties définies comme non dépendantes ?
