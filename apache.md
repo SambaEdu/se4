@@ -169,3 +169,24 @@ A ajouter à la fin de `/etc/php5/cgi/php.ini` ( ou ailleurs ? )
 ```
 include_path=".:/var/www/se3/includes"
 ```
+# Auth AD Apache
+
+La doc officielle est ici : 
+https://wiki.samba.org/index.php/Authenticating_Apache_against_Active_Directory
+
+## principe
+L'utilisateur www-se3 est un compte de type service, qui n'a pas de droits particuliers sur AD, à part celui de relayer les demandes d'auth du serveur apache vers Ad, et de stocker les tickets.
+
+Concretement, cela veut dire que lorsqu'un utilisateur s'authentifie, son ticket est stocké par apache et peut être réutilisé pour toute opération ldap, samba-tool ou n'importe quel autre outil acceptant les tickets Kerberos. Les utilisateurs ont donc exactement les mêmes droits que si ils utilisaient les outils de la console AD.
+
+## avantages
+- pas besoin de gérer l'auth au niveau php
+- pas besoin de gérer les droits au niveau php
+- bonne sécurisation : les droits d'accès à AD sont ceux de l'utilisateur, pas ceux d'un compte admin.
+- SSO sur les Windows (conf nécessaire pour FF/Chrome)
+
+## inconvénients
+- Il n'est pas possible de changer d'identité au cours d'une session, il faut au minimum fermer le navigateur.
+- La SSO est pénible si on n'a pas de certificats SSL valides. Il faut donc prévoir un mécanisme pour en obtenir chez LetsEncrypt, ce qui peut être complexe si le DNS interne n'est pas cohérent avec l'extérieur...
+
+
