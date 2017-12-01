@@ -94,6 +94,7 @@ $ldap_serveur="sambaedu3.maison";
 $ldap_port="389";
 $ds = @ldap_connect($ldap_server, $ldap_port);
 if ($ds) {
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
     $ret = ldap_sasl_bind($ds, null, null, 'GSSAPI');
 }
 ```
