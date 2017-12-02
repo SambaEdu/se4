@@ -47,7 +47,22 @@ administrator
 krbtgt
 Guest
 ```
+### Stratégie d'authentification possible :
 
+1. on configure apache pour faire de l'auth SSO si il y arrive, sinon il autorise par défaut, on tombe alors sur la page.
+1. on teste $_SERVER['REMOTE_USER'] : si ok, alors on ouvre direct la session php
+1. on teste la validité du ticket : si invalide on redemande l'auth.
+1. si pas de ticket on affiche le dialogue d'auth.
+1. on fait un ldap_bind () pour vérifier.
+1. on fait un shell_exec (kinit $user@SAMBAEDU ... et on sauve le chemin du ticket dans le cookie de session.
+
+Dans les pages on fait :
+
+- $path_ticket = get_ticket_from_session (.....
+- putenv("KRB5CCNAME=$path_ticket);
+- ldap_sasl_bind($ds, NULL, NULL,  GSSAPI);
+- shell_exec ( samba-tool -k yes....);  
+ 
 ## compatibilité avec l'existant 
 Le serveur ldap samba4 n'accepte de faire de bind simple (option -x) que en SSL. Il faut donc configurer correctement `/etc/ldap/ldap.conf` :
 ```
