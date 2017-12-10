@@ -1,6 +1,16 @@
 # Installation sur Stretch
 On part d'une machine à jour avec se3master, se3-logonpy et se3-domain
 
+On pourra installer le serveur AD avec LXC :
+http://debian-facile.org/doc:autres:vm:lxc
+
+Avantages : 
+* Léger et facile à déployer 
+* On peut monter une machine stretch tout en étant sur une machine se3 wheezy pour tester l'annuaire en mode se4-AD
+* On conserve une machine fonctionnelle durant la phase de migration 
+
+
+## Configuration de AD sur la machine Stretch
 ce fichier décrit les chose à faire manuellement, à éliminer au fur et à mesure de la construction du paquet !
 
 source : 
