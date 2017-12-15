@@ -11,6 +11,7 @@ SambaEdu4 est l'évolution de SambaEdu3.
 * serveur d'impression SMB/CUPS, avec intégration possible avec la solution de gestion centralisée PaperCut (payante)
 * déploiement et mises à jour centralisée des logiciels à l'aide de WPKG et Wsusoffline
 * solution de clonage
+* intégration avec un cloud seafile/seadrive
 
 Techniquement, le  serveur est construit sur debian 9 stretch, avec Samba 4.5.x et eventuellement ZFSonLinux ou dcache. Les paquets sont construits en respectant le standard Debian pour pouvoir être mis à jour facilement, et donc suivre les versions Debian. 
 
