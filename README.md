@@ -16,12 +16,14 @@ SambaEdu4 est l'évolution de SambaEdu3.
 Techniquement, le  serveur est construit sur debian 9 stretch, avec Samba 4.5.x et eventuellement ZFSonLinux ou dcache. Les paquets sont construits en respectant le standard Debian pour pouvoir être mis à jour facilement, et donc suivre les versions Debian. 
 
 ## matériel et stockage
+Proxmox 5.x est une excellente base de virtualisation libre. Mais XenEdu, VMWare ou autres sont aussi possibles...
+
 Deux types de serveurs sont envisagés : 
 
 * Support physique :
 
  - serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
- - serveurs de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD, cluster iscsi ?
+ - serveurs de type "lycée" : N > 4 disques SATA en ZFS raid10 + cache SSD, cluster iscsi ?
 
 * Serveurs virtuels ou conteneurs : 
 
@@ -32,7 +34,7 @@ Deux types de serveurs sont envisagés :
  Il est possible de conserver la partie "NAS" sur le serveur physique, l'avantage potentiel étant de meilleurs performances pour les accès disques car ils sont en direct, et surtout une migration facilitée dans le cas d'un se3.
 
 L'équipe Samba recommande fortement la séparation du serveur AD du serveur de fichiers. La configuration virtualisées est donc probablement préférable. Le serveur de fichiers est une configuration complètement standard, et peut donc être un NAS externe. Il n'y a pas d'exigence particulière à respecter. Il est possible de répartir les serveurs de fichiers sur plusieurs machines. 
-Proxmox 5.x est une bonne base de virtualisation libre. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde et de journalisation.
+Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde et de journalisation.
 
 Le "NAS" doit pouvoir executer des scripts de manipulation de fichiers, soit via samba root preexec, soit à distance depuis l'interface : en gros les sudo actuels deviennent du ssh -> faire un paquet sambaedu-scripts à déployer sur les "NAS", ou déployer en scp ?
 
