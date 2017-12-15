@@ -25,7 +25,7 @@ Deux types de serveurs sont envisagés :
  - serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
  - serveurs de type "lycée" : N > 4 disques SATA en ZFS raid10 + cache SSD, cluster iscsi ?
 
-* Serveurs virtuels ou conteneurs : 
+* Serveurs virtuels ou conteneurs LXC : 
 
  - vm "AD" avec le serveur AD,  `netlogon` et `sysvol`
  - vm "NAS" avec les partages de fichiers samba, l'interface web, dhcp, ipxe, et le serveur d'impression
