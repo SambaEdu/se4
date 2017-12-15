@@ -9,9 +9,9 @@ La solution Seafile / Seadrive est parfaitement adaptée au besoin :
 - client Seadrive multiplateforme (Win/Mac/Linux/Android/IOS)
 - accès totalement transparent depuis l'extérieur en https
 
-## interfacage sambaedu
+## interfaçage sambaedu
 
-Le client seadrive peut être déployé en paquet wpkg  (lien xml). Il peut être préconfiguré de façon à ce que la seule intervention de l'utilisateur soit la saisie de son mot de passe à la première utilisation. 
+Le client seadrive peut être déployé en paquet wpkg  (lien xml). Il peut être préconfiguré en GPO de façon à ce que la seule intervention de l'utilisateur soit la saisie de son mot de passe à la première utilisation. 
 
 L'utilisateur a ensuite sur son poste un lecteur S: qui regroupe toutes les bibliothèques ou les dossiers partagés auxquels il peut accéder.
 
@@ -66,7 +66,7 @@ Les premiers tests semblent confirmer que la quantité de données partagées a 
 - il faut être en mesure de configurer un service web https acessible de l'intérieur et de l'extérieur avec exactement la même adresse (maîtrise du dns externe et interne, du proxy, redirection 443 ou mieux reverse proxy SSL). C'est techniquement possible avec AMON...
 - obligation d'avoir un certificat ssl en cas d'accès extérieur. 
 - si le certificat n'est pas signé, la configuration du client est plus complexe pour l'utilisateur de base ( il faut décocher la case...)
-
+- pas de vraie SSO : l'utilisateur doit taper son mot de passe à la première ouverture de session. Ceci est également vrai pour l'interface : cela oblige à créer les bibliothèques avec un compte dont le mot de passe est connu par l'interface (adminse3)
 
 
 
