@@ -18,18 +18,21 @@ Techniquement, le  serveur est construit sur debian 9 stretch, avec Samba 4.5.x 
 ## matériel et stockage
 Deux types de serveurs sont envisagés : 
 
-* Serveurs physiques :
+* Support physique :
 
  - serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache SSD avec 'Dcache' 
- - serveur de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD
+ - serveurs de type "lycée" : N > 4 disques SATA en ZFS raidz1 + cache SSD, cluster iscsi ?
 
-* Serveurs virtuels : 
+* Serveurs virtuels ou conteneurs : 
 
  - vm "AD" avec le serveur AD,  `netlogon` et `sysvol`
- - vm "NAS" avec les partages de fichiers samba l'interface web, dhcp, ipxe, et le serveur d'impression
+ - vm "NAS" avec les partages de fichiers samba, l'interface web, dhcp, ipxe, et le serveur d'impression
+ - vm "cloud" avec seafile et nginx
+ 
+ Il est possible de conserver la partie "NAS" sur le serveur physique, l'avantage potentiel étant de meilleurs performances pour les accès disques car ils sont en direct, et surtout une migration facilitée dans le cas d'un se3.
 
 L'équipe Samba recommande fortement la séparation du serveur AD du serveur de fichiers. La configuration virtualisées est donc probablement préférable. Le serveur de fichiers est une configuration complètement standard, et peut donc être un NAS externe. Il n'y a pas d'exigence particulière à respecter. Il est possible de répartir les serveurs de fichiers sur plusieurs machines. 
-Proxmox 5.x est une bonne base de virtualisation. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde et de journalisation.
+Proxmox 5.x est une bonne base de virtualisation libre. Les disques virtuels peuvent être des ZVOL avec tous les avantages en terme de sauvegarde et de journalisation.
 
 Le "NAS" doit pouvoir executer des scripts de manipulation de fichiers, soit via samba root preexec, soit à distance depuis l'interface : en gros les sudo actuels deviennent du ssh -> faire un paquet sambaedu-scripts à déployer sur les "NAS", ou déployer en scp ?
 
