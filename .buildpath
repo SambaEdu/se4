@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="src/build/se4/usr/share/se3/scripts"/>
+	<buildpathentry kind="src" path="src/build/se4/var/www/se3"/>
+	<buildpathentry kind="src" path="src/usr/share/se3/scripts"/>
+	<buildpathentry kind="src" path="src/var/www/se3"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>

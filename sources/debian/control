@@ -6,44 +6,6 @@ Build-Depends: debhelper (>=9)
 Standards-Version: 3.9.6
 Homepage: https://sambaedu.org
 #Vcs-Git: https://github.com/SambaEdu/se4.git
-#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/sambaedu-master.git
-
-Package: sambaedu-master
-Architecture: all
-Depends: ssmtp, ftp, libcgi-pm-perl, patch, liblocale-gettext-perl, libnet-ldap-perl,  mysql-server|default-mysql-server, mysql-client|mariadb-client, apache2, apache2-suexec-custom, php5-cgi, libapache2-mod-fcgid, php5, php5-mysql, php5-ldap, slapd, ldap-utils, libpam-ldap, libnss-ldap, libunicode-string-perl, libunicode-maputf8-perl, gawk, mrtg, acl, attr, libattr1, xfsprogs, python, libtext-unaccent-perl, libcrypt-smbhash-perl, libtext-iconv-perl, wget, xfsdump, make, ssh, ntpdate, cups, cups-client, sudo, hp-ppd, less, nut, nut-server, nut-snmp, smbclient, lpr, quota-se3|quota, host, libfile-rsyncp-perl, par2, bzip2, unzip, openssl, libapache2-mod-perl2, php5-gd, gcc, libnet-ssleay-perl, fping, php5-cli, memtester, procinfo, tofrodos, at, man, rsync, wakeonlan, mailx, cifs-utils, nfs-common, makepasswd, php5-recode, php-apc, sambaedu-fileserver, sambaedu-web
-Replaces: se3
-Conflicts: nscd
-Maintainer: Denis Bonnenfant <denis.bonnenfant@sambaedu.org>
-Description: Serveur SambaEdu
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-
-Package: sambaedu-ad-dc
-Architecture: all
-Depends: libtalloc2 (>= 2.1.5), samba (>= 2:4.5.3), winbind, libnss-winbind, krb5-user, samba-common-bin, samba-dsdb-modules
-Description: Controleur de domaine AD Sambaedu
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-
-
-Package: sambaedu-web
-Architecture: all
-Depends: sambaedu-scripts
-Description: Interface Web d'administration Sambaedu
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-scripts
-Architecture: all
-Depends: sambaedu-fileserver, libsasl2-modules-gssapi-mit
-Description: scripts d'administration Sambaedu
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-fileserver
-Architecture: all
-Depends: libtalloc2 (>= 2.1.5), samba (>= 2:4.5.3), winbind, libnss-winbind, krb5-user, samba-common-bin, samba-dsdb-modules, samba-vfs-modules, sambaedu-config
-Maintainer: Denis Bonnenfant <denis.bonnenfant@sambaedu.org>
-Description: Serveur de fichiers Sambaedu
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
 
 
 Package: sambaedu-config
