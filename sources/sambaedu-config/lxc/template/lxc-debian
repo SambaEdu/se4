@@ -130,7 +130,7 @@ EOF
         sed -i "s/root@$(hostname)/root@$hostname/g" $rootfs/etc/ssh/ssh_host_*.pub
 
 	# Don't allow root login with password
-	sed -i "s/PermitRootLogin yes/PermitRootLogin without-password/" $rootfs/etc/ssh/sshd_config
+# 	sed -i "s/PermitRootLogin yes/PermitRootLogin without-password/" $rootfs/etc/ssh/sshd_config
 
         if [ -f "$rootfs/etc/init/ssh.conf.disabled" ]; then
             mv $rootfs/etc/init/ssh.conf.disabled $rootfs/etc/init/ssh.conf
@@ -152,9 +152,9 @@ EOF
     fi
 
     password="$(dd if=/dev/urandom bs=6 count=1 2> /dev/null | base64)"
-
+	password="se4ad"
     echo "root:$password" | chroot $rootfs chpasswd
-    echo "Root password is '$password', please change !"
+    echo "A noter : Le mot de passe Root temporaire est le suivant : '$password'"
 
     return 0
 }
