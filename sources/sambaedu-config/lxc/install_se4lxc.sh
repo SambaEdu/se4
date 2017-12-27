@@ -163,11 +163,14 @@ END
 
 function install_se4()
 {
-wget https://raw.githubusercontent.com/SambaEdu/se4/267e75abd420e103336305867c85d23d32255f92/sources/sambaedu-config/lxc/template/lxc-debian
-mv lxc-debian /usr/share/lxc/templates/lxc-debianse4
+if [ -e "$dir_config/lxc/template/lxc-debian" ]; then
+	cp $dir_config/lxc/template/lxc-debian /usr/share/lxc/templates/lxc-debianse4
+else
+	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/template/lxc-debian
+	mv lxc-debian /usr/share/lxc/templates/lxc-debianse4
+fi
 chmod +x /usr/share/lxc/templates/lxc-debianse4
 lxc-create -n $se4name -t debianse4 -f /var/lib/lxc/$se4name.config
-
 }
 
 function write_lxc_lan()
@@ -195,6 +198,53 @@ gateway $se3gw
 END
 
 chmod 644 $interfaces_file_lxc
+
+}
+
+function write_lxc_profile
+{
+profile_lxc="/var/lib/lxc/$se4name/rootfs/root/.profile"
+echo '# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+
+mesg n
+
+if [ -f /root/install_se4ad_phase2.sh ]; then
+    . /root/install_se4ad_phase2.sh  
+fi
+
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+' > $profile_lxc 
+}
+
+function write_lxc_bashrc
+{
+lxc_bashrc="/var/lib/lxc/$se4name/rootfs/root/.bashrc"
+if [ -e "$dir_config/lxc/bashrc" ]; then
+	cp $dir_config/lxc/template/lxc-debian $lxc_bashrc
+else
+	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/bashrc
+	mv bashrc $lxc_bashrc
+fi
+chmod 644 $lxc_bashrc
+}
+
+
+function write_se4conf
+{
+
+echo "se4ip=$se4ip" >> $se4_config
+chmod +x $se4_config
+dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
+mkdir -p $dir_config_lxc
+cp -a  $se4_config $dir_config_lxc/$se4_config
+
 }
 
 clear
@@ -219,7 +269,8 @@ source /usr/share/se3/includes/functions.inc.sh
 
 # Variables :
 interfaces_file="/etc/network/interfaces" 
-
+dir_config="/etc/sambaedu"
+se4_config="$dir_config/se4.config"
 
 lxc_arch="$(arch)"
 ecard="br0"
@@ -332,6 +383,8 @@ POURSUIVRE
 write_lxc_conf
 install_se4
 write_lxc_lan
+write_lxc_profile
+write_lxc_bashrc
 echo "/!\ notez bien le mot de passe root du container
 Il vous sera indispensable pour le premier lancement"
 
