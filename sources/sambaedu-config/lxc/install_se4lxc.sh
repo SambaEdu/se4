@@ -385,7 +385,8 @@ install_se4
 write_lxc_lan
 write_lxc_profile
 write_lxc_bashrc
-echo "/!\ notez bien le mot de passe root du container
+write_se4conf
+echo "/!\ notez bien le mot de passe root du container  ---> se4install
 Il vous sera indispensable pour le premier lancement"
 
 echo -e "$COLTITRE"
