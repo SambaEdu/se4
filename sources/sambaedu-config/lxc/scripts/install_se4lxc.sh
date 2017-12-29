@@ -92,7 +92,7 @@ function install_lxc()
 echo "Vérification de l'existence des backports dans le sources.list"
 echo
 url_depot_backpot="deb http://ftp.fr.debian.org/debian/ wheezy-backports main"
-grep -q "$url_depot_backpot" /etc/apt/sources.list || echo "$url_depot_backpot" >> /etc/apt/sources.list
+grep -q "^$url_depot_backpot" /etc/apt/sources.list || echo "$url_depot_backpot" >> /etc/apt/sources.list
 echo -e "${COLCMD}Mise à jour des dépots....${COLTXT}"
 # apt-get autoremove 
 apt-get -qq update
@@ -170,6 +170,11 @@ else
 	mv lxc-debian /usr/share/lxc/templates/lxc-debianse4
 fi
 chmod +x /usr/share/lxc/templates/lxc-debianse4
+if [ ! -e  /usr/share/debootstrap/scripts/stretch ]; then
+	cd /usr/share/debootstrap/scripts/ 
+	ln -s sid stretch
+	cd -
+fi
 lxc-create -n $se4name -t debianse4 -f /var/lib/lxc/$se4name.config
 }
 
@@ -386,19 +391,18 @@ write_lxc_lan
 write_lxc_profile
 write_lxc_bashrc
 write_se4conf
-echo "/!\ notez bien le mot de passe root du container  ---> se4install
+echo -e "/!\ notez bien le mot de passe root du container  --->$COLINFO se4ad $COLTXT
 Il vous sera indispensable pour le premier lancement"
-
-echo -e "$COLTITRE"
-echo "Terminé!"
 
 echo -e "$COLTXT"
 # echo "Appuyez sur ENTREE "
-echo -e "${COLINFO}Le container $se4name est installé, vous pouvez le lancer avec la commande suivante :
+echo -e "${COLINFO}Le container $se4name est installé, vous pouvez le lancer avec la commande suivante :$COLCMD
 lxc-start -n $se4name"
 # echo "Un nouveau script d'installation se lancera sur le container une fois que vous serez connecté root"
+
+echo -e "$COLTITRE"
+echo "Terminé!"
 echo -e "$COLTXT"
+exit 0
 
-
-read PAUSE
 
