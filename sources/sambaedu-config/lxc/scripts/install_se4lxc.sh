@@ -166,8 +166,8 @@ function install_se4ad_lxc()
 if [ -e "$dir_config/lxc/template/lxc-debian" ]; then
 	cp $dir_config/lxc/template/lxc-debian /usr/share/lxc/templates/lxc-debianse4
 else
-	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/template/lxc-debian
-	mv lxc-debian /usr/share/lxc/templates/lxc-debianse4
+	wget $url_sambaedu_config/lxc/template/lxc-debianse4
+	mv lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
 fi
 chmod +x /usr/share/lxc/templates/lxc-debianse4
 if [ ! -e  /usr/share/debootstrap/scripts/stretch ]; then
@@ -234,7 +234,7 @@ lxc_bashrc="/var/lib/lxc/$se4name/rootfs/root/.bashrc"
 if [ -e "$dir_config/lxc/bashrc" ]; then
 	cp $dir_config/lxc/template/lxc-debian $lxc_bashrc
 else
-	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/bashrc
+	wget $url_sambaedu_config/lxc/bashrc
 	mv bashrc $lxc_bashrc
 fi
 chmod 644 $lxc_bashrc
@@ -258,7 +258,7 @@ se4_install_script="/var/lib/lxc/$se4name/rootfs/root/install_se4ad_phase2.sh"
 if [ -e "$dir_config/lxc/install_se4ad_phase2.sh" ]; then
 	cp $dir_config/lxc/install_se4ad_phase2.sh $se4_install_script
 else
-	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/
+	wget $url_sambaedu_config/lxc/$se4_install_script
 	mv install_se4ad_phase2.sh $se4_install_script
 fi
 chmod +x $se4_install_script
@@ -285,6 +285,7 @@ source /usr/share/se3/includes/functions.inc.sh
 
 
 # Variables :
+url_sambaedu_config="https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config"
 interfaces_file="/etc/network/interfaces" 
 dir_config="/etc/sambaedu"
 se4ad_config="$dir_config/se4ad.config"
