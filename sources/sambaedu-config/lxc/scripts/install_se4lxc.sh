@@ -153,7 +153,7 @@ lxc.network.flags = up
 lxc.network.link = br0
 lxc.network.name = eth0
 lxc.network.hwaddr = $se4mac
-lxc.network.ipv4 = $se4ip
+lxc.network.ipv4 = $se4ad_ip
 
 # Définissez la passerelle pour avoir un accès à Internet
 lxc.network.ipv4.gateway = $se3gw
@@ -161,7 +161,7 @@ lxc.network.ipv4.gateway = $se3gw
 END
 }
 
-function install_se4()
+function install_se4ad_lxc()
 {
 if [ -e "$dir_config/lxc/template/lxc-debian" ]; then
 	cp $dir_config/lxc/template/lxc-debian /usr/share/lxc/templates/lxc-debianse4
@@ -195,7 +195,7 @@ iface lo inet loopback
 # (network, broadcast and gateway are optional)
 auto eth0
 iface eth0 inet static
-address $se4ip
+address $se4ad_ip
 netmask $se3mask
 network $se3network
 broadcast $se3bcast
@@ -241,15 +241,27 @@ chmod 644 $lxc_bashrc
 }
 
 
-function write_se4conf
+function write_se4ad_conf
 {
 
-echo "se4ip=$se4ip" >> $se4_config
-chmod +x $se4_config
+echo "se4ad_ip=$se4ad_ip" >> $se4ad_config
+chmod +x $se4ad_config
 dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
 mkdir -p $dir_config_lxc
-cp -a  $se4_config $dir_config_lxc/$se4_config
+cp -a  $se4ad_config $dir_config_lxc/$se4ad_config
 
+}
+
+function write_se4ad_install
+{
+se4_install_script="/var/lib/lxc/$se4name/rootfs/root/install_se4ad_phase2.sh"
+if [ -e "$dir_config/lxc/install_se4ad_phase2.sh" ]; then
+	cp $dir_config/lxc/install_se4ad_phase2.sh $se4_install_script
+else
+	wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/
+	mv install_se4ad_phase2.sh $se4_install_script
+fi
+chmod +x $se4_install_script
 }
 
 clear
@@ -275,7 +287,7 @@ source /usr/share/se3/includes/functions.inc.sh
 # Variables :
 interfaces_file="/etc/network/interfaces" 
 dir_config="/etc/sambaedu"
-se4_config="$dir_config/se4.config"
+se4ad_config="$dir_config/se4ad.config"
 
 lxc_arch="$(arch)"
 ecard="br0"
@@ -352,7 +364,7 @@ details="no"
 while [ "$REPONSE" != "o" ]
 do
 	echo -e "${COLTXT}IP du container SE4: $COLSAISIE\c"
-	read se4ip
+	read se4ad_ip
 
 	if [ "$details" != "no" ]; then
 		echo -e "${COLTXT}Masque sous réseau: $COLSAISIE\c"
@@ -370,7 +382,7 @@ do
 		echo -e "$COLINFO"
 		echo "Configuration IP prévue pour le container :"
 		echo -e "$COLTXT\c"
-		echo "IP :         $se4ip"
+		echo "IP :         $se4ad_ip"
 		echo "Masque :     $se3mask"
 		echo "Réseau :     $se3network"
 		echo "Broadcast :  $se3bcast"
@@ -386,11 +398,12 @@ read se4name
 POURSUIVRE
 
 write_lxc_conf
-install_se4
+install_se4ad_lxc
 write_lxc_lan
 write_lxc_profile
 write_lxc_bashrc
-write_se4conf
+write_se4ad_conf
+write_se4ad_install
 echo -e "/!\ notez bien le mot de passe root du container  --->$COLINFO se4ad $COLTXT
 Il vous sera indispensable pour le premier lancement"
 
