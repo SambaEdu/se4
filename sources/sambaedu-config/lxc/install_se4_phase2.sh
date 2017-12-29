@@ -1,7 +1,7 @@
 #!/bin/bash
-# installation LXC se4 phase 2
+# installation se4 phase 2
 # version pour Stretch - franck molle
-# version 12 - 2017 1st version
+# version 12 - 2017 
 
 #Couleurs
 COLTITRE="\033[1;35m"   # Rose
