@@ -163,8 +163,8 @@ END
 
 function install_se4ad_lxc()
 {
-if [ -e "$dir_config/lxc/template/lxc-debian" ]; then
-	cp $dir_config/lxc/template/lxc-debian /usr/share/lxc/templates/lxc-debianse4
+if [ -e "$dir_config/lxc/template/lxc-debianse4" ]; then
+	cp $dir_config/lxc/template/lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
 else
 	wget $url_sambaedu_config/lxc/template/lxc-debianse4
 	mv lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
@@ -216,23 +216,23 @@ if [ "$BASH" ]; then
   fi
 fi
 
-mesg n
-
-if [ -f /root/install_se4ad_phase2.sh ]; then
-    . /root/install_se4ad_phase2.sh  
+mesg n' > $profile_lxc
+echo "
+if [ -f /root/$script_phase2 ]; then
+    . /root/$script_phase2  
 fi
 
 if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
-' > $profile_lxc 
+" >> $profile_lxc 
 }
 
 function write_lxc_bashrc
 {
 lxc_bashrc="/var/lib/lxc/$se4name/rootfs/root/.bashrc"
 if [ -e "$dir_config/lxc/bashrc" ]; then
-	cp $dir_config/lxc/template/lxc-debian $lxc_bashrc
+	cp $dir_config/lxc/bashrc $lxc_bashrc
 else
 	wget $url_sambaedu_config/lxc/bashrc
 	mv bashrc $lxc_bashrc
@@ -248,20 +248,21 @@ echo "se4ad_ip=$se4ad_ip" >> $se4ad_config
 chmod +x $se4ad_config
 dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
 mkdir -p $dir_config_lxc
-cp -a  $se4ad_config $dir_config_lxc/$se4ad_config
+cp -a  $se4ad_config $dir_config_lxc/se4ad.config
 
 }
 
 function write_se4ad_install
 {
-se4_install_script="/var/lib/lxc/$se4name/rootfs/root/install_se4ad_phase2.sh"
-if [ -e "$dir_config/lxc/install_se4ad_phase2.sh" ]; then
-	cp $dir_config/lxc/install_se4ad_phase2.sh $se4_install_script
+
+dir_root_lxc="/var/lib/lxc/$se4name/rootfs/root"
+if [ -e "$dir_config/lxc/$script_phase2" ]; then
+	cp $dir_config/lxc/$script_phase2 $dir_root_lxc/$script_phase2
 else
-	wget $url_sambaedu_config/lxc/$se4_install_script
-	mv install_se4ad_phase2.sh $se4_install_script
+	wget $url_sambaedu_config/lxc/$script_phase2
+	mv $script_phase2 $dir_root_lxc/$script_phase2
 fi
-chmod +x $se4_install_script
+chmod +x $dir_root_lxc/$script_phase2
 }
 
 clear
@@ -289,7 +290,7 @@ url_sambaedu_config="https://raw.githubusercontent.com/SambaEdu/se4/master/sourc
 interfaces_file="/etc/network/interfaces" 
 dir_config="/etc/sambaedu"
 se4ad_config="$dir_config/se4ad.config"
-
+script_phase2="install_se4ad_phase2.sh"
 lxc_arch="$(arch)"
 ecard="br0"
 
