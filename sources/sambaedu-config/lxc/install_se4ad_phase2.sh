@@ -1,5 +1,5 @@
 #!/bin/bash
-# installation se4 phase 2
+# installation Se4-AD phase 2
 # version pour Stretch - franck molle
 # version 12 - 2017 
 
@@ -67,8 +67,9 @@ cat >/etc/apt/sources.list.d/se4.list <<END
 # sources pour se4
 deb http://wawadeb.crdp.ac-caen.fr/debian stretch se4
 
-#### Sources testing desactivee en prod ####
-#deb http://wawadeb.crdp.ac-caen.fr/debian stretch se4testing
+#### Sources testing seront desactivees en prod ####
+deb http://wawadeb.crdp.ac-caen.fr/debian stretch se4testing
+
 
 END
 }
@@ -115,29 +116,7 @@ iface eth0 inet static
         gateway $NEW_GATEWAY
 END
 
-cat >/etc/hosts <<END
-127.0.0.1       localhost
-$NEW_SE3IP    se4ad.domaine.ac-rouen.fr        se4ad
 
-# The following lines are desirable for IPv6 capable hosts
-# (added automatically by netbase upgrade)
-
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
-ff02::3 ip6-allhosts
-END
-
-cat >/etc/hostname <<END
-se4ad
-END
-
-cat >/etc/resolv.conf<<END
-search etab.ac-rouen.fr
-nameserver $NEW_GATEWAY
-END
 
 }
 
@@ -214,18 +193,76 @@ apt-get upgrade --quiet --assume-yes
 echo -e "$COLPARTIE"
 echo "installation de ssmtp, ntpdate, makepasswd, ssh, etc...."
 echo -e "$COLTXT"
-apt-get install --quiet --assume-yes ssmtp ntpdate makepasswd ssh vim screen lshw atop htop smartmontools nmap tcpdump dos2unix
+"prim_packages"="ntpdate vim wget nano"
+apt-get install --quiet --assume-yes $prim_packages
 }
 
 function write_hostconf()
-{}
+{
+cat >/etc/hosts <<END
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+$se4ad_ip	se4ad.$fulldomaine	se4ad
+END
 
-function write_resolv()
-{}
+cat >/etc/hostname <<END
+se4ad
+END
+}
 
+function write_resolvconf()
+{
+cat >/etc/resolv.conf<<END
+search $fulldomaine
+nameserver 127.0.0.1
+END
+}
+
+function write_krb5()
+{
+cat > /etc/krb5.conf <<END
+[libdefaults]
+ dns_lookup_realm = false
+ dns_lookup_kdc = true
+ default_realm = $fulldomaine_up
+END
+
+}
 
 #Variables :
-samba_packages="samba"
+samba_packages="samba winbind libnss-winbind krb5-user"
+export DEBIAN_FRONTEND=noninteractive
+se4ad_config="/etc/sambaedu/se4ad.config"
+
+
+echo -e "$COLPARTIE"
+echo "Prise en compte des valeur de $se4ad_config"
+echo -e "$COLTXT"
+
+echo -e "$COLINFO"
+if [ -e "$se4ad_config" ] ; then
+ 	echo "$se4ad_config est bien present sur la machine"
+	source $se4ad_config 
+	echo -e "$COLTXT"
+else
+	echo "$se4ad_config ne se trouve pas sur la machine"
+	echo -e "$COLTXT"
+	se4ad_ip="$(ifconfig eth0 | grep "inet " | awk '{ print $2}')"
+fi
+
+
+
+# A voir pour modifier ou récupérer depuis sambaedu.config 
+[ -z "$mondomaine" ] && mondomaine="sambaedu4"
+[ -z "$lan" ] && lan="lan"
+fulldomaine="$mondomaine.$lan" 
+
+mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
+lan_up="$(echo "$lan" | tr [:lower:] [:upper:])"
+fulldomaine_up="$(echo "$fulldomaine" | tr [:lower:] [:upper:])"
+
 
 while :; do
 	case $1 in
@@ -266,14 +303,10 @@ if [ "$download" = "yes" ]; then
 	gensourcelist
 	gensourcese4
 	echo -e "$COLINFO"
-	echo "Ajout du support de l'architecture i386 pour dpkg" 
-	echo -e "$COLCMD\c"
-
-	echo -e "$COLINFO"
 	echo "Téléchargement du backport samba 4.4" 
 	echo -e "$COLCMD\c"
 
-	apt-get install $samba_packages 
+	apt-get install $samba_packages -d
 
 
 	echo "Phase de Téléchargement est terminée !"
@@ -319,22 +352,9 @@ gensourcelist
 gensourcese4
 
 installbase
-echo -e "$COLPARTIE"
-echo "Prise en compte des valeur de $se4_config"
-echo -e "$COLTXT"
-
-echo -e "$COLINFO"
-if [ -e "$se4_config" ] ; then
- 	echo "$se4_config est bien present sur la machine"
-	source $se4_config 
-	echo -e "$COLTXT"
-else
-	echo "$se4_config ne se trouve pas sur la machine"
-	echo -e "$COLTXT"
-fi
 
 write_hostconf
-write_resolv
+write_resolvconf
 
 echo -e "$COLPARTIE"
 echo "Type de configuration Ldap et mise a l'heure"
@@ -417,9 +437,6 @@ script_absolute_path=$(readlink -f "$0")
 [ -e /root/install_phase2.sh ] && mv /root/install_phase2.sh  /root/install_phase2.done
 . /etc/profile
 
-DEBIAN_PRIORITY="high"
-DEBIAN_FRONTEND="dialog" 
-export  DEBIAN_PRIORITY
-export  DEBIAN_FRONTEND
+unset DEBIAN_FRONTEND
 exit 0
 
