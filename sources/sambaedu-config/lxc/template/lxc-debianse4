@@ -226,7 +226,7 @@ cleanup()
 #libui-dialog-perl,\
 download_debian()
 {
-    packages="ifupdown,init,locales,dialog,isc-dhcp-client,netbase,net-tools,iproute,openssh-server"
+    packages="ifupdown,init,locales,dialog,isc-dhcp-client,netbase,net-tools,iproute,openssh-server,wget,nano,iputils-ping,bind9-host"
     cache=$1
     arch=$2
     release=$3
