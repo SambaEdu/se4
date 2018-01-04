@@ -112,7 +112,10 @@ sleep 2
 echo
 SETMYSQL dhcp_iface $ecard
 SETMYSQL ecard $ecard
-echo "Modification de $interfaces_file"
+echo -e "$COLINFO"
+echo -e "Modification de $interfaces_file"
+echo -e "$COLTXT"
+
 cp $interfaces_file ${interfaces_file}_sav_install_lxc 
 
 cat > /etc/network/interfaces <<END
@@ -141,9 +144,15 @@ chmod 644 $interfaces_file
 function write_lxc_conf {
 
 if [ -e "usr/share/se3/sbin/lxc_mac_generator" ]; then
+	echo -e "$COLINFO"
+	echo "Génération de l'adresse MAC de la machine LXC"
+	echo -e "$COLTXT"
 	se4mac="$(usr/share/se3/sbin/lxc_mac_generator)"
 else
 	se4mac="00:FF:AA:00:00:01"
+	echo -e "$COLINFO"
+	echo "Adresse MAC de la machine LXC fixée à $se4mac"
+	echo -e "$COLTXT"
 fi
 cat > /var/lib/lxc/$se4name.config <<END
 lxc.network.type = veth
@@ -164,26 +173,40 @@ END
 function install_se4ad_lxc()
 {
 if [ -e "$dir_config/lxc/template/lxc-debianse4" ]; then
-	cp $dir_config/lxc/template/lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
+	echo -e "$COLINFO"
+	echo "Copie du template $dir_config/lxc/template/lxc-debianse4"
+	echo -e "$COLTXT"
+	cp -v $dir_config/lxc/template/lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
 else
+	echo -e "$COLINFO"
+	echo "Récupération du template lxc-debianse4"
+	echo -e "$COLTXT"
 	wget $url_sambaedu_config/lxc/template/lxc-debianse4
 	mv lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
 fi
 chmod +x /usr/share/lxc/templates/lxc-debianse4
 if [ ! -e  /usr/share/debootstrap/scripts/stretch ]; then
+	echo -e "$COLINFO"
+	echo "création de /usr/share/debootstrap/scripts/stretch"
+	echo -e "$COLTXT"
 	cd /usr/share/debootstrap/scripts/ 
 	ln -s sid stretch
 	cd -
 fi
+echo -e "$COLINFO"
+echo "Lancement de lxc-create - Patience !!"
+echo -e "$COLCMD"
 lxc-create -n $se4name -t debianse4 -f /var/lib/lxc/$se4name.config
+echo -e "$COLTXT"
 }
 
 function write_lxc_lan()
 {
 
 interfaces_file_lxc="/var/lib/lxc/$se4name/rootfs/etc/network/interfaces"
+echo -e "$COLINFO"
 echo "Modification de $interfaces_file_lxc"
-
+echo -e "$COLTXT"
 cat > $interfaces_file_lxc <<END
 # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
 
@@ -208,7 +231,11 @@ chmod 644 $interfaces_file_lxc
 
 function write_lxc_profile
 {
+
 profile_lxc="/var/lib/lxc/$se4name/rootfs/root/.profile"
+echo -e "$COLINFO"
+echo "Génération de $profile_lxc"
+echo -e "$COLTXT"
 echo '# ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
@@ -232,10 +259,18 @@ function write_lxc_bashrc
 {
 lxc_bashrc="/var/lib/lxc/$se4name/rootfs/root/.bashrc"
 if [ -e "$dir_config/lxc/bashrc" ]; then
-	cp $dir_config/lxc/bashrc $lxc_bashrc
+	echo -e "$COLINFO"
+	echo "Copie de $dir_config/lxc/bashrc"
+	echo -e "$COLCMD"
+	cp -v $dir_config/lxc/bashrc $lxc_bashrc
+	echo -e "$COLTXT"
 else
+	echo -e "$COLINFO"
+	echo "Récupération du fichier bashrc"
+	echo -e "$COLCMD"
 	wget $url_sambaedu_config/lxc/bashrc
-	mv bashrc $lxc_bashrc
+	mv -v bashrc $lxc_bashrc
+	echo -e "$COLTXT"
 fi
 chmod 644 $lxc_bashrc
 }
@@ -243,13 +278,18 @@ chmod 644 $lxc_bashrc
 
 function write_se4ad_conf
 {
-
-echo "se4ad_ip=$se4ad_ip" >> $se4ad_config
-chmod +x $se4ad_config
+if [ ! -e "$se4ad_config" ] ; then
+	echo -e "$COLINFO"
+	echo "Pas de ficher de conf $se4ad_config  -> On en crée un uniquement avec l'ip du se4ad"
+	echo "se4ad_ip=$se4ad_ip" > $se4ad_config
+	chmod +x $se4ad_config
+fi
 dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
 mkdir -p $dir_config_lxc
-cp -a  $se4ad_config $dir_config_lxc/se4ad.config
-
+echo "copie de $se4ad_config sur la machine LXC"
+echo -e "$COLCMD"
+cp -av  $se4ad_config $dir_config_lxc/se4ad.config
+echo -e "$COLTXT"
 }
 
 function write_se4ad_install
@@ -257,10 +297,18 @@ function write_se4ad_install
 
 dir_root_lxc="/var/lib/lxc/$se4name/rootfs/root"
 if [ -e "$dir_config/lxc/$script_phase2" ]; then
-	cp $dir_config/lxc/$script_phase2 $dir_root_lxc/$script_phase2
+	echo -e "$COLINFO"
+	echo "Copie de $dir_config/lxc/$script_phase2"
+	echo -e "$COLCMD"
+	cp -v $dir_config/lxc/$script_phase2 $dir_root_lxc/$script_phase2
+	echo -e "$COLTXT"
 else
+	echo -e "$COLINFO"
+	echo "Récupération de $script_phase2"
+	echo -e "$COLCMD"
 	wget $url_sambaedu_config/lxc/$script_phase2
-	mv $script_phase2 $dir_root_lxc/$script_phase2
+	mv -v $script_phase2 $dir_root_lxc/$script_phase2
+	echo -e "$COLTXT"
 fi
 chmod +x $dir_root_lxc/$script_phase2
 }
@@ -316,9 +364,10 @@ do
 	echo -e "$COLINFO"
 	echo "Configuration réseau actuelle détectée :"
 	echo -e "$COLTXT\c"
-	echo "Réseau :     $se3network"
-	echo "Broadcast :  $se3bcast"
-	echo "Passerelle : $se3gw"
+	echo "Adresse IP du serveur :  $se3ip"
+	echo "Adresse réseau de base : $se3network"
+	echo "Adresse de Broadcast :   $se3bcast"
+	echo "IP de la Passerelle :    $se3gw"
 	
 	
 	echo -e "$COLTXT"
@@ -357,7 +406,7 @@ ifup $ecard
 
 echo -e $COLPARTIE
 echo "--------"
-echo "Partie 3 : Installation du container LXC SE4"
+echo "Partie 3 : Pré-configuration du container LXC SE4"
 echo "--------"
 echo -e "$COLTXT"
 
@@ -365,7 +414,7 @@ REPONSE=""
 details="no"
 while [ "$REPONSE" != "o" ]
 do
-	echo -e "${COLTXT}IP du container SE4: $COLSAISIE\c"
+	echo -e "${COLTXT}IP du container SE4 : $COLSAISIE\c"
 	read se4ad_ip
 
 	if [ "$details" != "no" ]; then
@@ -391,16 +440,32 @@ do
 		echo "Passerelle : $se3gw"
 	
 		echo -e "$COLTXT"
-		echo -e "Confirmer la configuration pour le container ?(${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c"
+		echo -e "Confirmer la configuration pour le container ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c"
 		read REPONSE
 done
 echo -e "${COLTXT}Nom du container SE4: [se4stretch]$COLSAISIE \c"
 read se4name
 [ -z "$se4name" ] && se4name="se4stretch"
 POURSUIVRE
+echo -e "$COLTXT"
+echo -e $COLPARTIE
+echo "--------"
+echo "Partie 4 : Installation du container $se4name"
+echo "--------"
+echo -e "$COLTXT"
+sleep 2
 
 write_lxc_conf
 install_se4ad_lxc
+
+echo -e "$COLTXT"
+echo -e $COLPARTIE
+echo "--------"
+echo "Partie 5 : Post-installation du container : Mise en place des fichiers nécessaires à la phase 2"
+echo "--------"
+echo -e "$COLTXT"
+sleep 2
+
 write_lxc_lan
 write_lxc_profile
 write_lxc_bashrc
@@ -411,13 +476,20 @@ Il vous sera indispensable pour le premier lancement"
 
 echo -e "$COLTXT"
 # echo "Appuyez sur ENTREE "
-echo -e "${COLINFO}Le container $se4name est installé, vous pouvez le lancer avec la commande suivante :$COLCMD
-lxc-start -n $se4name"
-# echo "Un nouveau script d'installation se lancera sur le container une fois que vous serez connecté root"
 
+# echo "Un nouveau script d'installation se lancera sur le container une fois que vous serez connecté root"
 echo -e "$COLTITRE"
 echo "Terminé!"
+echo "--------"
 echo -e "$COLTXT"
+echo -e "${COLINFO}Container $se4name installé. Pour lancer la machine, utiliser la commande suivante :$COLCMD
+lxc-start -n $se4name"
+echo -e "${COLTXT}L'installation se poursuivra ensuite une fois identifié root
+/!\ Mot de passe root --->$COLINFO se4ad $COLTXT"
+echo "--------"
+
+echo ""
+# echo "Appuyez sur ENTREE "
 exit 0
 
 
