@@ -191,9 +191,9 @@ apt-get -qq update
 apt-get upgrade --quiet --assume-yes
 
 echo -e "$COLPARTIE"
-echo "installation de ssmtp, ntpdate, makepasswd, ssh, etc...."
+echo "installation ntpdate, vim, etc..."
 echo -e "$COLTXT"
-"prim_packages"="ntpdate vim wget nano"
+prim_packages="ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-utils"
 apt-get install --quiet --assume-yes $prim_packages
 }
 
@@ -211,6 +211,23 @@ cat >/etc/hostname <<END
 se4ad
 END
 }
+
+
+function installsamba()
+{
+
+
+echo -e "$COLINFO"
+echo "Installation de samba 4.5" 
+echo -e "$COLCMD\c"
+
+apt-get install $samba_packages 
+rm -f /etc/samba/smb.conf
+
+}
+
+
+
 
 function write_resolvconf()
 {
@@ -230,6 +247,7 @@ cat > /etc/krb5.conf <<END
 END
 
 }
+
 
 #Variables :
 samba_packages="samba winbind libnss-winbind krb5-user"
@@ -354,6 +372,15 @@ gensourcese4
 installbase
 
 write_hostconf
+
+echo -e "$COLPARTIE"
+echo "Installation de Samba et cie" 
+echo -e "$COLTXT"
+
+
+installsamba
+
+
 write_resolvconf
 
 echo -e "$COLPARTIE"
@@ -389,18 +416,6 @@ fi
 
 
 
-echo -e "$COLPARTIE"
-echo "Installation de Samba et cie" 
-echo -e "$COLTXT"
-
-
-
-echo -e "$COLINFO"
-echo "Installation de samba 4.5" 
-echo -e "$COLCMD\c"
-
-apt-get install $samba_packages 
-
 # 
 # echo -e "$COLINFO"
 # echo "On stopppe le service winbind" 
@@ -429,7 +444,7 @@ done
 echo -e "$COLTXT"
 
 echo -e "$COLTITRE"
-echo "L'installation est terminée. Bonne utilisation de SambaEdu3 !"
+echo "L'installation est terminée. Bonne utilisation de SambaEdu4-AD !"
 echo -e "$COLTXT"
 
 script_absolute_path=$(readlink -f "$0")
