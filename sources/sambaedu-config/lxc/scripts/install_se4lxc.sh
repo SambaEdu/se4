@@ -276,19 +276,33 @@ chmod 644 $lxc_bashrc
 }
 
 
-function write_se4ad_conf
+function write_sambaedu_conf
 {
 if [ ! -e "$se4ad_config" ] ; then
 	echo -e "$COLINFO"
-	echo "Pas de ficher de conf $se4ad_config  -> On en crée un uniquement avec l'ip du se4ad"
+	echo "Pas de fichier de conf $se4ad_config  -> On en crée un avec les params du se4ad"
+	echo -e "$COLTXT"
 	echo "se4ad_ip=$se4ad_ip" > $se4ad_config
+	echo "mondomaine=$mondomaine" >>  $se4ad_config
+	echo "lan=$lan" >>  $se4ad_config
+	echo "fulldomaine=$fulldomaine" >> $se4ad_config
+	echo "se3ip=$se3ip" >> $se4ad_config
 	chmod +x $se4ad_config
 fi
-dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
-mkdir -p $dir_config_lxc
-echo "copie de $se4ad_config sur la machine LXC"
+
+if [ ! -e "$dir_config/ldap.conf" ]; then
+	conf_ldap="/etc/ldap/ldap.conf"
+	echo -e "$COLINFO"
+	echo "Export de la conf ldap vers $dir_config"
+	echo -e "$COLTXT"
+	cp -v $conf_ldap $dir_config/
+fi
+
+dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc"
+# mkdir -p $dir_config_lxc
+echo "copie de $dir_config sur la machine LXC"
 echo -e "$COLCMD"
-cp -av  $se4ad_config $dir_config_lxc/se4ad.config
+cp -av  $dir_config $dir_config_lxc/
 echo -e "$COLTXT"
 }
 
@@ -311,6 +325,55 @@ else
 	echo -e "$COLTXT"
 fi
 chmod +x $dir_root_lxc/$script_phase2
+}
+
+function write_lxc_hosts_conf()
+{
+lxc_hosts_file="/var/lib/lxc/$se4name/rootfs/etc/hosts"
+echo -e "$COLINFO"
+echo "Génération de $lxc_hosts_file"
+echo -e "$COLTXT"
+
+cat >$lxc_hosts_file <<END
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+$se4ad_ip	se4ad.$fulldomaine	se4ad
+END
+
+lxc_hostname_file="/var/lib/lxc/$se4name/rootfs/etc/hosts"
+echo -e "$COLINFO"
+echo "Génération de $lxc_hostname_file"
+echo -e "$COLTXT"
+
+cat >$lxc_hostname_file <<END
+se4ad
+END
+}
+
+function export_smb_files()
+{
+echo -e "$COLINFO"
+echo "Coupure du service Samba pour export des fichier TDB"
+echo -e "$COLTXT"
+service samba stop
+smb_dbdir_export="/etc/sambaedu/smb_export"
+mkdir -p "$smb_dbdir_export"
+echo -e "$COLINFO"
+echo "Copie des fichiers TDB vers $smb_dbdir_export"
+echo -e "$COLCMD"
+tdb_smb_dir="/var/lib/samba"
+pv_tdb_smb_dir="/var/lib/samba/private"
+cp $pv_tdb_smb_dir/secrets.tdb $smb_dbdir_export/
+cp $pv_tdb_smb_dir/schannel_store.tdb $smb_dbdir_export/
+cp $pv_tdb_smb_dir/passdb.tdb $smb_dbdir_export/
+
+cp $tdb_smb_dir/gencache_notrans.tdb $smb_dbdir_export/
+cp $tdb_smb_dir/group_mapping.tdb $smb_dbdir_export/
+cp $tdb_smb_dir/account_policy.tdb $smb_dbdir_export/
+
+cp /etc/samba/smb.conf $dir_config/
 }
 
 clear
@@ -342,6 +405,16 @@ script_phase2="install_se4ad_phase2.sh"
 lxc_arch="$(arch)"
 ecard="br0"
 
+
+
+# A voir pour modifier avec hostname -d pour le moment on fixe sambaedu4 
+
+# mondomaine=$(hostname -d | cut -d"." -f1)
+# fulldomaine=$(hostname -d)
+
+[ -z "$mondomaine" ] && mondomaine="sambaedu4"
+[ -z "$fulldomaine" ] && fulldomaine="${mondomaine}.lan" 
+
 # source /usr/share/se3/sbin/bibliotheque_ip_masque.sh
 
 se3network=$(grep network $interfaces_file | grep -v "#" | sed -e "s/network//g" | tr "\t" " " | sed -e "s/ //g")
@@ -371,7 +444,7 @@ do
 	
 	
 	echo -e "$COLTXT"
-	echo -e "Confirmer cette configuration réseau ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT})$COLSAISIE\c "
+	echo -e "Confirmer cette configuration réseau ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c "
 	read REPONSE
 done
 
@@ -443,9 +516,9 @@ do
 		echo -e "Confirmer la configuration pour le container ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c"
 		read REPONSE
 done
-echo -e "${COLTXT}Nom du container SE4: [se4stretch]$COLSAISIE \c"
+echo -e "${COLTXT}Nom du container SE4: [se4ad]$COLSAISIE \c"
 read se4name
-[ -z "$se4name" ] && se4name="se4stretch"
+[ -z "$se4name" ] && se4name="se4ad"
 POURSUIVRE
 echo -e "$COLTXT"
 echo -e $COLPARTIE
@@ -469,8 +542,10 @@ sleep 2
 write_lxc_lan
 write_lxc_profile
 write_lxc_bashrc
-write_se4ad_conf
+export_smb_files
+write_sambaedu_conf
 write_se4ad_install
+write_lxc_hosts_conf
 echo -e "/!\ notez bien le mot de passe root du container  --->$COLINFO se4ad $COLTXT
 Il vous sera indispensable pour le premier lancement"
 
