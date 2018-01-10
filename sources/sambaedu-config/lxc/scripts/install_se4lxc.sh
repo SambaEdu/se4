@@ -287,6 +287,11 @@ if [ ! -e "$se4ad_config" ] ; then
 	echo "lan=$lan" >>  $se4ad_config
 	echo "fulldomaine=$fulldomaine" >> $se4ad_config
 	echo "se3ip=$se3ip" >> $se4ad_config
+	echo "se3_domain=$se3_domain"  >> $se4ad_config
+	echo "netbios_name=$netbios_name" >> $se4ad_config
+	echo "se3gw=$se3gwnetbios_name" >> $se4ad_config
+	
+
 	chmod +x $se4ad_config
 fi
 
@@ -404,8 +409,6 @@ se4ad_config="$dir_config/se4ad.config"
 script_phase2="install_se4ad_phase2.sh"
 lxc_arch="$(arch)"
 ecard="br0"
-
-
 
 # A voir pour modifier avec hostname -d pour le moment on fixe sambaedu4 
 
