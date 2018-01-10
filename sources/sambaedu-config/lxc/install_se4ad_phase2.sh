@@ -219,22 +219,11 @@ function installsamba()
 
 echo -e "$COLINFO"
 echo "Installation de samba 4.5" 
-echo -e "$COLCMD\c"
+echo -e "$COLCMD"
 
 apt-get install $samba_packages 
-rm -f /etc/samba/smb.conf
-
-}
-
-
-
-
-function write_resolvconf()
-{
-cat >/etc/resolv.conf<<END
-search $fulldomaine
-nameserver 127.0.0.1
-END
+# rm -f /etc/samba/smb.conf
+echo -e "$COLTXT"
 }
 
 function write_krb5()
@@ -249,14 +238,98 @@ END
 }
 
 
+function convert_smb_to_ad()
+{
+db_dir="/etc/sambaedu/smb_export"
+if [ -e "$db_dir/smb.conf" ]; then
+		
+	echo -e "$COLINFO"
+	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
+	echo -e "$COLCMD"
+	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
+	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
+	echo -e "$COLTXT"
+else
+	
+fi
+}
+
+function write_smbconf()
+{
+cat >/etc/samba/smb.conf<<END
+# Global parameters
+[global]
+	netbios name = SE4AD
+	realm = $fulldomaine_up
+	workgroup = $mondomaine_up
+	server role = active directory domain controller
+	idmap_ldb:use rfc2307 = yes
+	dns forwarder = $nameserver
+
+[netlogon]
+	path = /var/lib/samba/sysvol/sambaedu4.lan/scripts
+	read only = No
+
+[sysvol]
+	path = /var/lib/samba/sysvol
+	read only = No
+END
+}
+
+
+function set_time 
+{
+echo -e "$COLPARTIE"
+echo "Type de configuration Ldap et mise a l'heure"
+echo -e "$COLTXT"
+
+
+echo -e "$COLINFO"
+
+if [ -n "$GATEWAY" ]; then
+	echo "Tentative de Mise à l'heure automatique du serveur sur $GATEWAY..."
+	ntpdate -b $GATEWAY
+	if [ "$?" = "0" ]; then
+		heureok="yes"
+	fi
+fi
+
+if [ "$heureok" != "yes" ];then
+
+	echo "Mise à l'heure automatique du serveur sur internet..."
+	echo -e "$COLCMD\c"
+	ntpdate -b fr.pool.ntp.org
+	if [ "$?" != "0" ]; then
+		echo -e "${COLERREUR}"
+		echo "ERREUR: mise à l'heure par internet impossible"
+		echo -e "${COLTXT}Vous devez donc vérifier par vous même que celle-ci est à l'heure"
+		echo -e "le serveur indique le$COLINFO $(date +%c)"
+		echo -e "${COLTXT}Ces renseignements sont-ils corrects ? (${COLCHOIX}O/n${COLTXT}) $COLSAISIE\c"
+		read rep
+		[ "$rep" = "n" ] && echo -e "${COLERREUR}Mettez votre serveur à l'heure avant de relancer l'installation$COLTXT" && exit 1
+	fi
+fi
+}
+
+
+function write_resolvconf()
+{
+cat >/etc/resolv.conf<<END
+search $fulldomaine
+nameserver 127.0.0.1
+END
+}
+
 #Variables :
 samba_packages="samba winbind libnss-winbind krb5-user"
 export DEBIAN_FRONTEND=noninteractive
-se4ad_config="/etc/sambaedu/se4ad.config"
+dir_config="/etc/sambaedu"
+se4ad_config="$dir_config/se4ad.config"
 
+nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
 
 echo -e "$COLPARTIE"
-echo "Prise en compte des valeur de $se4ad_config"
+echo "Prise en compte des valeurs de $se4ad_config"
 echo -e "$COLTXT"
 
 echo -e "$COLINFO"
@@ -270,7 +343,7 @@ else
 	se4ad_ip="$(ifconfig eth0 | grep "inet " | awk '{ print $2}')"
 fi
 
-
+poursuivre
 
 # A voir pour modifier ou récupérer depuis sambaedu.config 
 [ -z "$mondomaine" ] && mondomaine="sambaedu4"
@@ -377,53 +450,20 @@ echo -e "$COLPARTIE"
 echo "Installation de Samba et cie" 
 echo -e "$COLTXT"
 
-
 installsamba
 
+write_krb5
+
+convert_smb_to_ad
+
+write_smbconf
 
 write_resolvconf
 
-echo -e "$COLPARTIE"
-echo "Type de configuration Ldap et mise a l'heure"
-echo -e "$COLTXT"
-
-
-echo -e "$COLINFO"
-
-if [ -n "$GATEWAY" ]; then
-	echo "Tentative de Mise à l'heure automatique du serveur sur $GATEWAY..."
-	ntpdate -b $GATEWAY
-	if [ "$?" = "0" ]; then
-		heureok="yes"
-	fi
-fi
-
-if [ "$heureok" != "yes" ];then
-
-	echo "Mise à l'heure automatique du serveur sur internet..."
-	echo -e "$COLCMD\c"
-	ntpdate -b fr.pool.ntp.org
-	if [ "$?" != "0" ]; then
-		echo -e "${COLERREUR}"
-		echo "ERREUR: mise à l'heure par internet impossible"
-		echo -e "${COLTXT}Vous devez donc vérifier par vous même que celle-ci est à l'heure"
-		echo -e "le serveur indique le$COLINFO $(date +%c)"
-		echo -e "${COLTXT}Ces renseignements sont-ils corrects ? (${COLCHOIX}O/n${COLTXT}) $COLSAISIE\c"
-		read rep
-		[ "$rep" = "n" ] && echo -e "${COLERREUR}Mettez votre serveur à l'heure avant de relancer l'installation$COLTXT" && exit 1
-	fi
-fi
-
-
-
-# 
-# echo -e "$COLINFO"
-# echo "On stopppe le service winbind" 
-# echo -e "$COLCMD\c"
-# service winbind stop
-# insserv -r winbind
-
-
+systemctl unmask samba-ad-dc
+systemctl enable samba-ad-dc
+# systemctl disable samba winbind nmbd smbd
+systemctl mask samba winbind nmbd smbd
 	
 while [ "$TEST_PASS" != "OK" ]
 do
