@@ -222,7 +222,7 @@ echo "Installation de samba 4.5"
 echo -e "$COLCMD"
 
 apt-get install $samba_packages 
-# rm -f /etc/samba/smb.conf
+
 echo -e "$COLTXT"
 }
 
@@ -241,7 +241,7 @@ END
 function convert_smb_to_ad()
 {
 db_dir="/etc/sambaedu/smb_export"
-if [ -e "$db_dir/smb.conf" ]; then
+if [ -e "$dir_config/smb.conf" ]; then
 		
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
@@ -252,6 +252,7 @@ if [ -e "$db_dir/smb.conf" ]; then
 else
 	echo -e "$COLINFO"
 	echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelel installation de Samba AD avec sambatool" 
+	rm -f /etc/samba/smb.conf
 	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass --server-role=dc
 
 	echo -e "$COLCMD"
