@@ -282,16 +282,23 @@ if [ ! -e "$se4ad_config" ] ; then
 	echo -e "$COLINFO"
 	echo "Pas de fichier de conf $se4ad_config  -> On en crée un avec les params du se4ad"
 	echo -e "$COLTXT"
+	echo "## Adresse IP du futur SE4-AD ##"
 	echo "se4ad_ip=$se4ad_ip" > $se4ad_config
+	echo "## Nom de domaine samba du SE4-AD ##"
 	echo "mondomaine=$mondomaine" >>  $se4ad_config
-	echo "lan=$lan" >>  $se4ad_config
+	echo "## Suffixe du domaine##"
+	echo "suffixe_domaine=$suffixe_domaine" >>  $se4ad_config
+	echo "## Nom de domaine complet - realm du SE4-AD ##"
 	echo "fulldomaine=$fulldomaine" >> $se4ad_config
+	echo "## Adresse IP de l'annuaire LDAP à migrer en AD ##"
 	echo "se3ip=$se3ip" >> $se4ad_config
+	echo "## Nom du domaine samba actuel"
 	echo "se3_domain=$se3_domain"  >> $se4ad_config
+	echo "##Nom netbios du serveur se3 actuel##"
 	echo "netbios_name=$netbios_name" >> $se4ad_config
-	echo "se3gw=$se3gwnetbios_name" >> $se4ad_config
+	echo "##Adresse du serveur DNS##"
+	echo "nameserver=$nameserver" >> $se4ad_config
 	
-
 	chmod +x $se4ad_config
 fi
 
@@ -409,14 +416,15 @@ se4ad_config="$dir_config/se4ad.config"
 script_phase2="install_se4ad_phase2.sh"
 lxc_arch="$(arch)"
 ecard="br0"
+nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
 
 # A voir pour modifier avec hostname -d pour le moment on fixe sambaedu4 
 
 # mondomaine=$(hostname -d | cut -d"." -f1)
 # fulldomaine=$(hostname -d)
 
-[ -z "$mondomaine" ] && mondomaine="sambaedu4"
-[ -z "$fulldomaine" ] && fulldomaine="${mondomaine}.lan" 
+[ -z "$mondomaine" ] && mondomaine="sambaedu4" && suffixe_domaine="lan"
+[ -z "$fulldomaine" ] && fulldomaine="${mondomaine}.$suffixe_domaine" 
 
 # source /usr/share/se3/sbin/bibliotheque_ip_masque.sh
 
@@ -565,8 +573,12 @@ lxc-start -n $se4name"
 echo -e "${COLTXT}L'installation se poursuivra ensuite une fois identifié root
 /!\ Mot de passe root --->$COLINFO se4ad $COLTXT"
 echo "--------"
+echo -e "$COLINFO" 
+echo "Les valeurs utiles à la configuration du se4 seront les suivantes"
+echo -e "$COLCMD"
+cat $se4ad_config
+echo -e "$COLTXT"
 
-echo ""
 # echo "Appuyez sur ENTREE "
 exit 0
 
