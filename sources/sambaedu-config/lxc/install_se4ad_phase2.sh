@@ -193,7 +193,7 @@ apt-get upgrade --quiet --assume-yes
 echo -e "$COLPARTIE"
 echo "installation ntpdate, vim, etc..."
 echo -e "$COLTXT"
-prim_packages="ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-utils"
+prim_packages="ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-utils makepasswd haveged"
 apt-get install --quiet --assume-yes $prim_packages
 }
 
@@ -247,10 +247,14 @@ if [ -e "$db_dir/smb.conf" ]; then
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
 	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
-	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
+	samba-tool domain classicupgrade --dbdir=$db_dir --adminpass $ad_admin_pass --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
 	echo -e "$COLTXT"
 else
-	
+	echo -e "$COLINFO"
+	echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelel installation de Samba AD avec sambatool" 
+	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass --server-role=dc
+
+	echo -e "$COLCMD"
 fi
 }
 
@@ -347,13 +351,14 @@ poursuivre
 
 # A voir pour modifier ou récupérer depuis sambaedu.config 
 [ -z "$mondomaine" ] && mondomaine="sambaedu4"
-[ -z "$lan" ] && lan="lan"
-fulldomaine="$mondomaine.$lan" 
+[ -z "$suffixe_domaine" ] && suffixe_domaine="lan"
+fulldomaine="$mondomaine.$suffixe_domaine" 
 
 mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
-lan_up="$(echo "$lan" | tr [:lower:] [:upper:])"
+suffixe_domaine_up="$(echo "$suffixe_domaine" | tr [:lower:] [:upper:])"
 fulldomaine_up="$(echo "$fulldomaine" | tr [:lower:] [:upper:])"
-
+haveged
+ad_admin_pass=$(makepasswd --minchars=8)
 
 while :; do
 	case $1 in
