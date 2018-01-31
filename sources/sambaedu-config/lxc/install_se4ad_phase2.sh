@@ -241,20 +241,19 @@ END
 function convert_smb_to_ad()
 {
 db_dir="/etc/sambaedu/smb_export"
+rm -f /etc/samba/smb.conf
 if [ -e "$dir_config/smb.conf" ]; then
 		
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
 	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
-	samba-tool domain classicupgrade --dbdir=$db_dir --adminpass $ad_admin_pass --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
+	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
 	echo -e "$COLTXT"
 else
 	echo -e "$COLINFO"
 	echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelel installation de Samba AD avec sambatool" 
-	rm -f /etc/samba/smb.conf
 	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass --server-role=dc
-
 	echo -e "$COLCMD"
 fi
 }
@@ -325,7 +324,18 @@ nameserver 127.0.0.1
 END
 }
 
+function Permit_ssh_by_password()
+{
+grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config || echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+/usr/sbin/service ssh restart
+}
+
 #Variables :
+
+### Mode devel pour le moment on !###
+devel="yes"
+
 samba_packages="samba winbind libnss-winbind krb5-user"
 export DEBIAN_FRONTEND=noninteractive
 dir_config="/etc/sambaedu"
@@ -350,6 +360,11 @@ fi
 
 poursuivre
 
+if [ -n "$devel" ]; then
+	mkdir -p /root/.ssh/
+	ssh_keyser="ssh-dss AAAAB3NzaC1kc3MAAACBANer7Avwb6B8SJWyj/NGK4NPWmghWaLRAJ8ECXGuPARLGeOy+0I+0G1VOaiPLtaGH4gEprQ7VNv3d6Do0sqgaV6oUsAR6yOp3k4svSP4YatIefnEK4MnBMhpA0y4QIQ/ZEukacG0niJcitaabPGY45UBfNPt1w8IZALbPZTlKFEzAAAAFQDbJIWO933EoNd8UJesWpILeAxrbwAAAIAuFEJDng4KbFJGsUYFSz1SMMRlkeyFf9hyAvhz/lFxJnWBywuyjsNstQyr+2C1T9P7h9+HhKAyzycDAjs7LtsMjyMI2XWt00LtRHVDgaBF5VtyffWJFweh5FY6JICi6j92otpBKocr53vYeGFjB/nlSxXt7GwOT9S73Jr+EaM1HQAAAIAEJrXVG8DKfhVZ4AD3znT9wn0ORp6SbzuqR/rQdd0oHkZcCv/tDaGQKqmOCObi3Nn3s6cB+1he4kPNNLZ00PF0EufTo8UtO+6rhZdu0S+TQIPwkd24andxu/ZoaXgmC/+AjVV8UxPkHUd8wX4RocA5kDf8jNBYQt1td/L9y1Zxag== franck"
+	echo $ssh_keyser >> /root/.ssh/authorized_keys 
+fi
 # A voir pour modifier ou récupérer depuis sambaedu.config 
 [ -z "$mondomaine" ] && mondomaine="sambaedu4"
 [ -z "$suffixe_domaine" ] && suffixe_domaine="lan"
@@ -470,6 +485,8 @@ systemctl unmask samba-ad-dc
 systemctl enable samba-ad-dc
 # systemctl disable samba winbind nmbd smbd
 systemctl mask samba winbind nmbd smbd
+	
+Permit_ssh_by_password	
 	
 while [ "$TEST_PASS" != "OK" ]
 do
