@@ -282,21 +282,21 @@ if [ ! -e "$se4ad_config" ] ; then
 	echo -e "$COLINFO"
 	echo "Pas de fichier de conf $se4ad_config  -> On en crée un avec les params du se4ad"
 	echo -e "$COLTXT"
-	echo "## Adresse IP du futur SE4-AD ##"
-	echo "se4ad_ip=$se4ad_ip" > $se4ad_config
-	echo "## Nom de domaine samba du SE4-AD ##"
+	echo "## Adresse IP du futur SE4-AD ##" > $se4ad_config
+	echo "se4ad_ip=$se4ad_ip" >> $se4ad_config
+	echo "## Nom de domaine samba du SE4-AD ##" >> $se4ad_config
 	echo "mondomaine=$mondomaine" >>  $se4ad_config
-	echo "## Suffixe du domaine##"
+	echo "## Suffixe du domaine##" >> $se4ad_config
 	echo "suffixe_domaine=$suffixe_domaine" >>  $se4ad_config
-	echo "## Nom de domaine complet - realm du SE4-AD ##"
+	echo "## Nom de domaine complet - realm du SE4-AD ##" >> $se4ad_config
 	echo "fulldomaine=$fulldomaine" >> $se4ad_config
-	echo "## Adresse IP de l'annuaire LDAP à migrer en AD ##"
+	echo "## Adresse IP de l'annuaire LDAP à migrer en AD ##" >> $se4ad_config
 	echo "se3ip=$se3ip" >> $se4ad_config
-	echo "## Nom du domaine samba actuel"
+	echo "## Nom du domaine samba actuel" >> $se4ad_config
 	echo "se3_domain=$se3_domain"  >> $se4ad_config
-	echo "##Nom netbios du serveur se3 actuel##"
+	echo "##Nom netbios du serveur se3 actuel##" >> $se4ad_config
 	echo "netbios_name=$netbios_name" >> $se4ad_config
-	echo "##Adresse du serveur DNS##"
+	echo "##Adresse du serveur DNS##" >> $se4ad_config
 	echo "nameserver=$nameserver" >> $se4ad_config
 	
 	chmod +x $se4ad_config
