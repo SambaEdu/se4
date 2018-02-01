@@ -248,7 +248,7 @@ if [ -e "$dir_config/smb.conf" ]; then
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
 	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
-	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up $dir_config/smb.conf
+	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
 	echo -e "$COLTXT"
 else
 	echo -e "$COLINFO"
@@ -260,7 +260,8 @@ fi
 
 function write_smbconf()
 {
-cat >/etc/samba/smb.conf<<END
+mv /etc/samba/smb.conf /etc/samba/smb.conf.ori
+cat >/etc/samba/smb.conf<END
 # Global parameters
 [global]
 	netbios name = SE4AD
