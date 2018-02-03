@@ -298,17 +298,24 @@ if [ ! -e "$se4ad_config" ] ; then
 	echo "netbios_name=$netbios_name" >> $se4ad_config
 	echo "##Adresse du serveur DNS##" >> $se4ad_config
 	echo "nameserver=$nameserver" >> $se4ad_config
+	echo "##Pass admin LDAP##" >> $se4ad_config
+	echo "adminPw=$adminPw" >> $se4ad_config
+	echo "##base dn LDAP##" >> $se4ad_config
+	echo "ldap_base_dn=$ldap_base_dn" >> $se4ad_config
 	
 	chmod +x $se4ad_config
 fi
 
-if [ ! -e "$dir_config/ldap.conf" ]; then
-	conf_ldap="/etc/ldap/ldap.conf"
-	echo -e "$COLINFO"
-	echo "Export de la conf ldap vers $dir_config"
-	echo -e "$COLTXT"
-	cp -v $conf_ldap $dir_config/
-fi
+conf_slapd="/etc/ldap/slapd.conf"
+echo -e "$COLINFO"
+echo "Export de la conf ldap et de ldapse3.ldif vers $dir_config"
+echo -e "$COLTXT"
+cp -v $conf_slapd $dir_config/
+ldapsearch -xLLL -D "$adminRdn,$ldap_base_dn" -w $adminPw > $dir_config/ldapse3.ldif
+schema_dir="/etc/ldap/schema"
+cp -v $schema_dir/ltsp.schema $schema_dir/samba.schema $schema_dir/printer.schema $dir_config/
+cp -v /var/lib/ldap/DB_CONFIG $dir_config/
+cp -v /etc/ldap/slapd.pem $dir_config/
 
 dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc"
 # mkdir -p $dir_config_lxc
@@ -405,6 +412,8 @@ echo -e "$COLTXT"
 
 ## recuperation des variables necessaires pour interoger mysql ###
 source /etc/se3/config_m.cache.sh
+source /etc/se3/config_l.cache.sh
+
 source /usr/share/se3/includes/functions.inc.sh 
 
 
