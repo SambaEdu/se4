@@ -212,6 +212,48 @@ se4ad
 END
 }
 
+function install_slapd
+{
+
+echo -e "$COLINFO"
+echo "Installation et configuration du backend slapd pour récupération des anciennes données" 
+echo -e "$COLCMD"
+apt-get install --assume-yes slapd
+echo -e "$COLTXT"
+echo -e "$COLINFO"
+echo "configuration et import de l'annuaire" 
+echo -e "$COLTXT"
+/etc/init.d/slapd stop
+
+cat > /etc/default/slapd <<END
+SLAPD_CONF="/etc/ldap/slapd.conf"
+SLAPD_USER="openldap"
+SLAPD_GROUP="openldap"
+SLAPD_PIDFILE=
+SLAPD_SERVICES="ldap:/// ldapi:///"
+SLAPD_SENTINEL_FILE=/etc/ldap/noslapd
+SLAPD_OPTIONS=""
+END
+
+cat > /etc/lap/ldap.conf <<END
+HOST $se4ad_ip
+BASE $ldap_base_dn
+
+END
+
+rm /etc/ldap/slapd.d -rf
+cp $dir_config/slapd.conf /etc/ldap/
+sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/$se3ldif
+
+
+slapadd -l $dir_config/$se3ldif
+chown -R openldap:openldap /var/lib/ldap/
+chown -R openldap:openldap /etc/ldap
+# Attnetion au droits !
+/etc/init.d/slapd start
+
+}
+
 
 function installsamba()
 {
@@ -240,7 +282,7 @@ END
 
 function convert_smb_to_ad()
 {
-db_dir="/etc/sambaedu/smb_export"
+
 rm -f /etc/samba/smb.conf
 if [ -e "$dir_config/smb.conf" ]; then
 		
@@ -248,12 +290,15 @@ if [ -e "$dir_config/smb.conf" ]; then
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
 	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
+	sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/smb.conf
+	sed "s#passdb backend.*#passdb backend = ldapsam:ldap://$se4ad_ip#" -i $dir_config/smb.conf  
+	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
 	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
 	echo -e "$COLTXT"
 else
 	echo -e "$COLINFO"
 	echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelel installation de Samba AD avec sambatool" 
-	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass --server-role=dc
+	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass  
 	echo -e "$COLCMD"
 fi
 }
@@ -267,10 +312,10 @@ cat >/etc/samba/smb.conf<END
 	netbios name = SE4AD
 	realm = $fulldomaine_up
 	workgroup = $mondomaine_up
+	dns forwarder = $nameserver
 	server role = active directory domain controller
 	idmap_ldb:use rfc2307 = yes
-	dns forwarder = $nameserver
-
+	
 [netlogon]
 	path = /var/lib/samba/sysvol/sambaedu4.lan/scripts
 	read only = No
@@ -341,8 +386,9 @@ samba_packages="samba winbind libnss-winbind krb5-user"
 export DEBIAN_FRONTEND=noninteractive
 dir_config="/etc/sambaedu"
 se4ad_config="$dir_config/se4ad.config"
-
+db_dir="/etc/sambaedu/smb_export"
 nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
+se3ldif="ldapse3.ldif"
 
 echo -e "$COLPARTIE"
 echo "Prise en compte des valeurs de $se4ad_config"
@@ -363,7 +409,7 @@ poursuivre
 
 if [ -n "$devel" ]; then
 	mkdir -p /root/.ssh/
-	ssh_keyser="ssh-dss AAAAB3NzaC1kc3MAAACBANer7Avwb6B8SJWyj/NGK4NPWmghWaLRAJ8ECXGuPARLGeOy+0I+0G1VOaiPLtaGH4gEprQ7VNv3d6Do0sqgaV6oUsAR6yOp3k4svSP4YatIefnEK4MnBMhpA0y4QIQ/ZEukacG0niJcitaabPGY45UBfNPt1w8IZALbPZTlKFEzAAAAFQDbJIWO933EoNd8UJesWpILeAxrbwAAAIAuFEJDng4KbFJGsUYFSz1SMMRlkeyFf9hyAvhz/lFxJnWBywuyjsNstQyr+2C1T9P7h9+HhKAyzycDAjs7LtsMjyMI2XWt00LtRHVDgaBF5VtyffWJFweh5FY6JICi6j92otpBKocr53vYeGFjB/nlSxXt7GwOT9S73Jr+EaM1HQAAAIAEJrXVG8DKfhVZ4AD3znT9wn0ORp6SbzuqR/rQdd0oHkZcCv/tDaGQKqmOCObi3Nn3s6cB+1he4kPNNLZ00PF0EufTo8UtO+6rhZdu0S+TQIPwkd24andxu/ZoaXgmC/+AjVV8UxPkHUd8wX4RocA5kDf8jNBYQt1td/L9y1Zxag== franck"
+	ssh_keyser="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMQ6Nd0Kg+L8200pR2CxUVHBtmjQ2xAX2zqArqV45horU8qopf6AYEew0oKanK3GzY2nrs5g2SYbxqs656YKa/OkTslSc5MR/Nndm9/J1CUsurTlo+VwXJ/x1qoLBmGc/9mZjdlNVKIPwkuHMKUch+XmsWF92GYEpTA1D5ZmfuTxP0GMTpjbuPhas96q+omSubzfzpH7gLUX/afRHfpyOcYWdzNID+xdmML/a3DMtuCatsHKO94Pv4mxpPeAXpJdE262DPXPz2ZIoWSqPz8dQ6C3v7/YW1lImUdOah1Fwwei4jMK338ymo6huR/DheCMa6DEWd/OZK4FW2KccxjXvHALn/QCHWCw0UMQnSVpmFZyV4MqB6YvvQ6u0h9xxWIvloX+sjlFCn71hLgH7tYsj4iBqoStN9KrpKC9ZMYreDezCngnJ87FzAr/nVREAYOEmtfLN37Xww3Vr8mZ8/bBhU1rqfLIaDVKGAfnbFdN6lOJpt2AX07F4vLsF0CpPl4QsVaow44UV0JKSdYXu2okcM80pnVnVmzZEoYOReltW53r1bIZmDvbxBa/CbNzGKwxZgaMSjH63yX1SUBnUmtPDQthA7fK8xhQ1rLUpkUJWDpgLdC2zv2jsKlHf5fJirSnCtuvq6ux1QTXs+bkTz5bbMmsWt9McJMgQzWJNf63o8jw== GitLab"
 	echo $ssh_keyser >> /root/.ssh/authorized_keys 
 fi
 # A voir pour modifier ou récupérer depuis sambaedu.config 
@@ -374,6 +420,8 @@ fulldomaine="$mondomaine.$suffixe_domaine"
 mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
 suffixe_domaine_up="$(echo "$suffixe_domaine" | tr [:lower:] [:upper:])"
 fulldomaine_up="$(echo "$fulldomaine" | tr [:lower:] [:upper:])"
+sambadomaine_old="$(echo $se3_domain| tr [:lower:] [:upper:])"
+sambadomaine_new="$mondomaine_up"
 haveged
 ad_admin_pass=$(makepasswd --minchars=8)
 
@@ -416,7 +464,7 @@ if [ "$download" = "yes" ]; then
 	gensourcelist
 	gensourcese4
 	echo -e "$COLINFO"
-	echo "Téléchargement du backport samba 4.4" 
+	echo "Téléchargement de samba 4" 
 	echo -e "$COLCMD\c"
 
 	apt-get install $samba_packages -d
@@ -488,7 +536,27 @@ systemctl enable samba-ad-dc
 systemctl mask samba winbind nmbd smbd
 	
 Permit_ssh_by_password	
-	
+while [ "$TEST_PASS" != "OK" ]
+do
+echo -e "$COLCMD"
+echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
+echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et une Majuscule $COLTXT"
+read administrator_pass
+echo -e "$administrator_pass\n$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
+
+    if [ $? != 0 ]; then
+        echo -e "$COLERREUR"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
+        echo "Merci de saisir le mot de passe à nouveau"
+        sleep 1
+    else
+        TEST_PASS="OK"
+        echo -e "$COLINFO\nMot de passe root changé avec succès :)"
+        sleep 1
+    fi
+done
+echo -e "$COLTXT"	
 while [ "$TEST_PASS" != "OK" ]
 do
 echo -e "$COLCMD"
@@ -508,12 +576,12 @@ done
 echo -e "$COLTXT"
 
 echo -e "$COLTITRE"
-echo "L'installation est terminée. Bonne utilisation de SambaEdu4-AD !"
+echo "L'installation est terminée. Bonne utilisation de SambaEdu4-AD ! :)"
 echo -e "$COLTXT"
 
-script_absolute_path=$(readlink -f "$0")
-[ "$DEBUG" != "yes" ] &&  mv "$script_absolute_path" /root/install_phase2.done 
-[ -e /root/install_phase2.sh ] && mv /root/install_phase2.sh  /root/install_phase2.done
+# script_absolute_path=$(readlink -f "$0")
+# [ "$DEBUG" != "yes" ] &&  mv "$script_absolute_path" /root/install_phase2.done 
+[ -e /root/install_phase2.sh ] && mv /root/install_se4ad_phase2.sh  /root/install_phase2.done
 . /etc/profile
 
 unset DEBIAN_FRONTEND
