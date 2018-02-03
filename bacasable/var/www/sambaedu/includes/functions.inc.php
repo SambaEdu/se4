@@ -51,11 +51,11 @@ function isauth()
                 - Si non, renvoie ""
                 - Si oui, renvoie l'uid de la personne
     */
-    
+
     $login="";
     session_name("Sambaedu");
     @session_start();
-    $login= $_SESSION['login'];
+    $login= (isset($_SESSION['login'])?$_SESSION['login']:"");
     return $login;
 }
 
@@ -188,26 +188,26 @@ function ldap_get_right($type,$login)
     global $ldap_server, $ldap_port, $adminDn, $adminPw, $dn;
 
     $nom="cn=" . $login . "," . $dn["people"];
-    
+
     $ret="N";
-    
+
     $ldap = ldap_connect ("ldaps://".$ldap_server, $ldap_port);
     if ( !$ldap ) {
         echo "Error connecting to LDAP server";
     } else {
-        if ( $adminDn != "") 
+        if ( $adminDn != "")
             $r = ldap_bind ( $ldap, $adminDn, $adminPw );     // bind as administrator
-        else 
+        else
             $r = ldap_bind ( $ldap ); // bind as anonymous
-  
-        if (!$r) 
+
+        if (!$r)
             echo "Invalid Admin's login for LDAP Server";
         else {
             // Recherche du nom exact
             $search_filter = "(member=$nom)";
             //$ret=ldap_get_right_search ($type,$search_filter,$ldap,$base_search);
             $ret=ldap_get_right_search ($type,$search_filter,$ldap);
-/*            
+/*
             if ($ret=="N") {
             // Recherche sur les Posixgroups d'appartenance
                 $result1 = @ldap_list ( $ldap, $dn["groups"], "memberUid=$login", array ("cn") );
@@ -225,7 +225,7 @@ function ldap_get_right($type,$login)
                 @ldap_free_result ( $result1 );
                 }
             }
-*/            
+*/
             #if ($ret=="N") {
             // Recherche sur les GroupsOfNames d'appartenance
                 $result1 = @ldap_list ( $ldap, $dn["groups"], "member=cn=$login,".$dn["people"], array ("cn") );
