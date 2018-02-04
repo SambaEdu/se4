@@ -1,59 +1,69 @@
-
 <?php
 
-require ("config.inc.php");
-require ("functions.inc.php");
+   /**
 
-echo "ldap_server $ldap_server<br />";
-echo "lang : $lang<br />";
+   * Page d'accueil redirige vers auth ou blank ou test
+   * @Version $Id$
 
-#echo "DBG > CN=administrator,CN=users,DC=sambaedu,DC=home<br />";
-#echo "adminDN : $adminDn adminPWD : $adminPw<br />";
+   * @Projet LCS / SambaEdu
 
-echo "<b>fonction user_valid_pwd</b> : vérification du couple login/pwd de l'utilisateur<br />";
+   * @auteurs Olivier Lecluse "wawa"
+   * @auteurs  jLCF >:>  jean-luc.chretien@tice.ac-caen.fr
+   * @auteurs   oluve  olivier.le_monnier@crdp.ac-caen.fr
+   * @auteurs Equipe Tice academie de Caen
 
-if (user_valid_passwd ("jchretien", "Bri1lola") )  {
-	echo "auth OK<br />";
-        echo "<b>On cherche si jchretien possede le droit se_is_admin </b><br />";
-        $RES=ldap_get_right("se_is_admin", "jchretien");
-        echo "RES : $RES<br />";
-} else
-	echo "auth NOK<br />";
+   * @Licence Distribue selon les termes de la licence GPL
 
+   * @note
 
+   */
 
+   /**
 
-echo "<b>-----------------------</b><br />";
-echo "<b>solution jLCF</b><br />";
-$ds = @ldap_connect("ldaps://".$ldap_server, $ldap_port);
-if ($ds) {
-    $ret = ldap_bind($ds, "CN=jchretien,CN=users,DC=sambaedu,DC=home", "Bri1lola");
-    if ( $ret ) {
-      echo "L'Authentification a reussie, on genere un ticket<br />";
-      exec("kinit -k -t /home/adminse4/adminse4.keytab adminse4@SAMBAEDU.HOME",$Err);
-      ldap_unbind ($ds);
-    } else {
-      echo "L'Authentification a echouee<br />";
-    }
-} 
+   * @Repertoire: /
+   * file: index.php
+   */
 
+session_name("Sambaedu");
+@session_start();
 
+require 'config.inc.php';
+require 'functions.inc.php';
 
-echo "<b>solution RTFM GSSAPI (on suppose qu'un ticket a été généré) </b><br />";
-#$ldap_server='ldap://sambaedu.home';
-#$ldap_port="389";
-
-$ds = ldap_connect("ldap://".$ldap_server,$ldap_port);
-if ($ds) {
-    #ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 3);
-    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-    ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
-    $ret = ldap_sasl_bind($ds, 'null', 'null', 'GSSAPI');
-    if ( $ret ) {
-      echo "L'Authentification a reussie<br />";
-    } else {
-      echo "L'Authentification a echouee<br />";
-    }
+$login=isauth();
+if ($login =="" ) {
+    header("Location:$urlauth");
+    exit;
 }
- 
+
+$registred=2;
+setparam("registred",2);
 ?>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+<head>
+<title>Interface SE3</title>
+</head>
+<!--FRAMESET COLS="220,*" BORDER="0"-->
+<FRAMESET COLS="227,*">
+<FRAME SRC="menu.php" NAME="menu" frameborder="0" /><!--/FRAME-->
+
+<?php if (ldap_get_right("se3_is_admin",$login)=="Y")  {
+
+    if ($affiche_etat == "1") {
+     if ($registred <= 1)  { ?>
+	<FRAME SRC="blank.php" NAME="main" frameborder="0" /><!--/FRAME-->
+<?php
+     } else {
+?>
+	<FRAME SRC="test.php" NAME="main" frameborder="0" /><!--/FRAME-->
+<?php   }
+    } else { ?>
+	<FRAME SRC="blank.php" NAME="main" frameborder="0" /><!--/FRAME-->
+ <?php }
+   } else { ?>
+   <FRAME SRC="individuel.php?uid=$login" NAME="main" frameborder="0" /><!--/FRAME-->
+<?php } ?>
+</FRAMESET>
+</html>
