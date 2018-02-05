@@ -242,10 +242,11 @@ BASE $ldap_base_dn
 END
 
 rm /etc/ldap/slapd.d -rf
-cp $dir_config/slapd.conf /etc/ldap/
+cp $dir_config/slapd.conf $dir_config/slapd.pem /etc/ldap/
 sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/$se3ldif
 
 
+cp $dir_config/DB_CONFIG  /var/lib/ldap/
 slapadd -l $dir_config/$se3ldif
 chown -R openldap:openldap /var/lib/ldap/
 chown -R openldap:openldap /etc/ldap
@@ -377,12 +378,64 @@ grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config || echo "PermitRootLogin yes
 /usr/sbin/service ssh restart
 }
 
+function change_pass_admin()
+{
+TEST_PASS="none"
+while [ "$TEST_PASS" != "OK" ]
+do
+echo -e "$COLCMD"
+echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
+echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et au moins une Majuscule $COLTXT"
+read administrator_pass
+echo -e "$administrator_pass\n$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
+
+    if [ $? != 0 ]; then
+        echo -e "$COLERREUR"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
+        echo "Merci de saisir le mot de passe à nouveau"
+        sleep 1
+    else
+        TEST_PASS="OK"
+        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
+        sleep 1
+    fi
+done
+echo -e "$COLTXT"
+}
+
+function change_pass_root()
+{	
+TEST_PASS="none"
+while [ "$TEST_PASS" != "OK" ]
+do
+echo -e "$COLCMD"
+echo -e "Entrez un mot de passe pour le compte super-utilisateur root $COLTXT"
+passwd
+    if [ $? != 0 ]; then
+        echo -e "$COLERREUR"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
+        echo "Merci de saisir le mot de passe à nouveau"
+        sleep 1
+    else
+        TEST_PASS="OK"
+        echo -e "$COLINFO\nMot de passe root changé avec succès :)"
+        sleep 1
+    fi
+done
+echo -e "$COLTXT"
+}
+
+
+
+
+
 #Variables :
 
 ### Mode devel pour le moment on !###
 devel="yes"
 
-samba_packages="samba winbind libnss-winbind krb5-user"
+samba_packages="samba winbind libnss-winbind krb5-user smbclient"
 export DEBIAN_FRONTEND=noninteractive
 dir_config="/etc/sambaedu"
 se4ad_config="$dir_config/se4ad.config"
@@ -522,9 +575,11 @@ echo -e "$COLTXT"
 
 installsamba
 
-write_krb5
+install_slapd
 
 convert_smb_to_ad
+
+write_krb5
 
 write_smbconf
 
@@ -534,46 +589,12 @@ systemctl unmask samba-ad-dc
 systemctl enable samba-ad-dc
 # systemctl disable samba winbind nmbd smbd
 systemctl mask samba winbind nmbd smbd
+
+change_pass_admin
 	
 Permit_ssh_by_password	
-while [ "$TEST_PASS" != "OK" ]
-do
-echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
-echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et une Majuscule $COLTXT"
-read administrator_pass
-echo -e "$administrator_pass\n$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
 
-    if [ $? != 0 ]; then
-        echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
-        echo "Merci de saisir le mot de passe à nouveau"
-        sleep 1
-    else
-        TEST_PASS="OK"
-        echo -e "$COLINFO\nMot de passe root changé avec succès :)"
-        sleep 1
-    fi
-done
-echo -e "$COLTXT"	
-while [ "$TEST_PASS" != "OK" ]
-do
-echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte super-utilisateur root $COLTXT"
-passwd
-    if [ $? != 0 ]; then
-        echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
-        echo "Merci de saisir le mot de passe à nouveau"
-        sleep 1
-    else
-        TEST_PASS="OK"
-        echo -e "$COLINFO\nMot de passe root changé avec succès :)"
-        sleep 1
-    fi
-done
-echo -e "$COLTXT"
+change_pass_root
 
 echo -e "$COLTITRE"
 echo "L'installation est terminée. Bonne utilisation de SambaEdu4-AD ! :)"
