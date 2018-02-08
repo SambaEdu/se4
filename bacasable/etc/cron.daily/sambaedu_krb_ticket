@@ -1,5 +1,8 @@
 #!/bin/bash
 
-su -c "kinit -k -t /home/adminse4/adminse4.keytab adminse4@SAMBAEDU.HOME" www-data -s /bin/bash
+# Destroys  the existing ticket
+su -c "kdestroy -q" www-data -s /bin/bash
+# Generate a new ticket
+su -c "kinit -k -t /home/adminse4/adminse4.keytab adminse4@SAMBAEDU.HOME -l 24h" www-data -s /bin/bash
 CACHEPATH=`find /tmp -name systemd*apache2*`
 cp -a /tmp/krb5cc_33 /$CACHEPATH/tmp/
