@@ -1,0 +1,5 @@
+#!/bin/bash
+
+su -c "kinit -k -t /home/adminse4/adminse4.keytab adminse4@SAMBAEDU.HOME" www-data -s /bin/bash
+CACHEPATH=`find /tmp -name systemd*apache2*`
+cp -a /tmp/krb5cc_33 /$CACHEPATH/tmp/
