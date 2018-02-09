@@ -218,7 +218,7 @@ function install_slapd
 echo -e "$COLINFO"
 echo "Installation et configuration du backend slapd pour récupération des anciennes données" 
 echo -e "$COLCMD"
-apt-get install --assume-yes slapd
+apt-get install --assume-yes slapd ldb-tools
 echo -e "$COLTXT"
 echo -e "$COLINFO"
 echo "configuration et import de l'annuaire" 
@@ -235,10 +235,13 @@ SLAPD_SENTINEL_FILE=/etc/ldap/noslapd
 SLAPD_OPTIONS=""
 END
 
-cat > /etc/lap/ldap.conf <<END
+cat > /etc/ldap/ldap.conf <<END
 HOST $se4ad_ip
 BASE $ldap_base_dn
+END
 
+cat > /etc/ldap.secret <<END
+$adminPw
 END
 
 rm /etc/ldap/slapd.d -rf
@@ -254,6 +257,51 @@ chown -R openldap:openldap /etc/ldap
 /etc/init.d/slapd start
 
 }
+
+function extract_ldifs ()
+{
+
+ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b ou=Rights,$ldap_base_dn cn | sed -n 's/^cn: //p' | while read cn_rights
+do
+	
+cat >> $dir_config/ad_rights.ldif <<END	
+dn: CN=$cn_rights,OU=Rights,$ad_base_dn
+objectClass: group
+objectClass: top
+instanceType: 4
+member: CN=Administrator,CN=Users,$ad_base_dn
+END
+ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b cn=$cn_rights,ou=Rights,$ldap_base_dn member | sed -n 's/member: uid=//p' | cut -d "," -f1 | grep -v "^admin" | while read member_rights
+	do
+		echo "member: CN=member_rights,CN=Users,$ad_base_dn" >> $dir_config/ad_rights.ldif
+	done
+	
+ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b cn=$cn_rights,ou=Rights,$ldap_base_dn member | sed -n 's/member: cn=//p' | cut -d "," -f1 | while read member_rights
+	do
+		echo "member: CN=member_rights,OU=Groups,$ad_base_dn" >> $dir_config/ad_rights.ldif
+	done
+echo ""	>> $dir_config/ad_rights.ldif
+done
+
+if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn| sed -n 's/^cn: //p')" ]; then
+	ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn| sed -n 's/^cn: //p' | while read cn_parcs
+	do
+	cat >> $dir_config/ad_parcs.ldif <<END	
+dn: CN=$cn_parcs,OU=Parcs,$ad_base_dn
+objectClass: group
+objectClass: top
+instanceType: 4
+END
+	if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: uid=//p'   ]; then
+		ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: uid=//p'  | cut -d "," -f1 | while read member_parcs
+		do
+			echo "member: CN=member_parcs,OU=Parcs,$ad_base_dn" >> $dir_config/ad_parcs.ldif
+		done
+	fi
+	done
+fi
+}
+
 
 
 function installsamba()
@@ -302,7 +350,83 @@ else
 	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass  
 	echo -e "$COLCMD"
 fi
+
+systemctl unmask samba-ad-dc
+systemctl enable samba-ad-dc
+# systemctl disable samba winbind nmbd smbd
+systemctl mask samba winbind nmbd smbd
+
+echo -e "$COLINFO"
+echo "En avant la musique :) - lancement de Samba AD-DC"
+echo -e "$COLCMD"
+/etc/init.d/samba-ad-dc start
+echo -e "$COLTXT"
+
+
 }
+
+
+function modif_ldb()
+{
+echo -e "$COLINFO"
+echo "Ajout des branches de l'annuaire propres à SE4"
+echo -e "$COLCMD"
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: OU=Groups,$ad_base_dn
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+instanceType: 4
+OU: Groups
+description: branche des groupes
+EOF
+
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: OU=Trash,$ad_base_dn
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+instanceType: 4
+OU: Trash
+description: branche de la corbeille
+EOF
+
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: OU=Parcs,$ad_base_dn
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+instanceType: 4
+OU: Parcs
+description: branche des parcs
+EOF
+
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: OU=Printers,$ad_base_dn
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+instanceType: 4
+OU: Printers
+description: branche des imprimantes
+EOF
+ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/rights_ad.ldif
+
+
+ldapsearch -xLLL -D $ad_bindDN -w $ad_bindPW -b $ad_base_dn -H ldaps://sambaedu4.lan "(objectClass=group)" dn | grep "dn:" | while read dn
+do
+	rdn="$(echo $dn | sed -e "s/dn: //" | cut -d "," -f1)"
+	ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+$dn
+changetype: moddn
+newrdn: $rdn
+deleteoldrdn: 1
+newsuperior: OU=Groups,$ad_base_dn
+EOF
+done
+
+}
+
 
 function write_smbconf()
 {
@@ -386,13 +510,13 @@ do
 echo -e "$COLCMD"
 echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
 echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et au moins une Majuscule $COLTXT"
-read administrator_pass
-echo -e "$administrator_pass\n$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+read -r administrator_pass
+printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
 smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
 
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité"
         echo "Merci de saisir le mot de passe à nouveau"
         sleep 1
     else
@@ -402,6 +526,13 @@ smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null
     fi
 done
 echo -e "$COLTXT"
+}
+
+function change_policy_passwords() {
+samba-tool domain passwordsettings set --complexity=off
+samba-tool domain passwordsettings set --history-length=0
+samba-tool domain passwordsettings set --min-pwd-age=0
+samba-tool domain passwordsettings set --max-pwd-age=0
 }
 
 function change_pass_root()
@@ -447,6 +578,28 @@ echo -e "$COLPARTIE"
 echo "Prise en compte des valeurs de $se4ad_config"
 echo -e "$COLTXT"
 
+#### Fichier de conf contient ces variables ####
+# ip du se4ad --> $se4ad_ip" 
+
+# Nom de domaine samba du SE4-AD --> $mondomaine" 
+
+# Suffixe du domaine --> $suffixe_domaine" 
+
+# Nom de domaine complet - realm du SE4-AD --> $fulldomaine" 
+
+# Adresse IP de l'annuaire LDAP à migrer en AD --> $se3ip" 
+
+# Nom du domaine samba actuel --> $se3_domain"  
+
+# Nom netbios du serveur se3 actuel--> $netbios_name" 
+
+# Adresse du serveur DNS --> $nameserver" 
+
+# Pass admin LDAP --> $adminPw" 
+
+# base dn LDAP ancienne --> $ldap_base_dn
+
+
 echo -e "$COLINFO"
 if [ -e "$se4ad_config" ] ; then
  	echo "$se4ad_config est bien present sur la machine"
@@ -469,6 +622,8 @@ fi
 [ -z "$mondomaine" ] && mondomaine="sambaedu4"
 [ -z "$suffixe_domaine" ] && suffixe_domaine="lan"
 fulldomaine="$mondomaine.$suffixe_domaine" 
+ad_base_dn="DC=$mondomaine,DC=$suffixe_domaine"
+ad_bindDN="CN=Administrator,CN=users,ad_base_dn"
 
 mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
 suffixe_domaine_up="$(echo "$suffixe_domaine" | tr [:lower:] [:upper:])"
@@ -555,7 +710,7 @@ export  DEBIAN_FRONTEND
 export  DEBIAN_PRIORITY
 
 test_ecard
-# LADATE=$(date +%d-%m-%Y)
+# LADATE="$(date +%d-%m-%Y)"
 # fichier_log="/etc/se3/install-stretch-$LADATE.log"
 # touch $fichier_log
 
@@ -577,6 +732,8 @@ installsamba
 
 install_slapd
 
+extract_ldifs
+
 convert_smb_to_ad
 
 write_krb5
@@ -585,13 +742,12 @@ write_smbconf
 
 write_resolvconf
 
-systemctl unmask samba-ad-dc
-systemctl enable samba-ad-dc
-# systemctl disable samba winbind nmbd smbd
-systemctl mask samba winbind nmbd smbd
-
 change_pass_admin
-	
+
+modif_ldb
+
+change_policy_passwords
+
 Permit_ssh_by_password	
 
 change_pass_root
