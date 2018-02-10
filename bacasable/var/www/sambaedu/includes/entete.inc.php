@@ -35,8 +35,8 @@ require("config.inc.php");
 require_once ("functions.inc.php");
 
 require_once ("lang.inc.php");
-bindtextdomain('se3-core',"/var/www/se3/locale");
-textdomain ('se3-core');
+bindtextdomain('se4-core', "/var/www/sambaedu/locale");
+textdomain('se4-core');
 
 require_once ("traitement_data.inc.php");
 

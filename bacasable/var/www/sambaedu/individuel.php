@@ -24,7 +24,7 @@
 session_name("Sambaedu");
 @session_start();
 require("entete.inc.php");
-require ("config.inc.php");
+require_once "config.inc.php";
 require ("ldap.inc.php");
 require("ihm.inc.php");
 

@@ -27,16 +27,17 @@
     @session_start();
 
 	require_once("lang.inc.php");
-	bindtextdomain('se3-core',"/var/www/se3/locale");
-	textdomain ('se3-core');
+	bindtextdomain('se4-core', "/var/www/sambaedu/locale");
+    textdomain('se4-core');
 
-	require ("config.inc.php");
+	require_once "config.inc.php";
 	//require ("menu.inc.php");
 	require ("functions.inc.php");
 	$login= $_SESSION['login'];
 	require ("menu.inc.php");
 	if ($login == ""){
 		header("Location:$urlauth");
+        exit;
 	}
 	else{
 ?>

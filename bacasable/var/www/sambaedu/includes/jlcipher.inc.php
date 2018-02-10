@@ -33,7 +33,7 @@ $MsgError[2]="MaxTimeLife expire";
 $MsgError[3]=$MsgError[1]." and ".$MsgError[2];
 $MsgError[4]="Authentification error";
 
-$logpath ="/var/log/se3/";
+$logpath ="/var/log/sambaedu/";
 
 
 

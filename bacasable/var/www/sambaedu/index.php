@@ -27,7 +27,7 @@
 session_name("Sambaedu");
 @session_start();
 
-require 'config.inc.php';
+require_once 'config.inc.php';
 require 'functions.inc.php';
 
 $login=isauth();
@@ -37,7 +37,7 @@ if ($login =="" ) {
 }
 
 $registred=2;
-setparam("registred",2);
+set_config_se4("registred",2); ///A quoi ça sert ? mrfi
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
