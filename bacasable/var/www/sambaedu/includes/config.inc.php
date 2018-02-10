@@ -101,10 +101,10 @@ function set_config_se4( $param, $valeur, $module = "base") {
 function get_config_se3 () {
 	# Paramètres de la base de données
 
-	$dbhost="localhost";
-	$dbname="se3db";
-	$dbuser="se3db_admin";
-	$dbpass="";
+	$dbhost="127.0.0.1";
+    $dbname="se4";
+    $dbuser="root";
+    $dbpass="philou";
 
 	$srv_id=1;
 
@@ -236,8 +236,8 @@ $config = get_config ();
 	$dn["rights"] = "$rightsRdn,$ldap_base_dn";
 	$dn["parcs"] = "$parcsRdn,$ldap_base_dn";
 	$dn["computers"] = "$computersRdn,$ldap_base_dn";
-#	$dn["printers"] = "$printersRdn,$ldap_base_dn";
-#	$dn["trash"] = "$trashRdn,$ldap_base_dn";
+	$dn["printers"] = "$printersRdn,$ldap_base_dn";
+	$dn["trash"] = "$trashRdn,$ldap_base_dn";
 //}
 
 ?>
