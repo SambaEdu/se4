@@ -302,6 +302,8 @@ if [ ! -e "$se4ad_config" ] ; then
 	echo "adminPw=$adminPw" >> $se4ad_config
 	echo "##base dn LDAP##" >> $se4ad_config
 	echo "ldap_base_dn=$ldap_base_dn" >> $se4ad_config
+	echo "##Rdn admin LDAP##" >> $se4ad_config
+	echo "adminRdn=$adminRdn" >> $se4ad_config
 	
 	chmod +x $se4ad_config
 fi
