@@ -366,63 +366,94 @@ echo -e "$COLTXT"
 }
 
 
+function change_pass_admin()
+{
+TEST_PASS="none"
+while [ "$TEST_PASS" != "OK" ]
+do
+echo -e "$COLCMD"
+echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
+echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et au moins une Majuscule $COLTXT"
+read -r administrator_pass
+printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
+
+    if [ $? != 0 ]; then
+        echo -e "$COLERREUR"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité"
+        echo "Merci de saisir le mot de passe à nouveau"
+        sleep 1
+    else
+        TEST_PASS="OK"
+        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
+        sleep 1
+    fi
+done
+echo -e "$COLTXT"
+}
+
+
+
+
+function ldbadd_ou()
+{
+local dn_add=$1
+local rdn_add=$2
+local desc_add=$3
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: $dn_add
+changetype: add
+objectClass: organizationalUnit
+objectClass: top
+instanceType: 4
+OU: $rdn_add
+description: $desc_add
+EOF
+}
+
+function ldbmv_grp()
+{
+local dn_mv=$1
+local rdn_mv=$2
+local target_dn_mv=$3
+
+ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
+dn: $dn_mv
+changetype: moddn
+newrdn: $rdn_mv
+deleteoldrdn: 1
+newsuperior: $target_dn_mv
+EOF
+}
+
 function modif_ldb()
 {
 echo -e "$COLINFO"
 echo "Ajout des branches de l'annuaire propres à SE4"
 echo -e "$COLCMD"
-ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
-dn: OU=Groups,$ad_base_dn
-changetype: add
-objectClass: organizationalUnit
-objectClass: top
-instanceType: 4
-OU: Groups
-description: branche des groupes
-EOF
+ldbadd_ou "OU=Groups,$ad_base_dn" "Groups" "Branche des Groupes"
+ldbadd_ou "OU=Trash,$ad_base_dn" "Trash" "Branche de la corbeille"
+ldbadd_ou "OU=Parcs,$ad_base_dn" "Parcs" "Branche parcs"
+ldbadd_ou "OU=Printers,$ad_base_dn" "Printers" "Branche imprimantes"
 
-ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
-dn: OU=Trash,$ad_base_dn
-changetype: add
-objectClass: organizationalUnit
-objectClass: top
-instanceType: 4
-OU: Trash
-description: branche de la corbeille
-EOF
-
-ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
-dn: OU=Parcs,$ad_base_dn
-changetype: add
-objectClass: organizationalUnit
-objectClass: top
-instanceType: 4
-OU: Parcs
-description: branche des parcs
-EOF
-
-ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
-dn: OU=Printers,$ad_base_dn
-changetype: add
-objectClass: organizationalUnit
-objectClass: top
-instanceType: 4
-OU: Printers
-description: branche des imprimantes
-EOF
 ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/rights_ad.ldif
 
-
-ldapsearch -xLLL -D $ad_bindDN -w $ad_bindPW -b $ad_base_dn -H ldaps://sambaedu4.lan "(objectClass=group)" dn | grep "dn:" | while read dn
+echo -e "$COLINFO"
+echo "Déplacement des groupes dans la branche dédiée"
+echo -e "$COLCMD"
+# ldapsearch -xLLL -D $ad_bindDN -w $administrator_pass -b $ad_base_dn -H ldaps://sambaedu4.lan "(objectClass=group)" dn | grep "dn:" | while read dn
+ldbsearch -H /var/lib/samba/private/sam.ldb -b "CN=users,$ad_base_dn" "(objectClass=group)" dn | grep "dn:" | while read dn
 do
 	rdn="$(echo $dn | sed -e "s/dn: //" | cut -d "," -f1)"
-	ldbmodify -H /var/lib/samba/private/sam.ldb <<EOF
-$dn
-changetype: moddn
-newrdn: $rdn
-deleteoldrdn: 1
-newsuperior: OU=Groups,$ad_base_dn
-EOF
+	rdn_classe="$(echo $rdn | sed -n "s/^CN=Classe_\|^CN=Equipe_//"p)"
+# 	rdn_equipe="$(echo $rdn | sed -n "s/^CN=Equipe_//"p)"
+	if [ -n "$rdn_classe" ];then
+		target_dn="OU=$rdn_classe,OU=Groups,$ad_base_dn"
+		ldbsearch -H /var/lib/samba/private/sam.ldb -b "$target_dn" | grep "dn:" || ldbadd_ou "$target_dn" "$rdn_classe" "ensemble $rdn_classe"
+	else
+		target_dn="OU=Groups,$ad_base_dn"
+	fi
+	ldbmv_grp "$rdn,CN=users,$ad_base_dn" "$rdn" "$target_dn"
 done
 
 }
@@ -502,31 +533,7 @@ grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config || echo "PermitRootLogin yes
 /usr/sbin/service ssh restart
 }
 
-function change_pass_admin()
-{
-TEST_PASS="none"
-while [ "$TEST_PASS" != "OK" ]
-do
-echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
-echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et au moins une Majuscule $COLTXT"
-read -r administrator_pass
-printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
 
-    if [ $? != 0 ]; then
-        echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité"
-        echo "Merci de saisir le mot de passe à nouveau"
-        sleep 1
-    else
-        TEST_PASS="OK"
-        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
-        sleep 1
-    fi
-done
-echo -e "$COLTXT"
-}
 
 function change_policy_passwords() {
 samba-tool domain passwordsettings set --complexity=off
@@ -556,10 +563,6 @@ passwd
 done
 echo -e "$COLTXT"
 }
-
-
-
-
 
 #Variables :
 
@@ -623,7 +626,7 @@ fi
 [ -z "$suffixe_domaine" ] && suffixe_domaine="lan"
 fulldomaine="$mondomaine.$suffixe_domaine" 
 ad_base_dn="DC=$mondomaine,DC=$suffixe_domaine"
-ad_bindDN="CN=Administrator,CN=users,ad_base_dn"
+ad_bindDN="CN=Administrator,CN=users,$ad_base_dn"
 
 mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
 suffixe_domaine_up="$(echo "$suffixe_domaine" | tr [:lower:] [:upper:])"
