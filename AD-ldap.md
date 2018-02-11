@@ -92,6 +92,13 @@ Attention, l'URI est ldap et non ldaps, GSSAPI fait le cryptage dans ce cas-là.
 Il faut avoir un keytab valide pour l'utilisateur qui lance la commande...
 
 
+**Remarque** Sur le serveur AD lui même, il est possible de consulter / modifier directement les fichiers ldb avec les commandes ldbsearch, ldbmodify, ldbadd, etc....
+Exemple :
+```
+ldbsearch -H /var/lib/samba/private/sam.ldb -b OU=Groups,$baseDN "(objectClass=group)" dn
+```
+Permet de récupérer la liste des groupes un emplacement donné, ici OU=Groups
+
 ### interface se3 existante
 
 L'interface tourne avec www-se3, il faut donc lui configurer ldap : le problème c'est que le dossier /var/lib/samba/private/tls est privé...  il faut le mettre en 755 !
