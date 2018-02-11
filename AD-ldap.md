@@ -163,7 +163,18 @@ ou=Parcs qui contient les `ou=nom_parc` qui contient `cn=nom_parc`.
 * les GPO sont appliquées sur `ou=nom_parc`
 
 ### cn=computers
-contient les machines. Il est probablement possible d'avoir un seul enregistrement pour tous les OS dans le cas d'une machine en multiboot. Il faut pour cela récupérer le keytab de la première instance mise au domaine et le recopier sur toutes les autres. L'enregistrement de la machine contient le type d'OS, il faudrait vérifier si il est mis à jour à la connexion.
+contient les machines. Il est probablement possible d'avoir un seul enregistrement pour tous les OS dans le cas d'une machine en multiboot. Il faut pour cela récupérer le keytab de la première instance mise au domaine et le recopier sur toutes les autres. 
+L'enregistrement de la machine contient le type d'OS, il faudrait vérifier si il est mis à jour à la connexion.
+
+#### Configuration réseau
+
+Afin de pouvoir faire du WakeOnLan, et éventuellemnt pour les réservations dhcp, on stocke l'adresse ip et mac. Ces enregistrements sont facultatifs, ne pas les renseigner ne bloquera pas le fonctionnement du domaine
+
+IP : ipHostNumber
+MAC : networkAddress
+
+
+Pour les afficher dans la console il faut cliquer sur fonctionnalités avancées, et après on a accès à l'éditeur d'attributs dans l'enregistrement de la machine.
 
 **note**
 Le nom affiché de la machine est DisplayName. En cas de renommage, c'est lui seul qui change. Cela veut dire qu'il n'est pas nécessaire de renommer réellement les machines, il suffit de le faire sur AD. 
