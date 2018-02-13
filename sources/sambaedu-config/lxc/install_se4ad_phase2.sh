@@ -12,6 +12,7 @@ COLTXT="\033[0;37m"     # Gris
 COLINFO="\033[0;36m"	# Cyan
 COLPARTIE="\033[1;34m"	# Bleu
 
+# # Fonction permettant de quitter en cas d'erreur 
 function erreur()
 {
 	echo -e "$COLERREUR"
@@ -22,7 +23,7 @@ function erreur()
 }
 
 
-
+# Fonction permettant de poser la question s'il faut poursuivre ou quitter
 function poursuivre()
 {
         REPONSE=""
@@ -41,6 +42,7 @@ function poursuivre()
         fi
 }
 
+# Fonction génération du sources.list stretch FR
 function gensourcelist()
 {
 cat >/etc/apt/sources.list <<END
@@ -60,6 +62,7 @@ deb http://ftp.fr.debian.org/debian/ stretch-updates main contrib non-free
 END
 }
 
+# Fonction génération du sources.list SE4
 function gensourcese4()
 {
 
@@ -74,7 +77,7 @@ deb http://wawadeb.crdp.ac-caen.fr/debian stretch se4testing
 END
 }
 
-
+# Fonction génération conf réseau
 gennetwork()
 {
 echo "saisir l'ip de la machine"
@@ -115,11 +118,9 @@ iface eth0 inet static
         broadcast $NEW_BROADCAST
         gateway $NEW_GATEWAY
 END
-
-
-
 }
 
+# Fonction Affichage du titre
 function show_title()
 {
 
@@ -132,6 +133,7 @@ echo "--------------------------------------------------------------------------
 echo -e "$COLTXT"
 }
 
+# Fonction test carte réseau
 function test_ecard()
 {
 ECARD=$(/sbin/ifconfig | grep eth | sort | head -n 1 | cut -d " " -f 1)
@@ -175,15 +177,10 @@ if [ -z "$ECARD" ]; then
 fi
 }
 
+# Fonction installation des paquets de base
 function installbase()
 {
-
 echo -e "$COLPARTIE"
-
-
-# mv /etc/apt/sources.list /etc/apt/sources.list.sav2
-# cp /etc/se3/se3.list /etc/apt/sources.list.d/
-
 echo "Mise à jour des dépots et upgrade si necessaire, quelques mn de patience..."
 echo -e "$COLTXT"
 # tput reset
@@ -197,6 +194,7 @@ prim_packages="ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-
 apt-get install --quiet --assume-yes $prim_packages
 }
 
+# Fonction génération des fichiers /etc/hosts et /etc/hostname
 function write_hostconf()
 {
 cat >/etc/hosts <<END
@@ -212,18 +210,18 @@ se4ad
 END
 }
 
-function install_slapd
+# Fonction installation et config de slapd afin d'importer l'ancien SE3 ldap
+function install_slapd()
 {
-
 echo -e "$COLINFO"
 echo "Installation et configuration du backend slapd pour récupération des anciennes données" 
 echo -e "$COLCMD"
 apt-get install --assume-yes slapd ldb-tools
-echo -e "$COLTXT"
 echo -e "$COLINFO"
 echo "configuration et import de l'annuaire" 
-echo -e "$COLTXT"
+echo -e "$COLCMD"
 /etc/init.d/slapd stop
+echo -e "$COLTXT"
 
 cat > /etc/default/slapd <<END
 SLAPD_CONF="/etc/ldap/slapd.conf"
@@ -253,14 +251,18 @@ cp $dir_config/DB_CONFIG  /var/lib/ldap/
 slapadd -l $dir_config/$se3ldif
 chown -R openldap:openldap /var/lib/ldap/
 chown -R openldap:openldap /etc/ldap
-# Attnetion au droits !
+# Attention au droits !
+echo -e "$COLINFO"
+echo "Lancement de slapd" 
+echo -e "$COLCMD"
 /etc/init.d/slapd start
-
+echo -e "$COLTXT"
 }
 
-function extract_ldifs ()
+# Fonction génération des ldifs de l'ancien annuaire se3 avec adaptation de la structure pour conformité AD
+function extract_ldifs()
 {
-
+rm -f $dir_config/ad_rights.ldif
 ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b ou=Rights,$ldap_base_dn cn | sed -n 's/^cn: //p' | while read cn_rights
 do
 	
@@ -273,17 +275,18 @@ member: CN=Administrator,CN=Users,$ad_base_dn
 END
 ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b cn=$cn_rights,ou=Rights,$ldap_base_dn member | sed -n 's/member: uid=//p' | cut -d "," -f1 | grep -v "^admin" | while read member_rights
 	do
-		echo "member: CN=member_rights,CN=Users,$ad_base_dn" >> $dir_config/ad_rights.ldif
+		echo "member: CN=$member_rights,CN=Users,$ad_base_dn" >> $dir_config/ad_rights.ldif
 	done
 	
 ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b cn=$cn_rights,ou=Rights,$ldap_base_dn member | sed -n 's/member: cn=//p' | cut -d "," -f1 | while read member_rights
 	do
-		echo "member: CN=member_rights,OU=Groups,$ad_base_dn" >> $dir_config/ad_rights.ldif
+		echo "member: CN=$member_rights,OU=Groups,$ad_base_dn" >> $dir_config/ad_rights.ldif
 	done
 echo ""	>> $dir_config/ad_rights.ldif
 done
 
 if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn| sed -n 's/^cn: //p')" ]; then
+	rm -f $dir_config/ad_parcs.ldif
 	ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn| sed -n 's/^cn: //p' | while read cn_parcs
 	do
 	cat >> $dir_config/ad_parcs.ldif <<END	
@@ -292,31 +295,29 @@ objectClass: group
 objectClass: top
 instanceType: 4
 END
-	if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: uid=//p'   ]; then
-		ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: uid=//p'  | cut -d "," -f1 | while read member_parcs
+	if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: cn=//p')"  ]; then
+		ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: cn=//p'  | cut -d "," -f1 | while read member_parcs
 		do
-			echo "member: CN=member_parcs,OU=Parcs,$ad_base_dn" >> $dir_config/ad_parcs.ldif
+			echo "member: CN=$member_parcs,OU=Computers,$ad_base_dn" >> $dir_config/ad_parcs.ldif
 		done
 	fi
+	echo "" >>  $dir_config/ad_parcs.ldif
 	done
+	
 fi
 }
 
-
-
+# Fonction installation de samba 4.5 (pour le moment)
 function installsamba()
 {
-
-
 echo -e "$COLINFO"
 echo "Installation de samba 4.5" 
 echo -e "$COLCMD"
-
 apt-get install $samba_packages 
-
 echo -e "$COLTXT"
 }
 
+# Fonction génération du fichier /etc/krb5.conf On peut aussi copier celui de /var/lib/samba
 function write_krb5()
 {
 cat > /etc/krb5.conf <<END
@@ -325,16 +326,13 @@ cat > /etc/krb5.conf <<END
  dns_lookup_kdc = true
  default_realm = $fulldomaine_up
 END
-
 }
 
-
+# Fonction conversion domaine se3 ldap vers AD
 function convert_smb_to_ad()
 {
-
-rm -f /etc/samba/smb.conf
 if [ -e "$dir_config/smb.conf" ]; then
-		
+	rm -f /etc/samba/smb.conf
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
@@ -344,13 +342,32 @@ if [ -e "$dir_config/smb.conf" ]; then
 	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
 	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
 	echo -e "$COLTXT"
+	if [ "$?" != "0" ]; then
+		erreur "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme et relancez le script" 
+	else
+		echo -e "$COLINFO"
+		echo "Migration de l'annuaire vers samba AD Ok !! On peut couper le service slapd" 
+		echo -e "$COLCMD"
+		/etc/init.d/slapd stop
+		echo -e "$COLTXT"
+	fi
 else
-	echo -e "$COLINFO"
-	echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelel installation de Samba AD avec sambatool" 
-	samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass  
-	echo -e "$COLCMD"
+	erreur "$dir_config/smb.conf ne semble pas présent. Il est indispensable pour la migration des données. Reglez le probleme et relancez le script"
 fi
+}	
+	
+# Fonction provision d'un nouvel AD - cas new installation
+function provision_new_ad()	
+{
+echo -e "$COLINFO"
+echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelle installation de Samba AD avec sambatool" 
+samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass  
+echo -e "$COLCMD"
+}
 
+# Fonction activation samba ad-dc
+function activate_smb_ad()
+{
 systemctl unmask samba-ad-dc
 systemctl enable samba-ad-dc
 # systemctl disable samba winbind nmbd smbd
@@ -361,26 +378,25 @@ echo "En avant la musique :) - lancement de Samba AD-DC"
 echo -e "$COLCMD"
 /etc/init.d/samba-ad-dc start
 echo -e "$COLTXT"
-
-
 }
 
-
+# Fonction permettant de fixer le pass admin : Attention complexité requise
 function change_pass_admin()
 {
 TEST_PASS="none"
 while [ "$TEST_PASS" != "OK" ]
 do
 echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte Administrator AD $COLTXT"
-echo -e "Attention le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et au moins une Majuscule $COLTXT"
+echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
+echo -e "---- /!\ Attention /!\ ----"
+echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
 read -r administrator_pass
 printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
 smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
 
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité demandés"
         echo "Merci de saisir le mot de passe à nouveau"
         sleep 1
     else
@@ -392,9 +408,7 @@ done
 echo -e "$COLTXT"
 }
 
-
-
-
+# Fonction permettant l'ajout d'une OU ds l'annuaire AD
 function ldbadd_ou()
 {
 local dn_add=$1
@@ -411,6 +425,7 @@ description: $desc_add
 EOF
 }
 
+# Fonction permettant le déplacement d'un groupe ds l'annuaire AD
 function ldbmv_grp()
 {
 local dn_mv=$1
@@ -426,6 +441,7 @@ newsuperior: $target_dn_mv
 EOF
 }
 
+# Fonction permettant l'ajout des parties spécifiques à SE4 avec récup des données de l'ancien SE3 ds l'annuaire AD
 function modif_ldb()
 {
 echo -e "$COLINFO"
@@ -435,8 +451,18 @@ ldbadd_ou "OU=Groups,$ad_base_dn" "Groups" "Branche des Groupes"
 ldbadd_ou "OU=Trash,$ad_base_dn" "Trash" "Branche de la corbeille"
 ldbadd_ou "OU=Parcs,$ad_base_dn" "Parcs" "Branche parcs"
 ldbadd_ou "OU=Printers,$ad_base_dn" "Printers" "Branche imprimantes"
+sleep 2
 
-ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/rights_ad.ldif
+echo -e "$COLINFO"
+echo "Commplétion de la branche Rights"
+echo -e "$COLCMD"
+ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_rights.ldif
+
+echo -e "$COLINFO"
+echo "Commplétion de la branche Parcs"
+echo -e "$COLCMD"
+ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_parcs.ldif
+
 
 echo -e "$COLINFO"
 echo "Déplacement des groupes dans la branche dédiée"
@@ -458,7 +484,7 @@ done
 
 }
 
-
+# Fonction permettant l'écriture de smb.conf car sambatool n'ajoute pas le dns forwarder lors de l'upgrade
 function write_smbconf()
 {
 mv /etc/samba/smb.conf /etc/samba/smb.conf.ori
@@ -482,8 +508,8 @@ cat >/etc/samba/smb.conf<END
 END
 }
 
-
-function set_time 
+# Fonction permettant la mise à l'heure du serveur 
+function set_time()
 {
 echo -e "$COLPARTIE"
 echo "Type de configuration Ldap et mise a l'heure"
@@ -517,7 +543,7 @@ if [ "$heureok" != "yes" ];then
 fi
 }
 
-
+# Fonction permettant l'écriture de resolv.conf car AD est DNS du domaine
 function write_resolvconf()
 {
 cat >/etc/resolv.conf<<END
@@ -526,6 +552,7 @@ nameserver 127.0.0.1
 END
 }
 
+# Fonction permettant de se connecter ssh root sur se4-AD
 function Permit_ssh_by_password()
 {
 grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config || echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
@@ -534,7 +561,7 @@ grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config || echo "PermitRootLogin yes
 }
 
 
-
+# Fonction permettant de descendre le niveau de complexité des pass utilisateurs
 function change_policy_passwords() {
 samba-tool domain passwordsettings set --complexity=off
 samba-tool domain passwordsettings set --history-length=0
@@ -542,6 +569,7 @@ samba-tool domain passwordsettings set --min-pwd-age=0
 samba-tool domain passwordsettings set --max-pwd-age=0
 }
 
+# Fonction permettant de changer le pass root
 function change_pass_root()
 {	
 TEST_PASS="none"
@@ -733,21 +761,25 @@ echo -e "$COLTXT"
 
 installsamba
 
-install_slapd
-
-extract_ldifs
-
-convert_smb_to_ad
-
-write_krb5
-
-write_smbconf
-
-write_resolvconf
-
-change_pass_admin
-
-modif_ldb
+if [ -e "$dir_config/slapd.conf" ]; then 
+	install_slapd
+	extract_ldifs
+	convert_smb_to_ad
+	write_krb5
+	write_smbconf
+	activate_smb_ad
+	write_resolvconf
+	change_pass_admin
+	modif_ldb
+else
+	echo "$dir_config/slapd.conf non trouvé - L'installation se poursuivra sur un nouveau domaine sans import d'anciennes données"
+	poursuivre
+	provision_new_ad # Voir partie dns interne
+	write_smbconf
+	activate_smb_ad
+	write_krb5
+	
+fi
 
 change_policy_passwords
 
