@@ -270,7 +270,6 @@ cat >> $dir_config/ad_rights.ldif <<END
 dn: CN=$cn_rights,OU=Rights,$ad_base_dn
 objectClass: group
 objectClass: top
-instanceType: 4
 member: CN=Administrator,CN=Users,$ad_base_dn
 END
 ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b cn=$cn_rights,ou=Rights,$ldap_base_dn member | sed -n 's/member: uid=//p' | cut -d "," -f1 | grep -v "^admin" | while read member_rights
@@ -293,18 +292,39 @@ if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn| sed -n
 dn: CN=$cn_parcs,OU=Parcs,$ad_base_dn
 objectClass: group
 objectClass: top
-instanceType: 4
 END
 	if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: cn=//p')"  ]; then
 		ldapsearch -o ldif-wrap=no -xLLL -b ou=Parcs,$ldap_base_dn cn=$cn_parcs | sed -n 's/member: cn=//p'  | cut -d "," -f1 | while read member_parcs
 		do
-			echo "member: CN=$member_parcs,OU=Computers,$ad_base_dn" >> $dir_config/ad_parcs.ldif
+			if [ -n "$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn uid="$member_parcs"$ dn)" ]; then 
+				echo "member: CN=$member_parcs,CN=Computers,$ad_base_dn" >> $dir_config/ad_parcs.ldif
+			fi
 		done
 	fi
 	echo "" >>  $dir_config/ad_parcs.ldif
 	done
 	
 fi
+rm -f $dir_config/ad_computers.ldif
+ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn uid=*\$ uid | sed -n "s/^uid: //p"| sed -e 's/\$//g' | while read cn_computers
+do
+	ipHostNumber="$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn "cn=$cn_computers" ipHostNumber | sed -n "s/ipHostNumber: //p")"
+	macAddress="$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn "cn=$cn_computers" macAddress | sed -n "s/macAddress: //p")"
+	if [ -n "$ipHostNumber" -a   -n "$macAddress" ];then
+		cat >>  $dir_config/ad_computers.ldif <<END	
+dn: CN=$cn_computers,cn=Computers,$ad_base_dn
+changetype: modify
+add: ipHostNumber
+ipHostNumber: $ipHostNumber
+-
+add: networkAddress
+networkAddress: $macAddress
+
+END
+	fi 
+	# ajouter lecture cn=
+done
+
 }
 
 # Fonction installation de samba 4.5 (pour le moment)
@@ -463,6 +483,10 @@ echo "Commplétion de la branche Parcs"
 echo -e "$COLCMD"
 ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_parcs.ldif
 
+echo -e "$COLINFO"
+echo "Commplétion de la branche Computers"
+echo -e "$COLCMD"
+ldbmodify -H /var/lib/samba/private/sam.ldb $dir_config/ad_computers.ldif
 
 echo -e "$COLINFO"
 echo "Déplacement des groupes dans la branche dédiée"
