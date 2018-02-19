@@ -22,7 +22,6 @@ function erreur()
 	exit 1
 }
 
-
 # Fonction permettant de poser la question s'il faut poursuivre ou quitter
 function poursuivre()
 {
@@ -41,6 +40,19 @@ function poursuivre()
                 erreur "Abandon!"
         fi
 }
+
+# Fonction de verification de succes
+function verif()
+{
+if [ "$?" != "0" ]; then
+	echo -e "$COLERREUR"
+	echo "Attention "
+	echo -e "la dernière commande a envoyé une erreur !"
+	echo -e "$COLTXT"
+	poursuivre
+fi
+}
+
 
 # Fonction génération du sources.list stretch FR
 function gensourcelist()
@@ -244,14 +256,16 @@ END
 
 rm /etc/ldap/slapd.d -rf
 cp $dir_config/slapd.conf $dir_config/slapd.pem /etc/ldap/
+sed '/^include \/etc\/ldap\/syncrepl.conf/d' -i /etc/ldap/slapd.conf 
 sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/$se3ldif
 
+cp $dir_config/*.schema  /etc/ldap/schema/
 
 cp $dir_config/DB_CONFIG  /var/lib/ldap/
 slapadd -l $dir_config/$se3ldif
 chown -R openldap:openldap /var/lib/ldap/
 chown -R openldap:openldap /etc/ldap
-# Attention au droits !
+
 echo -e "$COLINFO"
 echo "Lancement de slapd" 
 echo -e "$COLCMD"
@@ -361,7 +375,6 @@ if [ -e "$dir_config/smb.conf" ]; then
 	sed "s#passdb backend.*#passdb backend = ldapsam:ldap://$se4ad_ip#" -i $dir_config/smb.conf  
 	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
 	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
-	echo -e "$COLTXT"
 	if [ "$?" != "0" ]; then
 		erreur "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme et relancez le script" 
 	else
@@ -512,7 +525,7 @@ done
 function write_smbconf()
 {
 mv /etc/samba/smb.conf /etc/samba/smb.conf.ori
-cat >/etc/samba/smb.conf<END
+cat >/etc/samba/smb.conf <<END
 # Global parameters
 [global]
 	netbios name = SE4AD
