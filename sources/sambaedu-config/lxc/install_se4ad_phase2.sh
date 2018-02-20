@@ -273,6 +273,26 @@ echo -e "$COLCMD"
 echo -e "$COLTXT"
 }
 
+# Nettoyage comptes machines en erreurs
+function check_ldap()
+{
+ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn uid=*\$ uid | sed -n "s/^uid: //p" | while read uid_computers
+do
+	uidnumberEntry="$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn "uid=$uid_computers" uidNumber  | grep uidNumber)"
+	if [ -z "$uidnumberEntry" ];then
+		echo -e "$COLINFO"
+		echo -e "Suppression de l'entrée invalide uid=$uid_computers,ou=Computers,$ldap_base_dn"
+		echo -e "$COLTXT"
+		ldapdelete -x -D "$adminRdn,$ldap_base_dn" -w "$adminPw" "uid=$uid_computers,ou=Computers,$ldap_base_dn"
+		sleep 2
+	fi
+	
+#	number_attributes="$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn "uid=$uid_computers" | wc -l)"
+	
+done
+
+}
+
 # Fonction génération des ldifs de l'ancien annuaire se3 avec adaptation de la structure pour conformité AD
 function extract_ldifs()
 {
@@ -367,6 +387,8 @@ function convert_smb_to_ad()
 {
 if [ -e "$dir_config/smb.conf" ]; then
 	rm -f /etc/samba/smb.conf
+	rm -f /var/lib/samba/private/*.tdb
+
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
