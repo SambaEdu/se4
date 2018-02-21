@@ -214,7 +214,7 @@ cat >/etc/hosts <<END
 ::1	localhost ip6-localhost ip6-loopback
 ff02::1	ip6-allnodes
 ff02::2	ip6-allrouters
-$se4ad_ip	se4ad.$fulldomaine	se4ad
+$se4ad_ip	se4ad.$ad_domain	se4ad
 END
 
 cat >/etc/hostname <<END
@@ -260,9 +260,11 @@ sed '/^include \/etc\/ldap\/syncrepl.conf/d' -i /etc/ldap/slapd.conf
 sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/$se3ldif
 
 cp $dir_config/*.schema  /etc/ldap/schema/
-
+# nettoyage au besoin
+rm -f /var/lib/ldap/* 
 cp $dir_config/DB_CONFIG  /var/lib/ldap/
 slapadd -l $dir_config/$se3ldif
+verif
 chown -R openldap:openldap /var/lib/ldap/
 chown -R openldap:openldap /etc/ldap
 
@@ -270,11 +272,12 @@ echo -e "$COLINFO"
 echo "Lancement de slapd" 
 echo -e "$COLCMD"
 /etc/init.d/slapd start
+verif
 echo -e "$COLTXT"
 }
 
-# Nettoyage comptes machines en erreurs
-function check_ldap()
+# Nettoyage comptes machines en erreurs et root
+function clean_ldap()
 {
 ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn uid=*\$ uid | sed -n "s/^uid: //p" | while read uid_computers
 do
@@ -282,15 +285,22 @@ do
 	if [ -z "$uidnumberEntry" ];then
 		echo -e "$COLINFO"
 		echo -e "Suppression de l'entrée invalide uid=$uid_computers,ou=Computers,$ldap_base_dn"
-		echo -e "$COLTXT"
+		echo -e "$COLCMD"
 		ldapdelete -x -D "$adminRdn,$ldap_base_dn" -w "$adminPw" "uid=$uid_computers,ou=Computers,$ldap_base_dn"
 		sleep 2
+		echo -e "$COLTXT"
 	fi
 	
 #	number_attributes="$(ldapsearch -o ldif-wrap=no -xLLL -b ou=Computers,$ldap_base_dn "uid=$uid_computers" | wc -l)"
 	
 done
-
+echo -e "$COLINFO"
+echo -e "Suppression du compte root samba obsolète"
+echo -e "$COLCMD"
+ldapdelete -x -D "$adminRdn,$ldap_base_dn" -w "$adminPw" "uid=root,ou=People,$ldap_base_dn"
+# A voir pour adaptation surppression groupe root
+#ldapdelete -x -D "$ADMINRDN,$BASEDN" -w "$ADMINPW" "cn=root,$GROUPSRDN,$BASEDN"
+echo -e "$COLTXT"
 }
 
 # Fonction génération des ldifs de l'ancien annuaire se3 avec adaptation de la structure pour conformité AD
@@ -378,7 +388,7 @@ cat > /etc/krb5.conf <<END
 [libdefaults]
  dns_lookup_realm = false
  dns_lookup_kdc = true
- default_realm = $fulldomaine_up
+ default_realm = $ad_domain_up
 END
 }
 
@@ -395,8 +405,8 @@ if [ -e "$dir_config/smb.conf" ]; then
 	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
 	sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/smb.conf
 	sed "s#passdb backend.*#passdb backend = ldapsam:ldap://$se4ad_ip#" -i $dir_config/smb.conf  
-	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
-	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$fulldomaine_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
+	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
+	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
 	if [ "$?" != "0" ]; then
 		erreur "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme et relancez le script" 
 	else
@@ -416,7 +426,7 @@ function provision_new_ad()
 {
 echo -e "$COLINFO"
 echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelle installation de Samba AD avec sambatool" 
-samba-tool domain provision --realm=$fulldomaine_up --domain $mondomaine_up --adminpass $ad_admin_pass  
+samba-tool domain provision --realm=$ad_domain_up --domain $smb4_domain_up --adminpass $ad_admin_pass  
 echo -e "$COLCMD"
 }
 
@@ -502,7 +512,8 @@ function modif_ldb()
 echo -e "$COLINFO"
 echo "Ajout des branches de l'annuaire propres à SE4"
 echo -e "$COLCMD"
-ldbadd_ou "OU=Groups,$ad_base_dn" "Groups" "Branche des Groupes"
+ldbadd_ou "OU=Rights,$ad_base_dn" "Groups" "Branche des droits"
+ldbadd_ou "OU=Groups,$ad_base_dn" "Groups" "Branche des groupes"
 ldbadd_ou "OU=Trash,$ad_base_dn" "Trash" "Branche de la corbeille"
 ldbadd_ou "OU=Parcs,$ad_base_dn" "Parcs" "Branche parcs"
 ldbadd_ou "OU=Printers,$ad_base_dn" "Printers" "Branche imprimantes"
@@ -551,8 +562,8 @@ cat >/etc/samba/smb.conf <<END
 # Global parameters
 [global]
 	netbios name = SE4AD
-	realm = $fulldomaine_up
-	workgroup = $mondomaine_up
+	realm = $ad_domain_up
+	workgroup = $smb4_domain_up
 	dns forwarder = $nameserver
 	server role = active directory domain controller
 	idmap_ldb:use rfc2307 = yes
@@ -606,7 +617,7 @@ fi
 function write_resolvconf()
 {
 cat >/etc/resolv.conf<<END
-search $fulldomaine
+search $ad_domain
 nameserver 127.0.0.1
 END
 }
@@ -671,11 +682,11 @@ echo -e "$COLTXT"
 #### Fichier de conf contient ces variables ####
 # ip du se4ad --> $se4ad_ip" 
 
-# Nom de domaine samba du SE4-AD --> $mondomaine" 
+# Nom de domaine samba du SE4-AD --> $smb4_domain" 
 
-# Suffixe du domaine --> $suffixe_domaine" 
+# Suffixe du domaine --> $suffix_domain" 
 
-# Nom de domaine complet - realm du SE4-AD --> $fulldomaine" 
+# Nom de domaine complet - realm du SE4-AD --> $ad_domain" 
 
 # Adresse IP de l'annuaire LDAP à migrer en AD --> $se3ip" 
 
@@ -709,17 +720,17 @@ if [ -n "$devel" ]; then
 	echo $ssh_keyser >> /root/.ssh/authorized_keys 
 fi
 # A voir pour modifier ou récupérer depuis sambaedu.config 
-[ -z "$mondomaine" ] && mondomaine="sambaedu4"
-[ -z "$suffixe_domaine" ] && suffixe_domaine="lan"
-fulldomaine="$mondomaine.$suffixe_domaine" 
-ad_base_dn="DC=$mondomaine,DC=$suffixe_domaine"
+[ -z "$smb4_domain" ] && smb4_domain="sambaedu4"
+[ -z "$suffix_domain" ] && suffix_domain="lan"
+ad_domain="$smb4_domain.$suffix_domain" 
+ad_base_dn="DC=$smb4_domain,DC=$suffix_domain"
 ad_bindDN="CN=Administrator,CN=users,$ad_base_dn"
 
-mondomaine_up="$(echo "$mondomaine" | tr [:lower:] [:upper:])"
-suffixe_domaine_up="$(echo "$suffixe_domaine" | tr [:lower:] [:upper:])"
-fulldomaine_up="$(echo "$fulldomaine" | tr [:lower:] [:upper:])"
+smb4_domain_up="$(echo "$smb4_domain" | tr [:lower:] [:upper:])"
+suffix_domain_up="$(echo "$suffix_domain" | tr [:lower:] [:upper:])"
+ad_domain_up="$(echo "$ad_domain" | tr [:lower:] [:upper:])"
 sambadomaine_old="$(echo $se3_domain| tr [:lower:] [:upper:])"
-sambadomaine_new="$mondomaine_up"
+sambadomaine_new="$smb4_domain_up"
 haveged
 ad_admin_pass=$(makepasswd --minchars=8)
 
@@ -822,6 +833,7 @@ installsamba
 
 if [ -e "$dir_config/slapd.conf" ]; then 
 	install_slapd
+	clean_ldap
 	extract_ldifs
 	convert_smb_to_ad
 	write_krb5
