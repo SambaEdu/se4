@@ -3,27 +3,27 @@
 # version pour Stretch - franck molle
 # version 12 - 2017 
 
-#Couleurs
-COLTITRE="\033[1;35m"   # Rose
-COLDEFAUT="\033[0;33m"  # Brun-jaune
-COLCMD="\033[1;37m"     # Blanc
-COLERREUR="\033[1;31m"  # Rouge
-COLTXT="\033[0;37m"     # Gris
-COLINFO="\033[0;36m"	# Cyan
-COLPARTIE="\033[1;34m"	# Bleu
 
 # # Fonction permettant de quitter en cas d'erreur 
-function erreur()
+function quit_on_choice()
 {
 	echo -e "$COLERREUR"
-	echo "ERREUR!"
+	echo "Arrêt du script !"
 	echo -e "$1"
 	echo -e "$COLTXT"
 	exit 1
 }
 
+function dev_debug() {
+if [ -n "$devel" ]; then
+	mkdir -p /root/.ssh/
+	ssh_keyser="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMQ6Nd0Kg+L8200pR2CxUVHBtmjQ2xAX2zqArqV45horU8qopf6AYEew0oKanK3GzY2nrs5g2SYbxqs656YKa/OkTslSc5MR/Nndm9/J1CUsurTlo+VwXJ/x1qoLBmGc/9mZjdlNVKIPwkuHMKUch+XmsWF92GYEpTA1D5ZmfuTxP0GMTpjbuPhas96q+omSubzfzpH7gLUX/afRHfpyOcYWdzNID+xdmML/a3DMtuCatsHKO94Pv4mxpPeAXpJdE262DPXPz2ZIoWSqPz8dQ6C3v7/YW1lImUdOah1Fwwei4jMK338ymo6huR/DheCMa6DEWd/OZK4FW2KccxjXvHALn/QCHWCw0UMQnSVpmFZyV4MqB6YvvQ6u0h9xxWIvloX+sjlFCn71hLgH7tYsj4iBqoStN9KrpKC9ZMYreDezCngnJ87FzAr/nVREAYOEmtfLN37Xww3Vr8mZ8/bBhU1rqfLIaDVKGAfnbFdN6lOJpt2AX07F4vLsF0CpPl4QsVaow44UV0JKSdYXu2okcM80pnVnVmzZEoYOReltW53r1bIZmDvbxBa/CbNzGKwxZgaMSjH63yX1SUBnUmtPDQthA7fK8xhQ1rLUpkUJWDpgLdC2zv2jsKlHf5fJirSnCtuvq6ux1QTXs+bkTz5bbMmsWt9McJMgQzWJNf63o8jw== GitLab"
+	grep -q "$ssh_keyser" /root/.ssh/authorized_keys || echo $ssh_keyser >> /root/.ssh/authorized_keys 
+fi
+}
+
 # Fonction permettant de poser la question s'il faut poursuivre ou quitter
-function poursuivre()
+function go_on()
 {
         REPONSE=""
         while [ "$REPONSE" != "o" -a "$REPONSE" != "O" -a "$REPONSE" != "n" ]
@@ -37,23 +37,35 @@ function poursuivre()
         done
 
         if [ "$REPONSE" != "o" -a "$REPONSE" != "O" ]; then
-                erreur "Abandon!"
+                quit_on_choice "Abandon!"
         fi
 }
 
-# Fonction de verification de succes
-function verif()
+# Fonction de verification d'erreur
+function check_error()
 {
 if [ "$?" != "0" ]; then
 	echo -e "$COLERREUR"
 	echo "Attention "
 	echo -e "la dernière commande a envoyé une erreur !"
 	echo -e "$COLTXT"
-	poursuivre
+	go_on
 fi
 }
 
-
+# Fonction permettant de quitter en cas d'erreur 
+# no @params 
+function quit_on_error()
+{
+if [ "$?" != "0" ]; then
+	echo -e "$COLERREUR"
+	echo "$1"
+	echo "Attention "
+	echo -e "la dernière commande a envoyé une erreur critique pour la suite !\nImpossible de poursuivre"
+	echo -e "$COLTXT"
+	exit 1
+fi
+}
 # Fonction génération du sources.list stretch FR
 function gensourcelist()
 {
@@ -111,7 +123,7 @@ echo -e "Réseau:		$NEW_NETWORK"
 echo -e "Broadcast:	$NEW_BROADCAST"
 echo -e "Passerelle:	$NEW_GATEWAY"
 
-poursuivre
+go_on
 
 cat >/etc/network/interfaces <<END
 # /etc/network/interfaces -- configuration file for ifup(8), ifdown(8)
@@ -202,7 +214,7 @@ apt-get upgrade --quiet --assume-yes
 echo -e "$COLPARTIE"
 echo "installation ntpdate, vim, etc..."
 echo -e "$COLTXT"
-prim_packages="ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-utils makepasswd haveged"
+prim_packages="ssh ntpdate vim wget nano iputils-ping bind9-host libldap-2.4-2 ldap-utils makepasswd haveged"
 apt-get install --quiet --assume-yes $prim_packages
 }
 
@@ -257,14 +269,14 @@ END
 rm /etc/ldap/slapd.d -rf
 cp $dir_config/slapd.conf $dir_config/slapd.pem /etc/ldap/
 sed '/^include \/etc\/ldap\/syncrepl.conf/d' -i /etc/ldap/slapd.conf 
-sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/$se3ldif
+sed "s/$sambadomaine_old/$sambadomaine_new/I" -i $dir_config/$se3ldif
 
 cp $dir_config/*.schema  /etc/ldap/schema/
 # nettoyage au besoin
 rm -f /var/lib/ldap/* 
 cp $dir_config/DB_CONFIG  /var/lib/ldap/
 slapadd -l $dir_config/$se3ldif
-verif
+check_error
 chown -R openldap:openldap /var/lib/ldap/
 chown -R openldap:openldap /etc/ldap
 
@@ -272,7 +284,7 @@ echo -e "$COLINFO"
 echo "Lancement de slapd" 
 echo -e "$COLCMD"
 /etc/init.d/slapd start
-verif
+check_error
 echo -e "$COLTXT"
 }
 
@@ -306,6 +318,7 @@ echo -e "$COLTXT"
 # Fonction génération des ldifs de l'ancien annuaire se3 avec adaptation de la structure pour conformité AD
 function extract_ldifs()
 {
+local ad_base_dn="##ad_base_dn##"
 rm -f $dir_config/ad_rights.ldif
 ldapsearch -o ldif-wrap=no -xLLL -D $adminRdn,$ldap_base_dn -w $adminPw -b ou=Rights,$ldap_base_dn cn | sed -n 's/^cn: //p' | while read cn_rights
 do
@@ -370,6 +383,17 @@ END
 done
 
 }
+# Nettoyage complet de la conf samba ad
+function reset_smb_ad_conf()
+{
+/etc/init.d/samba-ad-dc stop
+rm 	-f /etc/samba/smb.conf
+rm /var/lib/samba/private/* -rf
+
+}
+
+
+
 
 # Fonction installation de samba 4.5 (pour le moment)
 function installsamba()
@@ -402,22 +426,23 @@ if [ -e "$dir_config/smb.conf" ]; then
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	echo -e "$COLCMD"
-	sed "s/$netbios_name/se4ad/" -i $dir_config/smb.conf
-	sed "s/$sambadomaine_old/$sambadomaine_new/" -i $dir_config/smb.conf
+	sed "s/$netbios_name/se4ad/I" -i $dir_config/smb.conf
+	sed "s/$sambadomaine_old/$sambadomaine_new/I" -i $dir_config/smb.conf
 	sed "s#passdb backend.*#passdb backend = ldapsam:ldap://$se4ad_ip#" -i $dir_config/smb.conf  
 	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
 	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
 	if [ "$?" != "0" ]; then
-		erreur "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme et relancez le script" 
+		quit_on_error "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme sur l'export d'annuaire ou smb.conf et relancez le script" 
 	else
 		echo -e "$COLINFO"
-		echo "Migration de l'annuaire vers samba AD Ok !! On peut couper le service slapd" 
+		echo "Migration de l'annuaire vers samba AD Ok !! On peut couper le service slapd et le désactiver au boot" 
 		echo -e "$COLCMD"
 		/etc/init.d/slapd stop
+		systemctl disable slapd
 		echo -e "$COLTXT"
 	fi
 else
-	erreur "$dir_config/smb.conf ne semble pas présent. Il est indispensable pour la migration des données. Reglez le probleme et relancez le script"
+	quit_on_error "$dir_config/smb.conf ne semble pas présent. Il est indispensable pour la migration des données. Reglez le probleme et relancez le script"
 fi
 }	
 	
@@ -442,8 +467,24 @@ echo -e "$COLINFO"
 echo "En avant la musique :) - lancement de Samba AD-DC"
 echo -e "$COLCMD"
 /etc/init.d/samba-ad-dc start
+check_error
 echo -e "$COLTXT"
+sleep 3
 }
+
+# Fonction check samba ad-dc
+function check_smb_ad()
+{
+echo -e "$COLINFO"
+echo "Test de connexion : smbclient -L localhost -U%"
+echo -e "$COLCMD"
+sleep 2
+smbclient -L localhost -U%
+quit_on_error "Connexion impossible sur l'AD"
+
+echo -e "$COLTXT"	
+}
+
 
 # Fonction permettant de fixer le pass admin : Attention complexité requise
 function change_pass_admin()
@@ -451,13 +492,20 @@ function change_pass_admin()
 TEST_PASS="none"
 while [ "$TEST_PASS" != "OK" ]
 do
-echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
-echo -e "---- /!\ Attention /!\ ----"
-echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
-read -r administrator_pass
-printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-smbclient -L localhost -U Administrator%"$administrator_pass" >/dev/null 
+	echo -e "$COLCMD"
+	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
+	echo -e "---- /!\ Attention /!\ ----"
+	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
+	read -r administrator_pass
+	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
+	read -r confirm_pass
+	if [ "$administrator_pass" != "$confirm_pass" ];then
+		echo "Les deux mots de passe ne correspondent pas ! - Merci de recommencer"
+		sleep 3
+		continue
+	fi
+	printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+	smbclient -L localhost -U Administrator%"$administrator_pass"  
 
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
@@ -509,20 +557,24 @@ EOF
 # Fonction permettant l'ajout des parties spécifiques à SE4 avec récup des données de l'ancien SE3 ds l'annuaire AD
 function modif_ldb()
 {
+echo "Détection de la base dn de l'AD"	
+ad_base_dn="$(ldbsearch -H /var/lib/samba/private/sam.ldb -s base -b "" defaultNamingContext | sed -n "s/defaultNamingContext: //p")"
+echo "Base Dn trouvée : $ad_base_dn"
+
+echo "Modification des exports ldif pour insertion de la base dn AD"
+sed "s/##ad_base_dn##/$ad_base_dn/g" -i $dir_config/*.ldif
+
 echo -e "$COLINFO"
 echo "Ajout des branches de l'annuaire propres à SE4"
 echo -e "$COLCMD"
-ldbadd_ou "OU=Rights,$ad_base_dn" "Groups" "Branche des droits"
+ldbadd_ou "OU=Rights,$ad_base_dn" "Rights" "Branche des droits"
 ldbadd_ou "OU=Groups,$ad_base_dn" "Groups" "Branche des groupes"
 ldbadd_ou "OU=Trash,$ad_base_dn" "Trash" "Branche de la corbeille"
 ldbadd_ou "OU=Parcs,$ad_base_dn" "Parcs" "Branche parcs"
 ldbadd_ou "OU=Printers,$ad_base_dn" "Printers" "Branche imprimantes"
 sleep 2
 
-echo -e "$COLINFO"
-echo "Commplétion de la branche Rights"
-echo -e "$COLCMD"
-ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_rights.ldif
+
 
 echo -e "$COLINFO"
 echo "Commplétion de la branche Parcs"
@@ -552,6 +604,15 @@ do
 	ldbmv_grp "$rdn,CN=users,$ad_base_dn" "$rdn" "$target_dn"
 done
 
+echo -e "$COLINFO"
+echo "Commplétion de la branche Rights"
+echo -e "$COLCMD"
+#~ ad_base_dn
+
+#~ set -x
+ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_rights.ldif
+
+#~ set +x
 }
 
 # Fonction permettant l'écriture de smb.conf car sambatool n'ajoute pas le dns forwarder lors de l'upgrade
@@ -664,8 +725,20 @@ echo -e "$COLTXT"
 
 #Variables :
 
-### Mode devel pour le moment on !###
+#Couleurs
+COLTITRE="\033[1;35m"   # Rose
+COLDEFAUT="\033[0;33m"  # Brun-jaune
+COLCMD="\033[1;37m"     # Blanc
+COLERREUR="\033[1;31m"  # Rouge
+COLTXT="\033[0;37m"     # Gris
+COLINFO="\033[0;36m"	# Cyan
+COLPARTIE="\033[1;34m"	# Bleu
+
+
+
+### Mode devel pour le moment sur on !###
 devel="yes"
+
 
 samba_packages="samba winbind libnss-winbind krb5-user smbclient"
 export DEBIAN_FRONTEND=noninteractive
@@ -679,31 +752,22 @@ echo -e "$COLPARTIE"
 echo "Prise en compte des valeurs de $se4ad_config"
 echo -e "$COLTXT"
 
-#### Fichier de conf contient ces variables ####
+#### Variables suivantes init via Fichier de conf ####
 # ip du se4ad --> $se4ad_ip" 
-
 # Nom de domaine samba du SE4-AD --> $smb4_domain" 
-
 # Suffixe du domaine --> $suffix_domain" 
-
 # Nom de domaine complet - realm du SE4-AD --> $ad_domain" 
-
 # Adresse IP de l'annuaire LDAP à migrer en AD --> $se3ip" 
-
 # Nom du domaine samba actuel --> $se3_domain"  
-
 # Nom netbios du serveur se3 actuel--> $netbios_name" 
-
 # Adresse du serveur DNS --> $nameserver" 
-
 # Pass admin LDAP --> $adminPw" 
-
 # base dn LDAP ancienne --> $ldap_base_dn
 
 
 echo -e "$COLINFO"
 if [ -e "$se4ad_config" ] ; then
- 	echo "$se4ad_config est bien present sur la machine"
+ 	echo "$se4ad_config est bien present sur la machine - initialisation des paramètres"
 	source $se4ad_config 
 	echo -e "$COLTXT"
 else
@@ -712,18 +776,13 @@ else
 	se4ad_ip="$(ifconfig eth0 | grep "inet " | awk '{ print $2}')"
 fi
 
-poursuivre
+go_on
 
-if [ -n "$devel" ]; then
-	mkdir -p /root/.ssh/
-	ssh_keyser="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMQ6Nd0Kg+L8200pR2CxUVHBtmjQ2xAX2zqArqV45horU8qopf6AYEew0oKanK3GzY2nrs5g2SYbxqs656YKa/OkTslSc5MR/Nndm9/J1CUsurTlo+VwXJ/x1qoLBmGc/9mZjdlNVKIPwkuHMKUch+XmsWF92GYEpTA1D5ZmfuTxP0GMTpjbuPhas96q+omSubzfzpH7gLUX/afRHfpyOcYWdzNID+xdmML/a3DMtuCatsHKO94Pv4mxpPeAXpJdE262DPXPz2ZIoWSqPz8dQ6C3v7/YW1lImUdOah1Fwwei4jMK338ymo6huR/DheCMa6DEWd/OZK4FW2KccxjXvHALn/QCHWCw0UMQnSVpmFZyV4MqB6YvvQ6u0h9xxWIvloX+sjlFCn71hLgH7tYsj4iBqoStN9KrpKC9ZMYreDezCngnJ87FzAr/nVREAYOEmtfLN37Xww3Vr8mZ8/bBhU1rqfLIaDVKGAfnbFdN6lOJpt2AX07F4vLsF0CpPl4QsVaow44UV0JKSdYXu2okcM80pnVnVmzZEoYOReltW53r1bIZmDvbxBa/CbNzGKwxZgaMSjH63yX1SUBnUmtPDQthA7fK8xhQ1rLUpkUJWDpgLdC2zv2jsKlHf5fJirSnCtuvq6ux1QTXs+bkTz5bbMmsWt9McJMgQzWJNf63o8jw== GitLab"
-	echo $ssh_keyser >> /root/.ssh/authorized_keys 
-fi
+
 # A voir pour modifier ou récupérer depuis sambaedu.config 
 [ -z "$smb4_domain" ] && smb4_domain="sambaedu4"
 [ -z "$suffix_domain" ] && suffix_domain="lan"
 ad_domain="$smb4_domain.$suffix_domain" 
-ad_base_dn="DC=$smb4_domain,DC=$suffix_domain"
 ad_bindDN="CN=Administrator,CN=users,$ad_base_dn"
 
 smb4_domain_up="$(echo "$smb4_domain" | tr [:lower:] [:upper:])"
@@ -776,7 +835,7 @@ if [ "$download" = "yes" ]; then
 	echo "Téléchargement de samba 4" 
 	echo -e "$COLCMD\c"
 
-	apt-get install $samba_packages -d
+	apt-get install $samba_packages -d -y
 
 
 	echo "Phase de Téléchargement est terminée !"
@@ -802,6 +861,7 @@ show_title
 echo "Appuyez sur Entree pour continuer"
 read dummy
 
+dev_debug
 
 echo -e "$COLPARTIE"
 
@@ -826,10 +886,11 @@ installbase
 write_hostconf
 
 echo -e "$COLPARTIE"
-echo "Installation de Samba et cie" 
+echo "Installation de Samba & cie" 
 echo -e "$COLTXT"
-
+reset_smb_ad_conf
 installsamba
+Permit_ssh_by_password
 
 if [ -e "$dir_config/slapd.conf" ]; then 
 	install_slapd
@@ -839,12 +900,13 @@ if [ -e "$dir_config/slapd.conf" ]; then
 	write_krb5
 	write_smbconf
 	activate_smb_ad
+	check_smb_ad
 	write_resolvconf
-	change_pass_admin
 	modif_ldb
+	change_pass_admin
 else
 	echo "$dir_config/slapd.conf non trouvé - L'installation se poursuivra sur un nouveau domaine sans import d'anciennes données"
-	poursuivre
+	go_on
 	provision_new_ad # Voir partie dns interne
 	write_smbconf
 	activate_smb_ad
@@ -854,8 +916,6 @@ fi
 
 change_policy_passwords
 
-Permit_ssh_by_password	
-
 change_pass_root
 
 echo -e "$COLTITRE"
@@ -864,7 +924,7 @@ echo -e "$COLTXT"
 
 # script_absolute_path=$(readlink -f "$0")
 # [ "$DEBUG" != "yes" ] &&  mv "$script_absolute_path" /root/install_phase2.done 
-[ -e /root/install_phase2.sh ] && mv /root/install_se4ad_phase2.sh  /root/install_phase2.done
+[ -e /root/install_se4ad_phase2.sh ] && mv /root/install_se4ad_phase2.sh  /root/install_phase2.done
 . /etc/profile
 
 unset DEBIAN_FRONTEND
