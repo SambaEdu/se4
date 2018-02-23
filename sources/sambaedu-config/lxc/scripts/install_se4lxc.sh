@@ -464,7 +464,7 @@ echo "##base dn LDAP##" >> $se4ad_config
 echo "ldap_base_dn=\"$ldap_base_dn\"" >> $se4ad_config
 echo "##Rdn admin LDAP##" >> $se4ad_config
 echo "adminRdn=\"$adminRdn\"" >> $se4ad_config
-echo "SID domaine actuel" >> $se4ad_config
+echo "##SID domaine actuel" >> $se4ad_config
 echo "domainsid=\"$domainsid\"" >> $se4ad_config
 
 chmod +x $se4ad_config
@@ -542,6 +542,21 @@ else
 fi
 chmod +x $dir_root_lxc/$script_phase2
 }
+
+function write_ssh_keys
+{
+ssh_keys_host="/root/.ssh/authorized_keys"
+ssh_keys_lxc_path="/var/lib/lxc/$se4name/rootfs/root/.ssh"
+if [ -e "$ssh_keys_host" ];then
+	echo -e "$COLINFO"
+	echo "Copie du fichier des clés SSH $ssh_keys_host"
+	mkdir -p "$ssh_keys_lxc_path"
+	cp "$ssh_keys_host" "ssh_keys_lxc_path/"
+	echo -e "$COLCMD"
+fi
+
+}
+
 
 # Fonction génération des fichiers hosts @ LXC
 function write_lxc_hosts_conf()
@@ -637,6 +652,7 @@ export_ldap_files
 cp_config_to_lxc
 write_se4ad_install
 write_lxc_hosts_conf
+write_ssh_keys
 display_end_message
 
 
