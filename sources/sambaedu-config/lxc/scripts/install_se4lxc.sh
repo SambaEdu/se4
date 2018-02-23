@@ -551,7 +551,7 @@ if [ -e "$ssh_keys_host" ];then
 	echo -e "$COLINFO"
 	echo "Copie du fichier des clés SSH $ssh_keys_host"
 	mkdir -p "$ssh_keys_lxc_path"
-	cp "$ssh_keys_host" "ssh_keys_lxc_path/"
+	cp "$ssh_keys_host" "$ssh_keys_lxc_path/"
 	echo -e "$COLCMD"
 fi
 
