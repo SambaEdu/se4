@@ -46,7 +46,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 //	if (ldap_get_right("se3_is_admin",$login)=="Y")  {
 
 	if ((isset($action))&&($action == "setadminse3smbpass")) {
-			exec('/usr/bin/sudo /usr/share/se3/scripts/change_adminse3_smbpass.sh');
+			exec('/usr/bin/sudo /usr/share/sambaedu/scripts/change_adminse3_smbpass.sh');
 	}
 
 		//if ($_GET['action'] == "updatesystem") {
@@ -56,19 +56,19 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 	if ((isset($action))&&($action == "updatesystem")) {
 		$info_1 = gettext("Mise &#224; jour syst&#232;me lanc&#233;e, ne fermez pas cette fen&#234;tre avant que le script ne soit termin&#233;. vous recevrez un mail r&#233;capitulatif de tout ce qui sera effectu&#233;...");
 		echo $info_1;
-		system('sleep 1; /usr/bin/sudo /usr/share/se3/scripts/se3_update_system.sh --auto &');
+		system('sleep 1; /usr/bin/sudo /usr/share/sambaedu/scripts/se3_update_system.sh --auto &');
 		unset($action);
 	}
 	if ((isset($action))&&($action == "settime")) {
-		exec('/usr/bin/sudo /usr/share/se3/sbin/settime.sh');
+		exec('/usr/bin/sudo /usr/share/sambaedu/sbin/settime.sh');
 	}
 	if ((isset($action))&&($action == "startsamba")) {
-		exec('/usr/bin/sudo /usr/share/se3/scripts/services.sh samba restart');
+		exec('/usr/bin/sudo /usr/share/sambaedu/scripts/services.sh samba restart');
 	}
 	if ((isset($action))&&($action == "installse3-domain")) {
 		$info_1 = gettext("Mise &#224; jour lanc&#233;e, ne fermez pas cette fen&#234;tre avant que le script ne soit termin&#233;. vous recevrez un mail r&#233;capitulatif de tout ce qui sera effectu&#233;...");
 	echo $info_1;
-	system("/usr/bin/sudo /usr/share/se3/scripts/install_se3-module.sh se3-domain");
+	system("/usr/bin/sudo /usr/share/sambaedu/scripts/install_se3-module.sh se3-domain");
 	}
 
 	if ((isset($action))&&($action == "exim_mod")) {
@@ -126,7 +126,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 
 	// =======================================
 	// Affichage d'un lien de rafraichissement du cadre.
-	if(file_exists('/etc/se3/temoin_test_refresh.txt')){
+	if(file_exists('/etc/sambaedu/temoin_test_refresh.txt')){
 		echo "<div style='position:fixed; top:5px; left:5px; width:20px; height:20px; border:1x solid black;'>\n";
 		echo "<a href='".$_SERVER['PHP_SELF']."'><img src='elements/images/rafraichir.png' width='16' height='16' border='0' alt='Rafraichir' /></a>\n";
 		echo "</div>\n";
@@ -172,7 +172,9 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 
 
 	$os=exec("cat /etc/debian_version | cut -d. -f1-2");
-	$vers=exec("dpkg -s se3|grep Version|cut -d ' ' -f2");
+	//$vers=exec("dpkg -s se3|grep Version|cut -d ' ' -f2");
+    $extr=explode(" ", $version);
+    $vers=$extr[1];
 	$samba_version=exec("dpkg -s samba|grep Version|cut -d ':' -f3|cut -d '+' -f1");
 ?>
 
@@ -190,7 +192,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 		</TD>
 	</TR>
 	<TR>
-		<TD>Mise &#224; jour de votre serveur Se3 <I>(Version actuelle <?php echo $vers; ?>)</I></TD>
+		<TD>Mise &#224; jour de votre serveur SambaEdu <I>(Version actuelle <?php echo $vers; ?>)</I></TD>
 		<TD align="center">
 			<a id=link_maj href="#"><IMG id="check_maj" style="border: 0px solid ;" SRC="../elements/images/info.png" ></a>
 		</TD>
@@ -229,7 +231,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
         <TR>
 		<TD>Contr&#244;le la pr&#233;sence de Se3-domain</TD>
 		<TD align="center">
-			<a id=link_vbs href="#"><IMG id="check_vbs" style="border: 0px solid ;" SRC="../elements/images/info.png" /></a>
+			<a id=livbs href="#"><IMG id="check_vbs" style="border: 0px solid ;" SRC="../elements/images/info.png" /></a>
 		</TD>
 		<TD align="center">
 			<A id="help_vbs_se3"><img name="action_image2"  src="../elements/images/system-help.png"></A>
@@ -272,7 +274,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 		</TD>
 	</TR>
 	<TR>
-		<TD>V&#233;rification du nom DNS du serveur Se3 <span id="urlse3" style="font-style: italic;">(<?php echo $urlse3 ?>)</span></TD>
+		<TD>V&#233;rification du nom DNS du serveur Sambaedu <span id="urlsambaedu" style="font-style: italic;">(<?php echo $urlsambaedu ?>)</span></TD>
 		<TD align="center"><IMG id="check_dns_se3" style="border: 0px solid ;" SRC="../elements/images/info.png"></TD>
 		<TD align="center">
 			<a id="help_dns2_se3"><img name="action_image2"  src="../elements/images/system-help.png"></a>
@@ -313,7 +315,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 	<TR>
 		<TD>Configuration de l'exp&#233;dition des mails</TD>
 		<TD align="center">
-			<IMG id="check_mail" style="border: 0px solid ;" id="check_mail" SRC="../elements/images/info.png">
+			<IMG id="check_mail" style="border: 0px solid ;"  SRC="../elements/images/info.png">
 		</TD>
 		<TD align="center">
 			<A id="help_mail_se3"><img  name="action_image2"  src="../elements/images/system-help.png"></A>
@@ -383,7 +385,7 @@ if (ldap_get_right("se3_is_admin",$login)!="Y")
 	</TD>
 	</TR>
 	<TR>
-		<TD>Partition : /var/se3 <span id="space_disk2"><span></TD>
+		<TD>Partition : /var/sambaedu <span id="space_disk2"><span></TD>
 		<TD align="center">
 			<IMG id="check_disk2" style="border: 0px solid ;" SRC="../elements/images/info.png">
 		</TD>

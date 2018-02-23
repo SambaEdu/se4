@@ -50,8 +50,8 @@ function get_config_se4 ($module = "sambaedu") {
 		$config['dn']['people'] = $config['peopleRdn'].",".$config['ldap_base_dn'];
 		$config['dn']['groups'] = $config['groupsRdn'].",".$config['ldap_base_dn'];
 		$config['dn']['rights'] = $config['rightsRdn'].",".$config['ldap_base_dn'];
-		#$config['dn']['printers'] = $config['printersRdn'].",".$config['ldap_base_dn'];
-		#$config['dn']['trash'] = $config['trashRdn'].",".$config['ldap_base_dn'];
+		$config['dn']['printers'] = $config['printersRdn'].",".$config['ldap_base_dn'];
+		$config['dn']['trash'] = $config['trashRdn'].",".$config['ldap_base_dn'];
 
 	} else {
 		$conf_file = "/etc/sambaedu/sambaedu.conf.d/$module.conf";
