@@ -403,6 +403,12 @@ echo "Installation de samba 4.5"
 echo -e "$COLCMD"
 apt-get install $samba_packages 
 echo -e "$COLTXT"
+
+/etc/init.d/samba stop
+/etc/init.d/smbd stop
+/etc/init.d/nmbd stop
+/etc/init.d/winbind stop
+
 }
 
 # Fonction génération du fichier /etc/krb5.conf On peut aussi copier celui de /var/lib/samba
@@ -425,6 +431,7 @@ if [ -e "$dir_config/smb.conf" ]; then
 
 	echo -e "$COLINFO"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
+	go_on
 	echo -e "$COLCMD"
 	sed "s/$netbios_name/se4ad/I" -i $dir_config/smb.conf
 	sed "s/$sambadomaine_old/$sambadomaine_new/I" -i $dir_config/smb.conf
@@ -458,6 +465,20 @@ echo -e "$COLCMD"
 # Fonction activation samba ad-dc
 function activate_smb_ad()
 {
+/etc/init.d/samba stop
+sleep 1
+/etc/init.d/smbd stop
+sleep 1
+/etc/init.d/nmbd stop
+sleep 1
+/etc/init.d/winbind stop
+sleep 1
+ps aux | grep "nmbd|smbd|smb|winbind"
+systemctl disable samba 
+systemctl disable winbind
+systemctl disable nmbd 
+systemctl disable smbd
+
 systemctl unmask samba-ad-dc
 systemctl enable samba-ad-dc
 # systemctl disable samba winbind nmbd smbd
@@ -469,57 +490,11 @@ echo -e "$COLCMD"
 /etc/init.d/samba-ad-dc start
 check_error
 echo -e "$COLTXT"
-sleep 3
+sleep 10
+
+
 }
 
-# Fonction check samba ad-dc
-function check_smb_ad()
-{
-echo -e "$COLINFO"
-echo "Test de connexion : smbclient -L localhost -U%"
-echo -e "$COLCMD"
-sleep 2
-smbclient -L localhost -U%
-quit_on_error "Connexion impossible sur l'AD"
-
-echo -e "$COLTXT"	
-}
-
-
-# Fonction permettant de fixer le pass admin : Attention complexité requise
-function change_pass_admin()
-{
-TEST_PASS="none"
-while [ "$TEST_PASS" != "OK" ]
-do
-	echo -e "$COLCMD"
-	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
-	echo -e "---- /!\ Attention /!\ ----"
-	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
-	read -r administrator_pass
-	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
-	read -r confirm_pass
-	if [ "$administrator_pass" != "$confirm_pass" ];then
-		echo "Les deux mots de passe ne correspondent pas ! - Merci de recommencer"
-		sleep 3
-		continue
-	fi
-	printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-	smbclient -L localhost -U Administrator%"$administrator_pass"  
-
-    if [ $? != 0 ]; then
-        echo -e "$COLERREUR"
-        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité demandés"
-        echo "Merci de saisir le mot de passe à nouveau"
-        sleep 1
-    else
-        TEST_PASS="OK"
-        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
-        sleep 1
-    fi
-done
-echo -e "$COLTXT"
-}
 
 # Fonction permettant l'ajout d'une OU ds l'annuaire AD
 function ldbadd_ou()
@@ -557,8 +532,9 @@ EOF
 # Fonction permettant l'ajout des parties spécifiques à SE4 avec récup des données de l'ancien SE3 ds l'annuaire AD
 function modif_ldb()
 {
-echo "Détection de la base dn de l'AD"	
+echo "Détection DN et RDN de l'AD"	
 ad_base_dn="$(ldbsearch -H /var/lib/samba/private/sam.ldb -s base -b "" defaultNamingContext | sed -n "s/defaultNamingContext: //p")"
+ad_bindDN="CN=Administrator,CN=users,$ad_base_dn"
 echo "Base Dn trouvée : $ad_base_dn"
 
 echo "Modification des exports ldif pour insertion de la base dn AD"
@@ -615,30 +591,6 @@ ldbadd -H /var/lib/samba/private/sam.ldb $dir_config/ad_rights.ldif
 #~ set +x
 }
 
-# Fonction permettant l'écriture de smb.conf car sambatool n'ajoute pas le dns forwarder lors de l'upgrade
-function write_smbconf()
-{
-mv /etc/samba/smb.conf /etc/samba/smb.conf.ori
-cat >/etc/samba/smb.conf <<END
-# Global parameters
-[global]
-	netbios name = SE4AD
-	realm = $ad_domain_up
-	workgroup = $smb4_domain_up
-	dns forwarder = $nameserver
-	server role = active directory domain controller
-	idmap_ldb:use rfc2307 = yes
-	
-[netlogon]
-	path = /var/lib/samba/sysvol/sambaedu4.lan/scripts
-	read only = No
-
-[sysvol]
-	path = /var/lib/samba/sysvol
-	read only = No
-END
-}
-
 # Fonction permettant la mise à l'heure du serveur 
 function set_time()
 {
@@ -683,6 +635,32 @@ nameserver 127.0.0.1
 END
 }
 
+# Fonction permettant l'écriture de smb.conf car sambatool n'ajoute pas le dns forwarder lors de l'upgrade
+function write_smbconf()
+{
+mv /etc/samba/smb.conf /etc/samba/smb.conf.ori
+cat >/etc/samba/smb.conf <<END
+# Global parameters
+[global]
+	netbios name = SE4AD
+	realm = $ad_domain_up
+	workgroup = $smb4_domain_up
+	dns forwarder = $nameserver
+	server role = active directory domain controller
+	idmap_ldb:use rfc2307 = yes
+	
+[netlogon]
+	path = /var/lib/samba/sysvol/sambaedu4.lan/scripts
+	read only = No
+
+[sysvol]
+	path = /var/lib/samba/sysvol
+	read only = No
+END
+sleep 2
+}
+
+
 # Fonction permettant de se connecter ssh root sur se4-AD
 function Permit_ssh_by_password()
 {
@@ -699,6 +677,76 @@ samba-tool domain passwordsettings set --history-length=0
 samba-tool domain passwordsettings set --min-pwd-age=0
 samba-tool domain passwordsettings set --max-pwd-age=0
 }
+
+
+
+# Fonction check samba ad-dc
+function check_smb_ad()
+{
+echo -e "$COLINFO"
+echo -e "L'initialisation de samba4 peut s'avérer très longue lors de son tout premier lancement, jusqu'à quelques minutes"
+echo -e "On attend que le service soit près avec une série de tests de connexion : smbclient -L localhost -U%"
+echo -e "$COLTXT"
+echo -e "Pause de 30s pour commencer"
+sleep 30
+for cpt in 1 2 3 4
+do
+	echo "Test de connexion $cpt"
+	echo -e "$COLCMD"
+	smbclient -L localhost -U% >/dev/null 
+		if [ "$?" != "0" ]; then
+			echo "le service n'est pas encore prêts - nouvelle boucle de 30s"
+			sleep 30
+		else
+			break
+		fi
+smbclient -L localhost -U% 
+quit_on_error "Aie ! - Connexion impossible sur l'AD"
+
+echo -e "$COLTXT"	
+}
+
+
+# Fonction permettant de fixer le pass admin : Attention complexité requise
+function change_pass_admin()
+{
+TEST_PASS="none"
+while [ "$TEST_PASS" != "OK" ]
+do
+	echo -e "$COLCMD"
+	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
+	echo -e "---- /!\ Attention /!\ ----"
+	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
+	read -r administrator_pass
+	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
+	read -r confirm_pass
+	if [ "$administrator_pass" != "$confirm_pass" ];then
+		echo "Les deux mots de passe ne correspondent pas ! - Merci de recommencer"
+		sleep 3
+		continue
+	fi
+	printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
+	smbclient -L localhost -U Administrator%"$administrator_pass"  
+
+    if [ $? != 0 ]; then
+        echo -e "$COLERREUR"
+        echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité demandés"
+        echo "Merci de saisir le mot de passe à nouveau"
+        sleep 1
+    else
+        TEST_PASS="OK"
+        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
+        sleep 1
+    fi
+done
+echo -e "$COLTXT"
+}
+
+
+
+
+
+
 
 # Fonction permettant de changer le pass root
 function change_pass_root()
@@ -783,7 +831,7 @@ go_on
 [ -z "$smb4_domain" ] && smb4_domain="sambaedu4"
 [ -z "$suffix_domain" ] && suffix_domain="lan"
 ad_domain="$smb4_domain.$suffix_domain" 
-ad_bindDN="CN=Administrator,CN=users,$ad_base_dn"
+
 
 smb4_domain_up="$(echo "$smb4_domain" | tr [:lower:] [:upper:])"
 suffix_domain_up="$(echo "$suffix_domain" | tr [:lower:] [:upper:])"
@@ -822,11 +870,11 @@ while :; do
  		shift
 done
 
-if [ "$download" = "yes" ]; then
+if [ "$download" = "yes" ] || [ ! -e /root/dl_ok]; then
 	show_title
 	test_ecard
 	echo -e "$COLINFO"
-	echo "Pré-téléchargement des paquets uniquement"
+	echo "Pré-téléchargement des paquets nécessaire à l'installation"
 	echo -e "$COLTXT"
 	installbase
 	gensourcelist
@@ -838,9 +886,10 @@ if [ "$download" = "yes" ]; then
 	apt-get install $samba_packages -d -y
 
 
-	echo "Phase de Téléchargement est terminée !"
+	echo "Phase de Téléchargement est terminée ! - Continuer avec l'installation ?"
+	touch  /root/dl_ok
 	echo -e "$COLTXT"
-	exit 0
+	go_on
 fi
 
 
@@ -899,11 +948,13 @@ if [ -e "$dir_config/slapd.conf" ]; then
 	convert_smb_to_ad
 	write_krb5
 	write_smbconf
-	activate_smb_ad
-	check_smb_ad
 	write_resolvconf
+	activate_smb_ad
 	modif_ldb
+	
+	check_smb_ad
 	change_pass_admin
+	
 else
 	echo "$dir_config/slapd.conf non trouvé - L'installation se poursuivra sur un nouveau domaine sans import d'anciennes données"
 	go_on
