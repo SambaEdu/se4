@@ -689,7 +689,8 @@ echo -e "On attend que le service soit près avec une série de tests de connexi
 echo -e "$COLTXT"
 echo -e "Pause de 30s pour commencer"
 sleep 30
-for cpt in 1 2 3 4
+cpt_fin=6
+for ((cpt=1; cpt <= cpt_fin ; cpt++))
 do
 	echo "Test de connexion $cpt"
 	echo -e "$COLCMD"
@@ -700,6 +701,7 @@ do
 		else
 			break
 		fi
+done
 smbclient -L localhost -U% 
 quit_on_error "Aie ! - Connexion impossible sur l'AD"
 
@@ -726,7 +728,8 @@ do
 		continue
 	fi
 	printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-	smbclient -L localhost -U Administrator%"$administrator_pass"  
+	echo -e "Test de connexion smbclient avec le nouveau mot de passe....\c$COLTXT"
+	smbclient -L localhost -U Administrator%"$administrator_pass"  >/dev/null
 
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
@@ -735,6 +738,7 @@ do
         sleep 1
     else
         TEST_PASS="OK"
+        echo "Test Ok !!"
         echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
         sleep 1
     fi
