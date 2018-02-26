@@ -684,27 +684,27 @@ samba-tool domain passwordsettings set --max-pwd-age=0
 function check_smb_ad()
 {
 echo -e "$COLINFO"
-echo -e "L'initialisation de samba4 peut s'avérer très longue lors de son tout premier lancement, jusqu'à quelques minutes"
-echo -e "On attend que le service soit près avec une série de tests de connexion : smbclient -L localhost -U%"
+echo -e "L'initialisation de samba4 peut s'avérer assez longue lors de son tout premier lancement, jusqu'à quelques minutes"
+echo -e "--> On attend que le service soit près avec une série de tests de connexion : smbclient -L localhost -U%"
 echo -e "$COLTXT"
-echo -e "Pause de 30s pour commencer"
-sleep 30
-cpt_fin=6
+echo -e "Attente de 40s pour commencer"
+sleep 40
+cpt_fin=12
 for ((cpt=1; cpt <= cpt_fin ; cpt++))
 do
+	wt=20
 	echo "Test de connexion $cpt"
 	echo -e "$COLCMD"
 	smbclient -L localhost -U% >/dev/null 
 		if [ "$?" != "0" ]; then
-			echo "le service n'est pas encore prêts - nouvelle boucle de 30s"
-			sleep 30
+			echo "le service n'est pas encore prêt - nouvelle attente de $wt s"
+			sleep $wt
 		else
 			break
 		fi
 done
-smbclient -L localhost -U% 
+smbclient -L localhost -U% && echo "le service est désormais fonctionnel, on passe à la suite !"
 quit_on_error "Aie ! - Connexion impossible sur l'AD"
-
 echo -e "$COLTXT"	
 }
 
@@ -955,7 +955,6 @@ if [ -e "$dir_config/slapd.conf" ]; then
 	write_resolvconf
 	activate_smb_ad
 	modif_ldb
-	
 	check_smb_ad
 	change_pass_admin
 	
