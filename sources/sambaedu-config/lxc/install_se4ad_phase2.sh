@@ -144,17 +144,64 @@ iface eth0 inet static
 END
 }
 
-# Fonction Affichage du titre
+# Fonction Affichage du titre et choix dy type d'installation
 function show_title()
 {
 
 clear
+# 
+# echo -e "$COLTITRE"
+# echo "--------------------------------------------------------------------------------"
+# echo "----------- Installation de SambaEdu4-AD sur la machine.----------------"
+# echo "--------------------------------------------------------------------------------"
+# echo -e "$COLTXT"
+# echo "Appuyez sur Entree pour continuer"
+# read dummy
 
-echo -e "$COLTITRE"
-echo "--------------------------------------------------------------------------------"
-echo "L'installeur est maintenant sur le point de configurer SambaEdu4-AD."
-echo "--------------------------------------------------------------------------------"
-echo -e "$COLTXT"
+
+BACKTITLE="Projet Sambaédu - https://www.sambaedu.org/"
+
+WELCOME_TITLE="Installeur de samba Edu 4 - serveur Active Directory"
+WELCOME_TEXT="Bienvenue sur l'installation du serveur de fichiers SambaEdu 4.
+
+SambaEdu est un projet libre sous licence GPL vivant de la collaboration active des différents contributeurs issus de différentes académies
+
+Ce programme installera les paquet nécessaires au serveur AD avant de récupérer les données de l'ancien serveur si elles sont disponibles dans /root ou /etc/sambaedu, au choix.
+
+Le fichier contenant ces données devra se nommer $se4ad_config_tgz. S'il n'existe pas une nouvelle installation sera effectuée. 
+
+A noter que si la machine a été installé avec un container LXC l'import est complétement automatique.
+
+Contacts : 
+Franck.molle@sambaedu.org : Maintenance de l'installeur"
+
+dialog  --ok-label Ok --backtitle "$BACKTITLE" --title "$WELCOME_TITLE" \
+        	--msgbox "$WELCOME_TEXT" 25 70
+#
+
+dialog --backtitle "$BACKTITLE" --title "Installeur de samba Edu 4 - serveur Active Directory" \
+--menu "Choisissez l'action à effectuer" 15 90 7  \
+"1" "Installation classique" \
+"2" "Téléchargement des paquets uniquement (utile pour préparer un modèle de VM)" \
+"3" "Configuration du réseau uniquement (en cas de changement d'IP" \
+2>$tempfile
+
+choice=`cat $tempfile`
+[ "$?" != "0" ] && exit 0
+case $choice in
+        1)
+        ;;
+        2)
+        download_packages
+		exit 0
+        ;;
+        3)
+        conf_network
+		exit 0
+        ;;
+        *) exit 0
+        ;;
+        esac
 }
 
 # Fonction test carte réseau
@@ -201,6 +248,27 @@ if [ -z "$ECARD" ]; then
 fi
 }
 
+# Fonction recupératoin des paramètres via fichier de conf ou tgz
+function recup_params() {
+
+if [ -e "/root/$se4ad_config_tgz" ]; then
+	tar -xzf /root/$se4ad_config_tgz -C $dir_config/
+elif [ -e "$dir_config/$se4ad_config_tgz" ] ;then
+	tar -xzf $dir_config/$se4ad_config_tgz -C $dir_config/
+fi
+
+echo -e "$COLINFO"
+if [ -e "$se4ad_config" ] ; then
+ 	echo "$se4ad_config est bien present sur la machine - initialisation des paramètres"
+	source $se4ad_config 
+	echo -e "$COLTXT"
+else
+	echo "$se4ad_config ne se trouve pas sur la machine"
+	echo -e "$COLTXT"
+	se4ad_ip="$(ifconfig eth0 | grep "inet " | awk '{ print $2}')"
+fi
+}
+
 # Fonction installation des paquets de base
 function installbase()
 {
@@ -232,6 +300,37 @@ END
 cat >/etc/hostname <<END
 se4ad
 END
+}
+
+function download_packages() { 
+if [ "$download" = "yes" ] || [ ! -e /root/dl_ok ]; then
+# 	show_title
+	test_ecard
+	echo -e "$COLINFO"
+	echo "Pré-téléchargement des paquets nécessaire à l'installation"
+	echo -e "$COLTXT"
+	installbase
+	gensourcelist
+	gensourcese4
+	echo -e "$COLINFO"
+	echo "Téléchargement de samba 4" 
+	echo -e "$COLCMD\c"
+
+	apt-get install $samba_packages -d -y
+	echo -e "$COLTXT"
+	echo "Phase de Téléchargement terminée "
+fi
+}
+
+function conf_network {
+echo -e "$COLINFO"
+echo "Mofification de l'adressage IP"
+echo -e "$COLTXT"
+gennetwork
+service networking restart
+echo "Modification Ok" 
+echo "Testez la connexion internet avant de relancer le script sans option afin de procéder à l'installation"
+exit 0
 }
 
 # Fonction installation et config de slapd afin d'importer l'ancien SE3 ldap
@@ -386,7 +485,7 @@ done
 # Nettoyage complet de la conf samba ad
 function reset_smb_ad_conf()
 {
-/etc/init.d/samba-ad-dc stop
+service samba stop
 rm 	-f /etc/samba/smb.conf
 rm /var/lib/samba/private/* -rf
 
@@ -718,7 +817,7 @@ do
 	echo -e "$COLCMD"
 	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
 	echo -e "---- /!\ Attention /!\ ----"
-	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres, au moins une Majuscule et un caractère spécial ! $COLTXT"
+	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et un caractère spécial ! $COLTXT"
 	read -r administrator_pass
 	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
 	read -r confirm_pass
@@ -746,12 +845,6 @@ done
 echo -e "$COLTXT"
 }
 
-
-
-
-
-
-
 # Fonction permettant de changer le pass root
 function change_pass_root()
 {	
@@ -774,6 +867,8 @@ passwd
 done
 echo -e "$COLTXT"
 }
+
+#### 				---------- Fin des fonctions ---------------####
 
 #Variables :
 
@@ -799,6 +894,7 @@ se4ad_config="$dir_config/se4ad.config"
 db_dir="/etc/sambaedu/smb_export"
 nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
 se3ldif="ldapse3.ldif"
+se4ad_config_tgz="se4ad.config.tgz"
 
 echo -e "$COLPARTIE"
 echo "Prise en compte des valeurs de $se4ad_config"
@@ -817,42 +913,22 @@ echo -e "$COLTXT"
 # base dn LDAP ancienne --> $ldap_base_dn
 
 
-echo -e "$COLINFO"
-if [ -e "$se4ad_config" ] ; then
- 	echo "$se4ad_config est bien present sur la machine - initialisation des paramètres"
-	source $se4ad_config 
-	echo -e "$COLTXT"
-else
-	echo "$se4ad_config ne se trouve pas sur la machine"
-	echo -e "$COLTXT"
-	se4ad_ip="$(ifconfig eth0 | grep "inet " | awk '{ print $2}')"
-fi
 
-go_on
-
-
-# A voir pour modifier ou récupérer depuis sambaedu.config 
-[ -z "$smb4_domain" ] && smb4_domain="sambaedu4"
-[ -z "$suffix_domain" ] && suffix_domain="lan"
-ad_domain="$smb4_domain.$suffix_domain" 
-
-
-smb4_domain_up="$(echo "$smb4_domain" | tr [:lower:] [:upper:])"
-suffix_domain_up="$(echo "$suffix_domain" | tr [:lower:] [:upper:])"
-ad_domain_up="$(echo "$ad_domain" | tr [:lower:] [:upper:])"
-sambadomaine_old="$(echo $se3_domain| tr [:lower:] [:upper:])"
-sambadomaine_new="$smb4_domain_up"
-haveged
-ad_admin_pass=$(makepasswd --minchars=8)
+tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/inst$$
+tempfile2=`tempfile 2>/dev/null` || tempfile=/tmp/inst2$$
+trap "rm -f $tempfile ; rm -f $tempfile2" 0 1 2 5 15
 
 while :; do
 	case $1 in
 		-d|--download)
-		download="yes"
+		download_packages
+		exit 0
+		
 		;;
 		
 		-n|--network)
-		network="yes"
+		conf_network
+		exit 0
 		;;
 		
 		--debug)
@@ -874,45 +950,31 @@ while :; do
  		shift
 done
 
-if [ "$download" = "yes" ] || [ ! -e /root/dl_ok]; then
-	show_title
-	test_ecard
-	echo -e "$COLINFO"
-	echo "Pré-téléchargement des paquets nécessaire à l'installation"
-	echo -e "$COLTXT"
-	installbase
-	gensourcelist
-	gensourcese4
-	echo -e "$COLINFO"
-	echo "Téléchargement de samba 4" 
-	echo -e "$COLCMD\c"
-
-	apt-get install $samba_packages -d -y
-
-
-	echo "Phase de Téléchargement est terminée ! - Continuer avec l'installation ?"
-	touch  /root/dl_ok
-	echo -e "$COLTXT"
-	go_on
-fi
-
-
-if [ "$network" = "yes" ]; then
-	show_title
-	test_ecard
-	echo -e "$COLINFO"
-	echo "Mofification de l'adressage IP"
-	echo -e "$COLTXT"
-	gennetwork
-	service networking restart
-	echo "Modification Ok" 
-	echo "Testez la connexion internet avant de relancer le script sans option afin de procéder à l'installation"
-	exit 0
-fi
-
 show_title
-echo "Appuyez sur Entree pour continuer"
-read dummy
+recup_params
+
+
+
+# A voir pour modifier ou récupérer depuis sambaedu.config 
+[ -z "$smb4_domain" ] && smb4_domain="sambaedu4"
+[ -z "$suffix_domain" ] && suffix_domain="lan"
+ad_domain="$smb4_domain.$suffix_domain" 
+
+
+smb4_domain_up="$(echo "$smb4_domain" | tr [:lower:] [:upper:])"
+suffix_domain_up="$(echo "$suffix_domain" | tr [:lower:] [:upper:])"
+ad_domain_up="$(echo "$ad_domain" | tr [:lower:] [:upper:])"
+sambadomaine_old="$(echo $se3_domain| tr [:lower:] [:upper:])"
+sambadomaine_new="$smb4_domain_up"
+haveged
+ad_admin_pass=$(makepasswd --minchars=8)
+
+
+
+
+
+download_packages
+go_on
 
 dev_debug
 
@@ -923,18 +985,11 @@ DEBIAN_FRONTEND="noninteractive"
 export  DEBIAN_FRONTEND
 export  DEBIAN_PRIORITY
 
-test_ecard
 # LADATE="$(date +%d-%m-%Y)"
 # fichier_log="/etc/se3/install-stretch-$LADATE.log"
 # touch $fichier_log
 
 [ -e /root/debug ] && DEBUG="yes"
-
-gensourcelist
-
-gensourcese4
-
-installbase
 
 write_hostconf
 
@@ -963,7 +1018,9 @@ else
 	go_on
 	provision_new_ad # Voir partie dns interne
 	write_smbconf
+	write_resolvconf
 	activate_smb_ad
+	check_smb_ad
 	write_krb5
 	
 fi
