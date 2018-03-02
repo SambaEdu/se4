@@ -486,7 +486,7 @@ echo -e "$COLINFO"
 echo "Arrêt du service Samba pour export des fichiers TDB"
 echo -e "$COLTXT"
 service samba stop
-smb_dbdir_export="/etc/sambaedu/smb_export"
+smb_dbdir_export="/etc/sambaedu"
 mkdir -p "$smb_dbdir_export"
 echo -e "$COLINFO"
 echo "Copie des fichiers TDB vers $smb_dbdir_export"
@@ -503,6 +503,7 @@ fi
 cp $tdb_smb_dir/group_mapping.tdb $smb_dbdir_export/
 cp $tdb_smb_dir/account_policy.tdb $smb_dbdir_export/
 cp $tdb_smb_dir/wins.tdb $smb_dbdir_export/
+cp $tdb_smb_dir/wins.dat $smb_dbdir_export/
 
 cp /etc/samba/smb.conf $dir_config/
 }
@@ -528,11 +529,14 @@ function cp_config_to_lxc()
 {
 dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
 mkdir -p $dir_config_lxc
-echo "Création de l'archive d'export des données $se4ad_config_tgz"
-tar -czf $dir_config/$se4ad_config_tgz $dir_config/*
-echo "copie de $se4ad_config_tgz sur la machine LXC"
+echo "Création de l'archive d'export des données $se4ad_config_tgz sur la machine LXC"
+cd $dir_config
 echo -e "$COLCMD"
-cp -av  $dir_config/$se4ad_config_tgz $dir_config_lxc/
+tar -czf $dir_config_lxc/$se4ad_config_tgz *
+# echo "copie de $se4ad_config_tgz sur la machine LXC"
+# 
+# cp -av  $se4ad_config_tgz $dir_config_lxc/
+cd -
 echo -e "$COLTXT"
 sleep 2
 }
