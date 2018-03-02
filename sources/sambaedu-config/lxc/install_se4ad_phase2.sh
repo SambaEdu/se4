@@ -48,6 +48,7 @@ if [ "$?" != "0" ]; then
 	echo -e "$COLERREUR"
 	echo "Attention "
 	echo -e "la dernière commande a envoyé une erreur !"
+	echo -e "$1"
 	echo -e "$COLTXT"
 	go_on
 fi
@@ -251,7 +252,7 @@ fi
 function recup_params() {
 
 if [ -e "/root/$se4ad_config_tgz" ]; then
-	tar -xzf /root/$se4ad_config_tgz -C $dir_config/
+	tar -xzf /root/$se4ad_config_tgz -C /etc/
 elif [ -e "$dir_config/$se4ad_config_tgz" ] ;then
 	tar -xzf $dir_config/$se4ad_config_tgz -C $dir_config/
 fi
@@ -382,7 +383,7 @@ echo -e "$COLINFO"
 echo "Lancement de slapd" 
 echo -e "$COLCMD"
 /etc/init.d/slapd start
-check_error
+check_error "Impossible de lancer slapd. Si vous avez lancé le script plusieurs fois, le plus simple est de redémarrer la machine car le port 389 doit être déjà occupé"
 echo -e "$COLTXT"
 }
 
@@ -484,10 +485,25 @@ done
 # Nettoyage complet de la conf samba ad
 function reset_smb_ad_conf()
 {
-service samba stop
+echo
+echo -e "$COLPARTIE"
+echo "Arrêt des services si existants et installation de Samba & cie" 
+echo -e "$COLTXT\c"
+for smb_service in samba-ad-dc samba winbind smbd nmbd
+do
+	if [ -e /etc/init.d/$smb_service ]; then
+		echo -e "$COLINFO\c"
+		echo -e "Arrêt du service $smb_service"
+		echo -e "$COLCMD\c"
+		/etc/init.d/$smb_service stop 
+		sleep 1
+		echo -e "$COLTXT\c"
+	fi
+done
+
+sleep 1
 rm 	-f /etc/samba/smb.conf
 rm /var/lib/samba/private/* -rf
-
 }
 
 
@@ -500,12 +516,11 @@ echo -e "$COLINFO"
 echo "Installation de samba 4.5" 
 echo -e "$COLCMD"
 apt-get install $samba_packages 
-echo -e "$COLTXT"
-
 /etc/init.d/samba stop
 /etc/init.d/smbd stop
 /etc/init.d/nmbd stop
 /etc/init.d/winbind stop
+echo -e "$COLTXT"
 
 }
 
@@ -801,6 +816,7 @@ do
 			break
 		fi
 done
+sleep 10
 smbclient -L localhost -U% && echo "le service est désormais fonctionnel, on passe à la suite !"
 quit_on_error "Aie ! - Connexion impossible sur l'AD"
 echo -e "$COLTXT"	
@@ -811,6 +827,7 @@ echo -e "$COLTXT"
 function change_pass_admin()
 {
 TEST_PASS="none"
+cpt=1
 while [ "$TEST_PASS" != "OK" ]
 do
 	echo -e "$COLCMD"
@@ -818,19 +835,28 @@ do
 	echo -e "---- /!\ Attention /!\ ----"
 	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et un caractère spécial ! $COLTXT"
 	read -r administrator_pass
+	sleep 2
 	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
 	read -r confirm_pass
+	sleep 2
 	if [ "$administrator_pass" != "$confirm_pass" ];then
 		echo "Les deux mots de passe ne correspondent pas ! - Merci de recommencer"
 		sleep 3
 		continue
 	fi
 	printf '%s\n%s\n' "$administrator_pass" "$administrator_pass"|(/usr/bin/smbpasswd -s Administrator)
-	echo -e "Test de connexion smbclient avec le nouveau mot de passe....\c$COLTXT"
-	smbclient -L localhost -U Administrator%"$administrator_pass"  >/dev/null
-
+# 	echo -e "Test de connexion smbclient avec le nouveau mot de passe....\c$COLTXT"
+# 	sleep 5
+# # 	smbclient -L localhost -U Administrator%"$administrator_pass"  >/tmp/smbclient_cnx
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
+        cpt++
+		if [ "$cpt" = 3 ];then
+			echo -e "3 Tentatives infructueuses - Abandon de modification du mot de passe"
+			echo -e "Vous devrez changer le mot de passe manuellement avec smbpasswd Administrator"
+			echo -e "$COLTXT"
+			break
+		fi
         echo -e "Attention : mot de passe a été saisi de manière incorrecte ou ne respecte pas les critères de sécurité demandés"
         echo "Merci de saisir le mot de passe à nouveau"
         sleep 1
@@ -840,6 +866,8 @@ do
         echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
         sleep 1
     fi
+    
+    
 done
 echo -e "$COLTXT"
 }
@@ -877,11 +905,11 @@ echo -e "$COLTXT"
 #Couleurs
 COLTITRE="\033[1;35m"   # Rose
 COLDEFAUT="\033[0;33m"  # Brun-jaune
-COLCMD="\033[1;37m"     # Blanc
+COLCMD="\033[1;37m\c"     # Blanc
 COLERREUR="\033[1;31m"  # Rouge
 COLTXT="\033[0;37m"     # Gris
-COLINFO="\033[0;36m"	# Cyan
-COLPARTIE="\033[1;34m"	# Bleu
+COLINFO="\033[0;36m\c"	# Cyan
+COLPARTIE="\033[1;34m\c"	# Bleu
 
 
 
@@ -893,7 +921,7 @@ samba_packages="samba winbind libnss-winbind krb5-user smbclient"
 export DEBIAN_FRONTEND=noninteractive
 dir_config="/etc/sambaedu"
 se4ad_config="$dir_config/se4ad.config"
-db_dir="/etc/sambaedu/smb_export"
+db_dir="/etc/sambaedu"
 nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
 se3ldif="ldapse3.ldif"
 se4ad_config_tgz="se4ad.config.tgz"
@@ -968,14 +996,10 @@ suffix_domain_up="$(echo "$suffix_domain" | tr [:lower:] [:upper:])"
 ad_domain_up="$(echo "$ad_domain" | tr [:lower:] [:upper:])"
 sambadomaine_old="$(echo $se3_domain| tr [:lower:] [:upper:])"
 sambadomaine_new="$smb4_domain_up"
-haveged
-ad_admin_pass=$(makepasswd --minchars=8)
-
-
-
-
 
 download_packages
+haveged
+ad_admin_pass=$(makepasswd --minchars=8)
 go_on
 
 dev_debug
@@ -995,9 +1019,6 @@ export  DEBIAN_PRIORITY
 
 write_hostconf
 
-echo -e "$COLPARTIE"
-echo "Installation de Samba & cie" 
-echo -e "$COLTXT"
 reset_smb_ad_conf
 installsamba
 Permit_ssh_by_password
