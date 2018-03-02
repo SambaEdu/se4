@@ -1,7 +1,7 @@
 #!/bin/bash
 # installation Se4-AD phase 2
 # version pour Stretch - franck molle
-# version 12 - 2017 
+# version 02 - 2018 
 
 
 # # Fonction permettant de quitter en cas d'erreur 
@@ -172,11 +172,10 @@ Le fichier contenant ces données devra se nommer $se4ad_config_tgz. S'il n'exis
 
 A noter que si la machine a été installé avec un container LXC l'import est complétement automatique.
 
-Contacts : 
+Contact : 
 Franck.molle@sambaedu.org : Maintenance de l'installeur"
 
-dialog  --ok-label Ok --backtitle "$BACKTITLE" --title "$WELCOME_TITLE" \
-        	--msgbox "$WELCOME_TEXT" 25 70
+dialog  --ok-label Ok --backtitle "$BACKTITLE" --title "$WELCOME_TITLE" --msgbox "$WELCOME_TEXT" 25 70
 #
 
 dialog --backtitle "$BACKTITLE" --title "Installeur de samba Edu 4 - serveur Active Directory" \
@@ -870,6 +869,9 @@ echo -e "$COLTXT"
 
 #### 				---------- Fin des fonctions ---------------####
 
+# vt220 sucks !
+[ "$TERM" = "vt220" ] && TERM="linux"
+
 #Variables :
 
 #Couleurs
@@ -885,7 +887,7 @@ COLPARTIE="\033[1;34m"	# Bleu
 
 ### Mode devel pour le moment sur on !###
 devel="yes"
-
+dev_debug
 
 samba_packages="samba winbind libnss-winbind krb5-user smbclient"
 export DEBIAN_FRONTEND=noninteractive
@@ -916,7 +918,7 @@ echo -e "$COLTXT"
 
 tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/inst$$
 tempfile2=`tempfile 2>/dev/null` || tempfile=/tmp/inst2$$
-trap "rm -f $tempfile ; rm -f $tempfile2" 0 1 2 5 15
+# trap "rm -f $tempfile ; rm -f $tempfile2" 0 1 2 5 15
 
 while :; do
 	case $1 in
