@@ -1,7 +1,8 @@
 #!/bin/bash
 #
 ##### Permet l'installation et la conf d'un container LXC se4-AD#####
-#
+# franck molle
+# version 02 - 2018 
 
 
 
@@ -17,19 +18,28 @@ then
 	exit
 fi
 
-#Couleurs
-COLTITRE="\033[1;35m"   # Rose
-COLPARTIE="\033[1;34m"  # Bleu
+function check_whiptail()
+{
+if [ -z "$(which whiptail)" ];then
+apt-get install whiptail -y 
+fi
+}
 
-COLTXT="\033[0;37m"     # Gris
-COLCHOIX="\033[1;33m"   # Jaune
-COLDEFAUT="\033[0;33m"  # Brun-jaune
-COLSAISIE="\033[1;32m"  # Vert
 
-COLCMD="\033[1;37m"     # Blanc
+function show_title() {
+BACKTITLE="Projet Sambaédu - https://www.sambaedu.org/"
 
-COLERREUR="\033[1;31m"  # Rouge
-COLINFO="\033[0;36m"    # Cyan
+WELCOME_TITLE="Installeur de container LXC pour SE4-AD"
+WELCOME_TEXT="Bienvenue dans l'installation du container LXC SE4 Active directory.
+
+Ce programme installera un container LXC Debian Stretch et y déposera tous les fichiers d'export nécessaires à la migration vers AD.
+
+Une fois la machine LXC installée, il suffira de la démarrer afin de poursuivre son installation et sa configuration de façon automatique."
+
+$dialog_box  --backtitle "$BACKTITLE" --title "$WELCOME_TITLE" --msgbox "$WELCOME_TEXT" 18 70
+}
+
+
 
 function erreur()
 {
@@ -100,78 +110,48 @@ echo "--------"
 echo "$1"
 echo "--------"
 echo -e "$COLTXT"
-sleep 2
-}
-
-# Choix du nom de domaine
-function ask_for_domain()
-{
-
-echo -e "$COLINFO--- Important --- $COLTXT"
-echo "Sur un domaine AD, le serveur de domaine gère le DNS. Le choix du nom de domaine est donc primordial"
-echo "Le nom de domaine est décomposé en deux parties : le nom de domaine samba suivi de son suffixe"
-echo "Exemple pour un domaine AD clg-dupontel-belville.ac-acad.fr" 
-echo "le domaine samba sera clg-dupontel-belville et ac-acad.fr sera le suffixe"
-echo "Attention : les domaines du type samba.lan ou etab.local sont déconseillés en production par l'équipe samba "
-REPONSE="n"
-while [ "$REPONSE" != "o" ]
-do
-ad_domain="$(hostname -d)"
-	if [ "$REPONSE" = "n" ]; then
-		echo -e "${COLTXT}Saisir votre nom de domaine complet $COLSAISIE [$ad_domain] \c"
-		read ad_domain
-		[ -z "$ad_domain" ] && ad_domain=$(hostname -d)
-	fi
-
-smb4_domain=$(echo "$ad_domain" | cut -d"." -f1)
-suffix_domain=$(echo "$ad_domain" | sed -n "s/$smb4_domain\.//p")
-	echo -e "$COLINFO"
-	echo "Résumé :"
-	echo -e "$COLTXT\c"
-	echo "Nom de domaine AD saisi	-->  $ad_domain"
-	echo "Nom de domaine samba	-->  $smb4_domain"
-	echo "Suffixe du domain	-->  $suffix_domain"
-	
-	
-	echo -e "$COLTXT"
-	echo -e "Confirmer cette configuration ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c "
-	read REPONSE
-done
+# sleep 1
 }
 
 # confirmation de la conf du lan 
 function conf_network()
 {
-show_part "Configuration du réseau local"	
+config_lan_title="Configuration du réseau local"	
 se3network=$(grep network $interfaces_file | grep -v "#" | sed -e "s/network//g" | tr "\t" " " | sed -e "s/ //g")
 se3bcast=$(grep broadcast $interfaces_file | grep -v "#" | sed -e "s/broadcast//g" | tr "\t" " " | sed -e "s/ //g")
 se3gw=$(grep gateway $interfaces_file | grep -v "#" | sed -e "s/gateway//g" | tr "\t" " " | sed -e "s/ //g")
 
 
 REPONSE=""
-while [ "$REPONSE" != "o" ]
+while [ "$REPONSE" != "yes" ]
 do
-	if [ "$REPONSE" = "n" ]; then
-		echo -e "${COLTXT}Adresse de base du réseau $COLSAISIE\c"
-		read se3network
-		echo -e "${COLTXT}Adresse de broadcast $COLSAISIE\c"
-		read se3bcast
-		echo -e "${COLTXT}Adresse de la passerelle $COLSAISIE\c"
-		read se3gw
+	if [ "$REPONSE" = "no" ]; then
+		$dialog_box --backtitle "$BACKTITLE" --title "$config_lan_title" --inputbox "Veuillez saisir l'adresse de base du reseau" 15 70 $se3network 2>$tempfile || erreur "Annulation"
+		se3network="$(cat $tempfile)"
+				
+		$dialog_box --backtitle "$BACKTITLE" --title "$config_lan_title" --inputbox "Veuillez saisir l'adresse de broadcast" 15 70 $se3bcast 2>$tempfile || erreur "Annulation"
+		se3bcast="$(cat $tempfile)"
+		
+		$dialog_box --backtitle "$BACKTITLE" --title "$config_lan_title" --inputbox "Veuillez saisir l'adresse de la passerelle" 15 70 $se3gw 2>$tempfile || erreur "Annulation"
+		se3gw="$(cat $tempfile)"
+				
 	fi
 
-	echo -e "$COLINFO"
-	echo "Configuration réseau actuelle détectée :"
-	echo -e "$COLTXT\c"
-	echo "Adresse IP du serveur :  $se3ip"
-	echo "Adresse réseau de base : $se3network"
-	echo "Adresse de Broadcast :   $se3bcast"
-	echo "IP de la Passerelle :    $se3gw"
+	confirm_title="Configuration réseau local"
+	confirm_txt="La configuration suivante a été détectée sur le serveur SE3 
 	
+Adresse IP du serveur SE3 :   $se3ip
+Adresse réseau de base :      $se3network
+Adresse de Broadcast :        $se3bcast
+Adresse IP de la Passerelle : $se3gw
 	
-	echo -e "$COLTXT"
-	echo -e "Confirmer cette configuration réseau ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c "
-	read REPONSE
+Ces valeurs sont elles correctes ?"	
+	
+	if ($dialog_box --backtitle "$BACKTITLE" --title "$confirm_title" --yesno "$confirm_txt" 15 70) then
+		REPONSE="yes"
+	else
+		REPONSE="no"
+	fi
 done
 }
 
@@ -182,7 +162,7 @@ show_part "Installation  et configuration de LXC"
 
 echo "Vérification de l'existence des backports dans le sources.list"
 url_depot_backport="deb http://ftp.fr.debian.org/debian/ wheezy-backports main"
-grep -q "^$url_depot_backport" /etc/apt/sources.list || echo "$url_depot_backpot" >> /etc/apt/sources.list
+grep -q "^$url_depot_backport" /etc/apt/sources.list || echo "$url_depot_backport" >> /etc/apt/sources.list
 echo -e "${COLCMD}Mise à jour des dépots....${COLTXT}"
 # apt-get autoremove 
 apt-get -qq update
@@ -193,6 +173,7 @@ apt-get install -t wheezy-backports lxc
 
 grep -q cgroup /etc/fstab || echo "cgroup  /sys/fs/cgroup  cgroup  defaults  0   0" >> /etc/fstab
 mount -a
+sleep 3
 }
 
 # fonction config du lan
@@ -247,49 +228,78 @@ ifup $ecard
 function preconf_se4ad_lxc()
 {
 
-echo -e $COLPARTIE
-echo "--------"
-echo "Partie 3 : Pré-configuration du container LXC SE4"
-echo "--------"
-echo -e "$COLTXT"
+se4ad_lxc_lan_title="Configuration réseau du container LXC SE4"
 
 REPONSE=""
 details="no"
-while [ "$REPONSE" != "o" ]
+se4ad_ip="$(echo "$se3ip"  | cut -d . -f1-3)."
+se4mask="$se3mask"
+se4network="$se3network"
+se4bcast="$se3bcast"
+se4gw="$se3gw"
+while [ "$REPONSE" != "yes" ]
 do
-	echo -e "${COLTXT}IP du container SE4 : $COLSAISIE\c"
-	read se4ad_ip
-
+	$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_lan_title" --inputbox "Saisir l'IP du container SE4" 15 70 $se4ad_ip 2>$tempfile || erreur "Annulation"
+	se4ad_ip=$(cat $tempfile)
+	
 	if [ "$details" != "no" ]; then
-		echo -e "${COLTXT}Masque sous réseau: $COLSAISIE\c"
-		read se3mask
-		echo -e "${COLTXT}Adresse réseau $COLSAISIE\c"
-		read se3network
-		echo -e "${COLTXT}Adresse de broadcast $COLSAISIE\c"
-		read s3bcast
-		echo -e "${COLTXT}Adresse de la passerelle $COLSAISIE\c"
-		read se3gw
+		$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_lan_title" --inputbox "Saisir le Masque sous réseau" 15 70 $se3mask 2>$tempfile || erreur "Annulation"
+		se4mask=$(cat $tempfile)
+		
+		$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_lan_title" --inputbox "Saisir l'Adresse de base du réseau" 15 70 $se3network 2>$tempfile || erreur "Annulation"
+		se4network=$(cat $tempfile)
+		
+		$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_lan_title" --inputbox "Saisir l'Adresse de broadcast" 15 70 $se3bcast 2>$tempfile || erreur "Annulation"
+		se4bcast=$(cat $tempfile)
+		
+		$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_lan_title" --inputbox "Saisir l'Adresse de la passerelle" 15 70 $se3gw 2>$tempfile || erreur "Annulation"
+		se4gw=$(cat $tempfile)
 	fi
 	details="yes"
 	
-		
-		echo -e "$COLINFO"
-		echo "Configuration IP prévue pour le container :"
-		echo -e "$COLTXT\c"
-		echo "IP :         $se4ad_ip"
-		echo "Masque :     $se3mask"
-		echo "Réseau :     $se3network"
-		echo "Broadcast :  $se3bcast"
-		echo "Passerelle : $se3gw"
+	se4ad_lxc_name_title="Nom du container SE4"
+	$dialog_box --backtitle "$BACKTITLE" --title "$se4ad_lxc_name_title" --inputbox "Saisir le Nom du container SE4" 15 70 se4ad 2>$tempfile || erreur "Annulation"
+	se4name=$(cat $tempfile)
 	
-		echo -e "$COLTXT"
-		echo -e "Confirmer la configuration pour le container ? (${COLCHOIX}o${COLTXT}/${COLCHOIX}n${COLTXT}) $COLSAISIE\c"
-		read REPONSE
+	choice_domain_title="Important - nom de domaine AD"
+	choice_domain_text="Sur un domaine AD, le serveur de domaine gère le DNS. Le choix du nom de domaine est donc important.
+Il est décomposé en deux parties : le nom de domaine samba suivi de son suffixe, séparés par un point.
+
+Exemple de domaine AD : clg-dupontel-belville.ac-dijon.fr 
+* le domaine samba sera clg-dupontel-belville 
+* le suffixe et sera ac-acad.fr 
+
+Note : Les domaines du type sambaedu.lan ou etab.local sont déconseillés en production par l'équipe samba"
+
+	ad_domain="$(hostname -d)"
+	$dialog_box --backtitle "$BACKTITLE" --title "$choice_domain_title" --inputbox "$choice_domain_text" 18 80 $ad_domain 2>$tempfile
+	ad_domain="$(cat $tempfile)"		
+	smb4_domain=$(echo "$ad_domain" | cut -d"." -f1)
+	suffix_domain=$(echo "$ad_domain" | sed -n "s/$smb4_domain\.//p")
+	
+	confirm_title="Récapitulatif de la configuration prévue"
+	confirm_txt="IP :         $se4ad_ip
+Masque :     $se4mask
+Réseau :     $se4network
+Broadcast :  $se4bcast
+Passerelle : $se4gw
+
+Nom :        $se4name
+
+Nom de domaine AD saisi : $ad_domain
+Nom de domaine samba :    $smb4_domain
+Suffixe du domain :       $suffix_domain
+
+Confirmer l'enregistrement de cette configuration ?"
+		
+		if ($dialog_box --backtitle "$BACKTITLE" --title "$confirm_title" --yesno "$confirm_txt" 20 60) then
+			REPONSE="yes"
+		else
+			REPONSE="no"
+		fi	
 done
-echo -e "${COLTXT}Nom du container SE4: [se4ad]$COLSAISIE \c"
-read se4name
-[ -z "$se4name" ] && se4name="se4ad"
-POURSUIVRE
+
+#~ POURSUIVRE
 echo -e "$COLTXT"
 }
 
@@ -321,8 +331,7 @@ lxc.network.hwaddr = $se4mac
 lxc.network.ipv4 = $se4ad_ip
 
 # Définissez la passerelle pour avoir un accès à Internet
-lxc.network.ipv4.gateway = $se3gw
-
+lxc.network.ipv4.gateway = $se4gw
 END
 }
 
@@ -338,7 +347,7 @@ else
 	echo -e "$COLINFO"
 	echo "Récupération du template lxc-debianse4"
 	echo -e "$COLTXT"
-	wget $url_sambaedu_config/lxc/template/lxc-debianse4
+	wget -nv $url_sambaedu_config/lxc/template/lxc-debianse4
 	mv lxc-debianse4 /usr/share/lxc/templates/lxc-debianse4
 fi
 chmod +x /usr/share/lxc/templates/lxc-debianse4
@@ -376,10 +385,10 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet static
 address $se4ad_ip
-netmask $se3mask
-network $se3network
-broadcast $se3bcast
-gateway $se3gw
+netmask $se4mask
+network $se4network
+broadcast $se4bcast
+gateway $se4gw
 END
 
 chmod 644 $interfaces_file_lxc
@@ -426,7 +435,7 @@ else
 	echo -e "$COLINFO"
 	echo "Récupération du fichier bashrc"
 	echo -e "$COLCMD"
-	wget $url_sambaedu_config/lxc/bashrc
+	wget -nv $url_sambaedu_config/lxc/bashrc
 	mv -v bashrc $lxc_bashrc
 	echo -e "$COLTXT"
 fi
@@ -474,7 +483,7 @@ chmod +x $se4ad_config
 function export_smb_files()
 {
 echo -e "$COLINFO"
-echo "Coupure du service Samba pour export des fichiers TDB"
+echo "Arrêt du service Samba pour export des fichiers TDB"
 echo -e "$COLTXT"
 service samba stop
 smb_dbdir_export="/etc/sambaedu/smb_export"
@@ -488,38 +497,44 @@ cp $pv_tdb_smb_dir/secrets.tdb $smb_dbdir_export/
 cp $pv_tdb_smb_dir/schannel_store.tdb $smb_dbdir_export/
 cp $pv_tdb_smb_dir/passdb.tdb $smb_dbdir_export/
 
-cp $tdb_smb_dir/gencache_notrans.tdb $smb_dbdir_export/
+if [ -e "$tdb_smb_dir/gencache_notrans.tdb" ] ;then
+	cp $tdb_smb_dir/gencache_notrans.tdb $smb_dbdir_export/
+fi
 cp $tdb_smb_dir/group_mapping.tdb $smb_dbdir_export/
 cp $tdb_smb_dir/account_policy.tdb $smb_dbdir_export/
+cp $tdb_smb_dir/wins.tdb $smb_dbdir_export/
 
 cp /etc/samba/smb.conf $dir_config/
 }
 
-# Fonction export des fichiers ldap 
+# Fonction export des fichiers ldap conf, schémas propres à se3 et ldif
 function export_ldap_files()
 {
 conf_slapd="/etc/ldap/slapd.conf"
 echo -e "$COLINFO"
 echo "Export de la conf ldap et de ldapse3.ldif vers $dir_config"
 echo -e "$COLTXT"
-cp -v $conf_slapd $dir_config/
+cp $conf_slapd $dir_config/
 ldapsearch -xLLL -D "$adminRdn,$ldap_base_dn" -w $adminPw > $dir_config/ldapse3.ldif
 schema_dir="/etc/ldap/schema"
-cp -v $schema_dir/ltsp.schema $schema_dir/samba.schema $schema_dir/printer.schema $dir_config/
-cp -v /var/lib/ldap/DB_CONFIG $dir_config/
-cp -v /etc/ldap/slapd.pem $dir_config/
+cp $schema_dir/ltsp.schema $schema_dir/samba.schema $schema_dir/printer.schema $dir_config/
+cp /var/lib/ldap/DB_CONFIG $dir_config/
+cp /etc/ldap/slapd.pem $dir_config/
 
 }
 
 # Fonction copie des fichiers de conf @LXC/etc/sambaedu
 function cp_config_to_lxc()
 {
-dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc"
-# mkdir -p $dir_config_lxc
-echo "copie de $dir_config sur la machine LXC"
+dir_config_lxc="/var/lib/lxc/$se4name/rootfs/etc/sambaedu"
+mkdir -p $dir_config_lxc
+echo "Création de l'archive d'export des données $se4ad_config_tgz"
+tar -czf $dir_config/$se4ad_config_tgz $dir_config/*
+echo "copie de $se4ad_config_tgz sur la machine LXC"
 echo -e "$COLCMD"
-cp -av  $dir_config $dir_config_lxc/
+cp -av  $dir_config/$se4ad_config_tgz $dir_config_lxc/
 echo -e "$COLTXT"
+sleep 2
 }
 
 # Fonction copie install_phase2 @LXC  
@@ -530,19 +545,20 @@ if [ -e "$dir_config/lxc/$script_phase2" ]; then
 	echo -e "$COLINFO"
 	echo "Copie de $dir_config/lxc/$script_phase2"
 	echo -e "$COLCMD"
-	cp -v $dir_config/lxc/$script_phase2 $dir_root_lxc/$script_phase2
+	cp $dir_config/lxc/$script_phase2 $dir_root_lxc/$script_phase2
 	echo -e "$COLTXT"
 else
 	echo -e "$COLINFO"
 	echo "Récupération de $script_phase2"
 	echo -e "$COLCMD"
-	wget $url_sambaedu_config/lxc/$script_phase2
-	mv -v $script_phase2 $dir_root_lxc/$script_phase2
+	wget -nv $url_sambaedu_config/lxc/$script_phase2
+	mv $script_phase2 $dir_root_lxc/$script_phase2
 	echo -e "$COLTXT"
 fi
 chmod +x $dir_root_lxc/$script_phase2
 }
 
+# copie des clés ssh présente sur le serveur principal sur le container
 function write_ssh_keys
 {
 ssh_keys_host="/root/.ssh/authorized_keys"
@@ -584,40 +600,65 @@ se4ad
 END
 }
 
-function display_end_message() {
-echo -e "/!\ notez bien le mot de passe root du container  --->$COLINFO se4ad $COLTXT
-Il vous sera indispensable pour le premier lancement"
-
-echo -e "$COLTXT"
-# echo "Appuyez sur ENTREE "
-
-# echo "Un nouveau script d'installation se lancera sur le container une fois que vous serez connecté root"
-echo -e "$COLTITRE"
-echo "Terminé!"
-echo "--------"
-echo -e "$COLTXT"
-echo -e "${COLINFO}Container $se4name installé. Pour lancer la machine, utiliser la commande suivante :$COLCMD
-lxc-start -n $se4name"
-echo -e "${COLTXT}L'installation se poursuivra ensuite une fois identifié root
-/!\ Mot de passe root --->$COLINFO se4ad $COLTXT"
-echo "--------"
-echo -e "$COLINFO" 
-echo "Les valeurs utiles à la configuration du se4 seront les suivantes"
+function launch_se4ad() {
+echo -e "$COLINFO"
+echo "Lancement de $se4name en arrière plan"
 echo -e "$COLCMD"
-cat $se4ad_config
-echo -e "$COLTXT"
+lxc-start -d -n $se4name 
+if [ "$?" != "0" ]; then
+	echo -e "$COLERREUR"
+	echo "Attention "
+	echo -e "Erreur lors du lancement de $se4name !"
+	echo -e "$COLTXT"
+	echo "Appuyez sur entrée pour continuer"
+else
+	echo "$se4name Lancée avec succès !!"
+	echo -e "$COLTXT"
+	sleep 3
+fi
 }
 
-clear
+# Affichage message de fin
+function display_end_message() {
+display_end_title="Container $se4name installé"	
+	
+display_end_txt="Installation terminée !!
+
+Les différents paramètres sont consultables dans $se4ad_config 
+
+La machine LXC a été lancée en arrière plan. 
+
+Afin de poursuivre l'installation, il vous suffit de vous y connecter avec la commande
+lxc-console -n $se4name 
+/!\ Mot de passe root : \"se4ad\"
+
+Une fois connecté root, un nouveau script d'installation se lancera sur le container afin de finaliser sa configuration"
+
+$dialog_box --backtitle "$BACKTITLE" --title "$display_end_title" --msgbox "$display_end_txt" 20 70
+
+
 echo -e "$COLTITRE"
-usage
-echo -e "$COLINFO"
-echo "Appuyez sur Entree pour continuer..."
-
+echo "L'installation de $se4name est terminée.
+Pour se connecter : 
+lxc-console -n $se4name 
+/!\ Mot de passe root : \"se4ad\""
 echo -e "$COLTXT"
-read
+}
+clear
 
-show_part "Recupération des données depuis la BDD et initialisation des variables"
+#Couleurs
+COLTITRE="\033[1;35m"   # Rose
+COLPARTIE="\033[1;34m"  # Bleu
+
+COLTXT="\033[0;37m"     # Gris
+COLCHOIX="\033[1;33m"   # Jaune
+COLDEFAUT="\033[0;33m"  # Brun-jaune
+COLSAISIE="\033[1;32m"  # Vert
+
+COLCMD="\033[1;37m"     # Blanc
+
+COLERREUR="\033[1;31m"  # Rouge
+COLINFO="\033[0;36m"    # Cyan
 
 ## recuperation des variables necessaires pour interoger mysql ###
 source /etc/se3/config_m.cache.sh
@@ -625,6 +666,9 @@ source /etc/se3/config_l.cache.sh
 source /usr/share/se3/includes/functions.inc.sh 
 
 # Variables :
+dialog_box="$(which whiptail)"
+tempfile=`tempfile 2>/dev/null` || tempfile=/tmp/inst$$
+tempfile2=`tempfile 2>/dev/null` || tempfile=/tmp/inst2$$
 url_sambaedu_config="https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config"
 interfaces_file="/etc/network/interfaces" 
 dir_config="/etc/sambaedu"
@@ -633,9 +677,16 @@ script_phase2="install_se4ad_phase2.sh"
 lxc_arch="$(arch)"
 ecard="br0"
 nameserver=$(grep "^nameserver" /etc/resolv.conf | cut -d" " -f2)
+se4ad_config_tgz="se4ad.config.tgz"
 
 
-ask_for_domain
+
+show_title
+show_part "Recupération des données depuis la BDD et initialisation des variables"
+
+
+
+check_whiptail
 conf_network
 install_lxc_package
 write_host_lan
@@ -653,7 +704,9 @@ cp_config_to_lxc
 write_se4ad_install
 write_lxc_hosts_conf
 write_ssh_keys
+launch_se4ad
 display_end_message
+
 
 
 # echo "Appuyez sur ENTREE "
