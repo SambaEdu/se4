@@ -12,8 +12,12 @@ Ce document a pour but de décrire précisément la procédure d'installation au
 * Installation du container avec export des données importantes de la machine SE3, à savoir tout ce qui concerne l'annuaire et samba
 * La finalisation de la configuration du container avec réintégration des données précédentes et peuplement de l'AD 
 
-Ce documentation s’attardera plus précisément sur la première partie. La seconde est traitée à part dans ce document : **Lien à ajouter** car elle est indépendante du système de virtualisation utilisé 
+Ce documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de LXC.
  
+
+.. _documentation: install-se4AD.rst
+
+
 
 Se procurer le script d'installation 
 ====================================
@@ -158,7 +162,7 @@ Lorsque le container est déjà actif, il suffit de se connecter dessus via la c
 Nous voila sur notre container stretch... Une fois connecté une nouvelle phase d'installation se déroulera.
 On pourra se reporter à cette documentation_
 
-.. _documentation: install-se4AD
+.. _documentation: install-se4AD.rst
 
 Annexe : Quelques commandes LXC utiles
 --------------------------------------
