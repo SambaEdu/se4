@@ -412,7 +412,7 @@ fi
 mesg n' > $profile_lxc
 echo "
 if [ -f /root/$script_phase2 ]; then
-    . /root/$script_phase2  
+    /root/$script_phase2  
 fi
 
 if [ -f ~/.bashrc ]; then

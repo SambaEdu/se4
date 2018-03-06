@@ -7,50 +7,52 @@
 # # Fonction permettant de quitter en cas d'erreur 
 function quit_on_choice()
 {
-	echo -e "$COLERREUR"
-	echo "Arrêt du script !"
-	echo -e "$1"
-	echo -e "$COLTXT"
-	exit 1
+echo -e "$COLERREUR"
+echo "Arrêt du script !"
+echo -e "$1"
+echo -e "$COLTXT"
+exit 1
 }
 
 function dev_debug() {
 if [ -n "$devel" ]; then
-	mkdir -p /root/.ssh/
-	ssh_keyser="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMQ6Nd0Kg+L8200pR2CxUVHBtmjQ2xAX2zqArqV45horU8qopf6AYEew0oKanK3GzY2nrs5g2SYbxqs656YKa/OkTslSc5MR/Nndm9/J1CUsurTlo+VwXJ/x1qoLBmGc/9mZjdlNVKIPwkuHMKUch+XmsWF92GYEpTA1D5ZmfuTxP0GMTpjbuPhas96q+omSubzfzpH7gLUX/afRHfpyOcYWdzNID+xdmML/a3DMtuCatsHKO94Pv4mxpPeAXpJdE262DPXPz2ZIoWSqPz8dQ6C3v7/YW1lImUdOah1Fwwei4jMK338ymo6huR/DheCMa6DEWd/OZK4FW2KccxjXvHALn/QCHWCw0UMQnSVpmFZyV4MqB6YvvQ6u0h9xxWIvloX+sjlFCn71hLgH7tYsj4iBqoStN9KrpKC9ZMYreDezCngnJ87FzAr/nVREAYOEmtfLN37Xww3Vr8mZ8/bBhU1rqfLIaDVKGAfnbFdN6lOJpt2AX07F4vLsF0CpPl4QsVaow44UV0JKSdYXu2okcM80pnVnVmzZEoYOReltW53r1bIZmDvbxBa/CbNzGKwxZgaMSjH63yX1SUBnUmtPDQthA7fK8xhQ1rLUpkUJWDpgLdC2zv2jsKlHf5fJirSnCtuvq6ux1QTXs+bkTz5bbMmsWt9McJMgQzWJNf63o8jw== GitLab"
-	grep -q "$ssh_keyser" /root/.ssh/authorized_keys || echo $ssh_keyser >> /root/.ssh/authorized_keys 
+    mkdir -p /root/.ssh/
+    ssh_keyser="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDMQ6Nd0Kg+L8200pR2CxUVHBtmjQ2xAX2zqArqV45horU8qopf6AYEew0oKanK3GzY2nrs5g2SYbxqs656YKa/OkTslSc5MR/Nndm9/J1CUsurTlo+VwXJ/x1qoLBmGc/9mZjdlNVKIPwkuHMKUch+XmsWF92GYEpTA1D5ZmfuTxP0GMTpjbuPhas96q+omSubzfzpH7gLUX/afRHfpyOcYWdzNID+xdmML/a3DMtuCatsHKO94Pv4mxpPeAXpJdE262DPXPz2ZIoWSqPz8dQ6C3v7/YW1lImUdOah1Fwwei4jMK338ymo6huR/DheCMa6DEWd/OZK4FW2KccxjXvHALn/QCHWCw0UMQnSVpmFZyV4MqB6YvvQ6u0h9xxWIvloX+sjlFCn71hLgH7tYsj4iBqoStN9KrpKC9ZMYreDezCngnJ87FzAr/nVREAYOEmtfLN37Xww3Vr8mZ8/bBhU1rqfLIaDVKGAfnbFdN6lOJpt2AX07F4vLsF0CpPl4QsVaow44UV0JKSdYXu2okcM80pnVnVmzZEoYOReltW53r1bIZmDvbxBa/CbNzGKwxZgaMSjH63yX1SUBnUmtPDQthA7fK8xhQ1rLUpkUJWDpgLdC2zv2jsKlHf5fJirSnCtuvq6ux1QTXs+bkTz5bbMmsWt9McJMgQzWJNf63o8jw== GitLab"
+    grep -q "$ssh_keyser" /root/.ssh/authorized_keys || echo $ssh_keyser >> /root/.ssh/authorized_keys 
 fi
 }
 
 # Fonction permettant de poser la question s'il faut poursuivre ou quitter
 function go_on()
 {
-        REPONSE=""
-        while [ "$REPONSE" != "o" -a "$REPONSE" != "O" -a "$REPONSE" != "n" ]
-        do
-                echo -e "$COLTXT"
-                echo -e "Peut-on poursuivre? (${COLCHOIX}O/n${COLTXT}) $COLSAISIE\c"
-                read REPONSE
-                if [ -z "$REPONSE" ]; then
-                        REPONSE="o"
-                fi
-        done
+echo
+REPONSE=""
+while [ "$REPONSE" != "o" -a "$REPONSE" != "O" -a "$REPONSE" != "n" ]
+do
+    echo -e "$COLTXT"
+    echo -e "Peut-on poursuivre? (${COLCHOIX}O/n${COLTXL}) $COLSAISIE"
+    read REPONSE
+    echo -e "$COLTXT"
+    if [ -z "$REPONSE" ]; then
+            REPONSE="o"
+    fi
+done
 
-        if [ "$REPONSE" != "o" -a "$REPONSE" != "O" ]; then
-                quit_on_choice "Abandon!"
-        fi
+if [ "$REPONSE" != "o" -a "$REPONSE" != "O" ]; then
+        quit_on_choice "Abandon!"
+fi
 }
 
 # Fonction de verification d'erreur
 function check_error()
 {
 if [ "$?" != "0" ]; then
-	echo -e "$COLERREUR"
-	echo "Attention "
-	echo -e "la dernière commande a envoyé une erreur !"
-	echo -e "$1"
-	echo -e "$COLTXT"
-	go_on
+    echo -e "$COLERREUR"
+    echo "Attention "
+    echo -e "la dernière commande a envoyé une erreur !"
+    echo -e "$1"
+    echo -e "$COLTXT"
+    go_on
 fi
 }
 
@@ -59,12 +61,12 @@ fi
 function quit_on_error()
 {
 if [ "$?" != "0" ]; then
-	echo -e "$COLERREUR"
-	echo "$1"
-	echo "Attention "
-	echo -e "la dernière commande a envoyé une erreur critique pour la suite !\nImpossible de poursuivre"
-	echo -e "$COLTXT"
-	exit 1
+    echo -e "$COLERREUR"
+    echo "$1"
+    echo "Attention "
+    echo -e "la dernière commande a envoyé une erreur critique pour la suite !\nImpossible de poursuivre"
+    echo -e "$COLTXT"
+    exit 1
 fi
 }
 # Fonction génération du sources.list stretch FR
@@ -216,13 +218,13 @@ if [ -z "$ECARD" ]; then
 		echo "Aucune carte réseau n'a été détectée."
 		echo "Il n'est pas souhaitable de poursuivre l'installation."
 		echo -e "$COLTXT"
-		echo -e "Voulez-vous ne pas tenir compte de cet avertissement (${COLCHOIX}1${COLTXT}),"
-		echo -e "ou préférez-vous interrompre le script d'installation (${COLCHOIX}2${COLTXT})"
+		echo -e "Voulez-vous ne pas tenir compte de cet avertissement (${COLCHOIX}1${COLTXL}),"
+		echo -e "ou préférez-vous interrompre le script d'installation (${COLCHOIX}2${COLTXL})"
 		echo -e "et corriger le problème avant de relancer ce script?"
 		REPONSE=""
 		while [ "$REPONSE" != "1" -a "$REPONSE" != "2" ]
 		do
-			echo -e "${COLTXT}Votre choix: [${COLDEFAUT}2${COLTXT}] ${COLSAISIE}\c"
+			echo -e "${COLTXL}Votre choix: [${COLDEFAUT}2${COLTXL}] ${COLSAISIE}\c"
 			read REPONSE
 	
 			if [ -z "$REPONSE" ]; then
@@ -312,13 +314,14 @@ if [ "$download" = "yes" ] || [ ! -e /root/dl_ok ]; then
 	installbase
 	gensourcelist
 	gensourcese4
-	echo -e "$COLINFO"
+	echo -e "$COLPARTIE"
 	echo "Téléchargement de samba 4" 
-	echo -e "$COLCMD\c"
+	echo -e "$COLCMD"
 
 	apt-get install $samba_packages -d -y
+	echo -e "$COLCMD"
+	echo "Phase de Téléchargement terminée"
 	echo -e "$COLTXT"
-	echo "Phase de Téléchargement terminée "
 fi
 }
 
@@ -336,7 +339,7 @@ exit 0
 # Fonction installation et config de slapd afin d'importer l'ancien SE3 ldap
 function install_slapd()
 {
-echo -e "$COLINFO"
+echo -e "$COLPARTIE"
 echo "Installation et configuration du backend slapd pour récupération des anciennes données" 
 echo -e "$COLCMD"
 apt-get install --assume-yes slapd ldb-tools
@@ -500,14 +503,10 @@ do
 		echo -e "$COLTXT\c"
 	fi
 done
-
 sleep 1
 rm 	-f /etc/samba/smb.conf
 rm /var/lib/samba/private/* -rf
 }
-
-
-
 
 # Fonction installation de samba 4.5 (pour le moment)
 function installsamba()
@@ -542,7 +541,7 @@ if [ -e "$dir_config/smb.conf" ]; then
 	rm -f /etc/samba/smb.conf
 	rm -f /var/lib/samba/private/*.tdb
 
-	echo -e "$COLINFO"
+	echo -e "$COLPARTIE"
 	echo "Lancement de la migration du domaine NT4 vers Samba AD avec sambatool" 
 	go_on
 	echo -e "$COLCMD"
@@ -551,25 +550,26 @@ if [ -e "$dir_config/smb.conf" ]; then
 	sed "s#passdb backend.*#passdb backend = ldapsam:ldap://$se4ad_ip#" -i $dir_config/smb.conf  
 	echo "samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf"
 	samba-tool domain classicupgrade --dbdir=$db_dir --use-xattrs=yes --realm=$ad_domain_up --dns-backend=SAMBA_INTERNAL $dir_config/smb.conf
-	if [ "$?" != "0" ]; then
-		quit_on_error "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme sur l'export d'annuaire ou smb.conf et relancez le script" 
-	else
-		echo -e "$COLINFO"
-		echo "Migration de l'annuaire vers samba AD Ok !! On peut couper le service slapd et le désactiver au boot" 
-		echo -e "$COLCMD"
-		/etc/init.d/slapd stop
-		systemctl disable slapd
-		echo -e "$COLTXT"
-	fi
+	quit_on_error "Une erreur s'est produite lors de la migration de l'annaire avec samba-tool. Reglez le probleme sur l'export d'annuaire ou smb.conf et relancez le script" 
+        echo -e "$COLINFO"
+        echo "Migration de l'annuaire vers samba AD Ok !! On peut couper le service slapd et le désactiver au boot" 
+        echo -e "$COLCMD"
+        /etc/init.d/slapd stop
+        systemctl disable slapd
+        echo -e "$COLTXT"
+
 else
-	quit_on_error "$dir_config/smb.conf ne semble pas présent. Il est indispensable pour la migration des données. Reglez le probleme et relancez le script"
+	echo -e "$COLERREUR"
+	echo -e "$dir_config/smb.conf ne semble pas présent. Il est indispensable pour la migration des données. Reglez le probleme et relancez le script"
+	echo -e "$COLTXT"
+	exit 1
 fi
 }	
 	
 # Fonction provision d'un nouvel AD - cas new installation
 function provision_new_ad()	
 {
-echo -e "$COLINFO"
+echo -e "$COLPARTIE"
 echo "$db_dir/smb.conf Manquant - Lancement d'une nouvelle installation de Samba AD avec sambatool" 
 samba-tool domain provision --realm=$ad_domain_up --domain $smb4_domain_up --adminpass $ad_admin_pass  
 echo -e "$COLCMD"
@@ -586,7 +586,7 @@ sleep 1
 sleep 1
 /etc/init.d/winbind stop
 sleep 1
-ps aux | grep "nmbd|smbd|smb|winbind"
+# ps aux | grep "nmbd|smbd|smb|winbind"
 systemctl disable samba 
 systemctl disable winbind
 systemctl disable nmbd 
@@ -597,7 +597,7 @@ systemctl enable samba-ad-dc
 # systemctl disable samba winbind nmbd smbd
 systemctl mask samba winbind nmbd smbd
 
-echo -e "$COLINFO"
+echo -e "$COLPARTIE"
 echo "En avant la musique :) - lancement de Samba AD-DC"
 echo -e "$COLCMD"
 /etc/init.d/samba-ad-dc start
@@ -730,9 +730,9 @@ if [ "$heureok" != "yes" ];then
 	if [ "$?" != "0" ]; then
 		echo -e "${COLERREUR}"
 		echo "ERREUR: mise à l'heure par internet impossible"
-		echo -e "${COLTXT}Vous devez donc vérifier par vous même que celle-ci est à l'heure"
+		echo -e "${COLTXL}Vous devez donc vérifier par vous même que celle-ci est à l'heure"
 		echo -e "le serveur indique le$COLINFO $(date +%c)"
-		echo -e "${COLTXT}Ces renseignements sont-ils corrects ? (${COLCHOIX}O/n${COLTXT}) $COLSAISIE\c"
+		echo -e "${COLTXL}Ces renseignements sont-ils corrects ? (${COLCHOIX}O/n${COLTXL}) $COLSAISIE\c"
 		read rep
 		[ "$rep" = "n" ] && echo -e "${COLERREUR}Mettez votre serveur à l'heure avant de relancer l'installation$COLTXT" && exit 1
 	fi
@@ -796,29 +796,34 @@ samba-tool domain passwordsettings set --max-pwd-age=0
 # Fonction check samba ad-dc
 function check_smb_ad()
 {
+echo -e "$COLPARTIE"
+echo -e "Attente de la disponibilité du service samba 4"
 echo -e "$COLINFO"
 echo -e "L'initialisation de samba4 peut s'avérer assez longue lors de son tout premier lancement, jusqu'à quelques minutes"
 echo -e "--> On attend que le service soit près avec une série de tests de connexion : smbclient -L localhost -U%"
 echo -e "$COLTXT"
-echo -e "Attente de 40s pour commencer"
-sleep 40
+echo -e "Pause de 60s pour commencer"
+sleep 60
 cpt_fin=12
 for ((cpt=1; cpt <= cpt_fin ; cpt++))
 do
 	wt=20
 	echo "Test de connexion $cpt"
 	echo -e "$COLCMD"
-	smbclient -L localhost -U% >/dev/null 
+	smbclient -L localhost -U% >$tempfile
 		if [ "$?" != "0" ]; then
 			echo "le service n'est pas encore prêt - nouvelle attente de $wt s"
 			sleep $wt
 		else
-			break
+			cat $tempfile
+			echo "le service est désormais fonctionnel, on peut passer à la suite !"
+                        break
 		fi
 done
-sleep 10
-smbclient -L localhost -U% && echo "le service est désormais fonctionnel, on passe à la suite !"
-quit_on_error "Aie ! - Connexion impossible sur l'AD"
+if [ "$cpt" = 13 ]; then
+    echo -e "$COLERREUR\c" 
+    echo -e "Aie ! - Connexion impossible sur l'AD"
+fi
 echo -e "$COLTXT"	
 }
 
@@ -828,12 +833,17 @@ function change_pass_admin()
 {
 TEST_PASS="none"
 cpt=1
+echo -e "$COLPARTIE"
+echo -e "Mise en place du mot de passe du compte Administrator"
 while [ "$TEST_PASS" != "OK" ]
 do
+	
+	
 	echo -e "$COLCMD"
-	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3) $COLTXT"
+	echo -e "Entrez un mot de passe pour le compte Administrator AD (remplaçant de admin sur se3)" 
+	echo -e "$COLTXT"
 	echo -e "---- /!\ Attention /!\ ----"
-	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et un caractère spécial ! $COLTXT"
+	echo -e "le mot de passe doit contenir au moins 8 caractères tout en mélangeant lettres / chiffres et un caractère spécial !"
 	read -r administrator_pass
 	sleep 2
 	echo -e "Veuillez confirmer le mot de passe saisi précédemment"
@@ -850,7 +860,7 @@ do
 # # 	smbclient -L localhost -U Administrator%"$administrator_pass"  >/tmp/smbclient_cnx
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
-        cpt++
+        let cpt++
 		if [ "$cpt" = 3 ];then
 			echo -e "3 Tentatives infructueuses - Abandon de modification du mot de passe"
 			echo -e "Vous devrez changer le mot de passe manuellement avec smbpasswd Administrator"
@@ -862,8 +872,8 @@ do
         sleep 1
     else
         TEST_PASS="OK"
-        echo "Test Ok !!"
-        echo -e "$COLINFO\nMot de passe Administrator changé avec succès :)"
+        echo -e "$COLINFO"
+        echo "Mot de passe Administrator changé avec succès :)"
         sleep 1
     fi
     
@@ -876,10 +886,14 @@ echo -e "$COLTXT"
 function change_pass_root()
 {	
 TEST_PASS="none"
+echo -e "$COLPARTIE"
+echo -e "Mise en place du mot de passe Root"
 while [ "$TEST_PASS" != "OK" ]
 do
 echo -e "$COLCMD"
-echo -e "Entrez un mot de passe pour le compte super-utilisateur root $COLTXT"
+echo -e "Entrez un mot de passe pour le compte super-utilisateur root"
+echo -e "$COLTXT"
+
 passwd
     if [ $? != 0 ]; then
         echo -e "$COLERREUR"
@@ -888,7 +902,8 @@ passwd
         sleep 1
     else
         TEST_PASS="OK"
-        echo -e "$COLINFO\nMot de passe root changé avec succès :)"
+        echo -e "$COLINFO"
+        echo "Mot de passe root changé avec succès :)"
         sleep 1
     fi
 done
@@ -907,10 +922,12 @@ COLTITRE="\033[1;35m"   # Rose
 COLDEFAUT="\033[0;33m"  # Brun-jaune
 COLCMD="\033[1;37m\c"     # Blanc
 COLERREUR="\033[1;31m"  # Rouge
-COLTXT="\033[0;37m"     # Gris
+COLTXT="\033[0;37m\c"     # Gris avec coupure
+COLTXL="\033[0;37m"     # Gris 
 COLINFO="\033[0;36m\c"	# Cyan
-COLPARTIE="\033[1;34m\c"	# Bleu
-
+COLPARTIE="\n\033[1;34m\c"	# Bleu
+COLDEFAUT="\033[0;33m"  # Brun-jaune
+COLSAISIE="\033[1;32m"  # Vert
 
 
 ### Mode devel pour le moment sur on !###
