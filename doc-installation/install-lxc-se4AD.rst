@@ -143,7 +143,7 @@ A ce stade un message de fin s'affiche
 .. figure:: images/lxc_fini.png
 
 
-le container a par ailleurs été lancé en arrière plan. La commande pour s'y connecter ainsi que le mot de passe sont rappelés.
+le container a par ailleurs été lancé en arrière plan. La commande pour s'y connecter ainsi que le mot de passe root provisoire sont rappelés.
 
 
 .. figure:: images/lxc_fini1.png
