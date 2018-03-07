@@ -99,7 +99,7 @@ De même on donne un nom au container. Le choix par défaut semble correct :).
 
 Choix du nom de domaine.
 
-.. Attention :: Un point tout particulier est à apporter au domaine DNS. En mode active directory il est forcément au moins en deux parties dont la première correspond au domaine samba. Ne pas oublier que le serveur AD sera DNS de la zone définie et que toutes les mchines clients seront sur cette même zone distribuée par le DHCP. Il faut donc bien réfléchir à sa configuration avant.
+.. Attention :: Un point tout particulier est à apporter au domaine DNS. En mode active directory il est forcément au moins en deux parties dont la première correspond au domaine samba (workgroup). **Celui-ci ne doit pas absolument pas dépasser 15 caractères**. Ne pas oublier que le serveur AD sera DNS de la zone définie et que toutes les machines clients seront sur cette même zone distribuée par le DHCP. Il faut donc bien réfléchir à sa configuration avant.
 
 
 
