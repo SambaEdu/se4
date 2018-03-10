@@ -31,8 +31,8 @@ Le script sera packagé dans le paquet ``sambaedu-config`` sous peu et ainsi dis
 
 Déroulement de l'installation
 =============================
-Une fois le script récupéré d'une façon ou d'une autre, il suffit de la lancer sans argument.
-Si on consigère que le script a été téléchargé dans /usr/share/se3/sbin et que l'on a pris soin de le rendre exécutable : ::
+Une fois le script récupéré d'une façon ou d'une autre, il suffit de le lancer sans argument.
+Si l'on considère que le script a été téléchargé dans /usr/share/se3/sbin et que l'on a pris soin de le rendre exécutable : ::
 
  cd /usr/share/se3/sbin/
  wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/scripts/install_se4lxc.sh
@@ -88,6 +88,8 @@ Paramétrage du container SE4
 Viennent ensuite quelques questions sur la configuration du container.
 
 On commence par saisir l'IP. Si le container est dans le même subnet que le serveur principal, il suffit de compléter le début de l'IP suggérée. 
+
+.. Attention :: un container est considéré comme une autre machine, avec une adresse indépendante, donc ce ne sera pas la même ip que le SE3.
 
 .. figure:: images/lxc_ip_containe.png
 
