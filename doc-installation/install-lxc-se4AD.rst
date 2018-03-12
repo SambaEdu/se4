@@ -23,7 +23,7 @@ Se procurer le script d'installation
 ====================================
 Le script d'installation se trouve sur l'espace Github du projet. Pour le récupérer, exécuter la commande suivante : ::
 
- wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/scripts/install_se4lxc.sh
+ wget https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/usr/share/se3/sbin/install_se4lxc.sh
   
 
 Le script sera packagé dans le paquet ``sambaedu-config`` sous peu et ainsi disponible directement sur un serveur se3 installant ce paquet avec la méthode habituelle.
@@ -35,7 +35,7 @@ Une fois le script récupéré d'une façon ou d'une autre, il suffit de le lanc
 Si l'on considère que le script a été téléchargé dans /usr/share/se3/sbin et que l'on a pris soin de le rendre exécutable : ::
 
  cd /usr/share/se3/sbin/
- wget https://raw.githubusercontent.com/SambaEdu/se4/master/sources/sambaedu-config/lxc/scripts/install_se4lxc.sh
+ wget https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/usr/share/se3/sbin/install_se4lxc.sh
  chmod +x install_se4lxc.sh
  /usr/share/se3/sbin/install_se4lxc.sh
 
@@ -62,12 +62,12 @@ Ces valeurs serviront de base pour la configuration de la machine LXC par la sui
 Installation de LXC et configuration de la carte réseau en mode pont
 --------------------------------------------------------------------
 
-LXC n'est pas installé par défaut sur les SE3 wheezy. Par ailleurs seule la version 1.0 est disponible sur les dépots Debian Wheezy. La version 1.1 étant plus aboutie, elle sera récupérée sur les dépots Debian Backport ou le dépot SambaEdu lui même.
+LXC n'est pas installé par défaut sur les SE3 wheezy. Par ailleurs seule la version 1.0 est disponible sur les dépôts Debian Wheezy. La version 1.1 étant plus aboutie, elle sera récupérée sur les dépôts Debian Backport ou le dépôt SambaEdu lui même.
 
 
 .. figure:: images/lxc_package.png
 
-Une demande de confirmation est demandée avant de pousuivre le téléchargement. Elle permet de vérifier que tout va bien
+Une demande de confirmation est demandée avant de poursuivre le téléchargement. Elle permet de vérifier que tout va bien
 
 
 
@@ -101,13 +101,20 @@ De même on donne un nom au container. Le choix par défaut semble correct :).
 
 Choix du nom de domaine.
 
-.. Attention :: Un point tout particulier est à apporter au domaine DNS. En mode active directory il est forcément au moins en deux parties dont la première correspond au domaine samba (workgroup). **Celui-ci ne doit pas absolument pas dépasser 15 caractères**. Ne pas oublier que le serveur AD sera DNS de la zone définie et que toutes les machines clients seront sur cette même zone distribuée par le DHCP. Il faut donc bien réfléchir à sa configuration avant.
+.. Attention :: Un point tout particulier est à apporter au domaine AD. En mode active directory il correspond au domaine DNS sur lequel Le serveur AD sera serveur de nom. Par défaut le nom de domaine AD proposé sera le domaine DNS actuel du Se3. Vous pouvez utiliser ce choix ou le modifier à votre convenance. Le fait que toutes les machines clientes seront sur cette même zone DNS distribuée par le DHCP est également à prendre en compte. Il faut donc bien réfléchir à ce choix si l'on veut obtenir quelque chose de cohérent au final.
 
+Ce nom de domaine devra être composé d'au moins deux parties séparées par un point. Dans notre exemple, il y en a trois.
+ 
+* La première partie correspond au domaine samba. Appelé également workgroup, cet élément ne **ne doit pas absolument pas dépasser 15 caractères**. A noter également qu'il n'est pas souhaitable de reprendre celui de Se3, à savoir l'habituel "sambaedu3" afin d'éviter tout conflit.
+
+* La ou les parties suivantes correspondent à ce que l'on nomme le suffixe DNS
 
 
 .. figure:: images/lxc_nom_domaine.png
 
-Un récapitulatif de l'ensemble des paramètres est affiché
+
+
+Un récapitulatif de l'ensemble des paramètres saisis précédemment est affiché
 
 .. figure:: images/lxc_recap_config.png
 
