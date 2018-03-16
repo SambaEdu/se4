@@ -2,7 +2,7 @@
    /**
    * Librairie de fonctions utilisees dans l'interface d'administration
 
-   * @Version $Id: samba-tool.inc.php  2018-22-02 15:39:50Z jlcf $
+   * @Version $Id: samba-tool.inc.php  2018-16-03  jlcf $
 
    * @Projet  SambaEdu
 
@@ -92,10 +92,9 @@ function useradd ($prenom, $nom, $userpwd, $naissance, $sexe, $categorie, $emplo
 	# Penser à utiliser escapeshellarg pour les données provenant d'une saisie utilisateur : nom, prenom...
 	
 	# Il faut determiner le login (attribut cn : use-username-as-cn) en fonction du nom prenom de l'uidpolicy...
-	#$cn=strtolower("$prenom.$nom"); // Pour l'instant
-	$cn=creer_cn($nom,$prenom);
 	# Si $cn existe déja dans l'AD  (doublon) il faut en fabriquer un autre
-	
+	$cn=creer_cn($nom,$prenom);
+
 	$office="$naissance,$sexe";
 	
     if (!isset($userpwd)) {
@@ -132,17 +131,147 @@ function userdel ($cn) {
 }	
 
 
-function ouadd ($ou) {
+function ouexist($ou, $dn_parent) {
+    
+    /*
+    * Return true if OU exist false in other cases
+    */
+    
+    global $ldap_server, $ldap_port;
+    
+    $contenu=array("name");
+    $ds = ldap_connect("ldap://".$ldap_server,$ldap_port);;  
+    if ($ds) {
+        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
+        $ret = ldap_sasl_bind($ds, 'null', 'null', 'GSSAPI');
+        if ( $ret ) {
+            $r = ldap_search ($ds,$dn_parent,"ou=$ou", $contenu);
+            $info = ldap_get_entries($ds, $r);
+            if ($info["count"] > 0) { 
+                return true; 
+            } else {
+                return false;
+            }    
+        } else {
+            echo "Echec du bind sasl";
+            return false;
+        }
+    } else {
+        echo "Impossible de se connecter au serveur LDAP";
+        return false;
+    }        
+}
 
-}	
+function ouadd ($ou, $dn_parent) {
+    
+    /*
+    * Return true if OU is create or if there already exists else in other cases
+    */ 
+    
+    global $ldap_server, $ldap_port;
+    
+    $ds = ldap_connect("ldap://".$ldap_server,$ldap_port);;  
+    if ($ds) {
+        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
+        $r = ldap_sasl_bind($ds, 'null', 'null', 'GSSAPI');
+
+        // Prépare les données
+        $info["ou"] = "$ou";
+        $info["name"] = "$ou";
+        $info["objectclass"] = "top";
+        $info["objectclass"] = "organizationalUnit";    
+
+        // Ajoute le OU si il n'existe pas
+        if (!ouexist($ou, $dn_parent) ) {
+                $r = ldap_add($ds, "ou=$ou," .$dn_parent, $info);
+        }
+        ldap_close($ds);
+        
+        if (ouexist($ou, $dn_parent)) { 
+            return true;
+        } else {
+            return false;
+        }        
+    } else {
+        echo "Impossible de se connecter au serveur LDAP";
+        return false;
+    }
+}
+
+
+function oudel ($ou, $dn_parent) {
+    global $ldap_server, $ldap_port;
+    
+    $ds = ldap_connect("ldap://".$ldap_server,$ldap_port);;  
+    if ($ds) {
+        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
+        $r = ldap_sasl_bind($ds, 'null', 'null', 'GSSAPI');
+        
+        // On efface le OU
+        
+        $r = ldap_delete($ds, "ou=$ou, ".$dn_parent );
+        
+        ldap_close($ds);
+    } else {
+        echo "Impossible de se connecter au serveur LDAP";
+    }
+}        
+
+
+/*
+ * Samba-Tool
+ * Available subcommands:
+  add            - Creates a new AD group.
+  addmembers     - Add members to an AD group.
+  delete         - Deletes an AD group.
+  list           - List all groups.
+  listmembers    - List all members of an AD group.
+  removemembers  - Remove members from an AD group.
+ */
+
+function grouplist () {
+    
+    /*
+     * Return a array of cn
+     */
+}
+
+function groupexist ($cn) {
+    
+    /*
+     * Return true if cn group exist
+     */
+    
+}
 
 function groupadd ($cn, $description) {
+    /* 
+     * Utiliser samba-tool
+     * samba-tool group add Classe_2TC --groupou='ou=2TC,ou=groups'
+     */
 	
 }	
 
 function groupdel ($cn) {
 
-}	
+}
 
+function groupaddmember ( $cn, $ingroup) {
+    
+}
+
+function groupdelmember ($cn, $ingroup) {
+    /*
+     * group removemembers <groupname> <listofmembers> [options]
+     */
+    
+}
+
+function groupdelallmember ($ingroup) {
+    
+}
 
 ?>
