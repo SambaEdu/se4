@@ -109,7 +109,7 @@ function useradd ($prenom, $nom, $userpwd, $naissance, $sexe, $categorie, $emplo
     }
 
     $RES= sambatool ( $command );
-    
+    // A revoir !
     if ( count($RES) == 1 ) {
     	$newcn = explode("'", $RES[0]);
     	return $newcn[1];
@@ -247,15 +247,66 @@ function groupexist ($cn) {
     
 }
 
-function groupadd ($cn, $description) {
+function groupadd ($cn, $inou, $description) {
     /* 
-     * Utiliser samba-tool
-     * samba-tool group add Classe_2TC --groupou='ou=2TC,ou=groups'
+     * Principe :
+     * samba-tool group add Classe_TARCU --groupou='ou=2TC,ou=groups' --description="Groupe Classe TARCU"
+     * La commande retourne en cas de succes : Added group Classe_TARCU
      */
-	
+    
+    /*
+     * $cn : cn du groupe, exemple Classe_TARCU
+     * $inou : ou de destination dans ou=Groups,ou=$inou,cn=$cn 
+     * $description : la description du groupe
+     */
+    
+    /*
+     * Return true if group is create false in other cases
+     */
+    
+    $command="group add $cn --groupou='ou=$inou, ou=groups' --description='$description'";
+    $RES= sambatool ( $command );
+ 
+    if ( count($RES) == 1 ) {
+    	$group = explode(" ", $RES[0]); 
+        if (  $group[2] = $cn ) {
+            return true;
+        } else { 
+            return false;
+        }
+    } else { 
+        return false;
+    }    	
 }	
 
 function groupdel ($cn) {
+    
+    /*
+     * Principe : samba-tool group delete Classe_TARCU
+     * La commande retourne en cas de succes  : Deleted group Classe_TARCU
+     */
+    
+    /*
+     * $cn : cn du groupe a supprimer
+     */
+    
+    /*
+     * Return true if group is delete false in other cases
+     */
+    
+    $command="group delete $cn";
+    $RES= sambatool ( $command );
+ 
+    if ( count($RES) == 1 ) {
+    	$group = explode(" ", $RES[0]); 
+        if (  $group[2] = $cn ) {
+            return true;
+        } else { 
+            return false;
+        }
+    } else { 
+        return false;
+    }    	  
 
 }
 
