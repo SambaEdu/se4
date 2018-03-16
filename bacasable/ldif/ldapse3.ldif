@@ -1,0 +1,5438 @@
+dn: ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: top
+objectClass: organizationalUnit
+ou: clg-demo
+
+dn: ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: People
+
+dn: cn=admin,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalRole
+cn: admin
+
+dn: ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Groups
+
+dn: cn=admins,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: admins
+userPassword:: e2NyeXB0fXg=
+gidNumber: 5000
+memberUid: admin
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-512
+sambaGroupType: 2
+displayName: Admins
+description: Administrateurs du domaine
+
+dn: cn=lcs-users,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: lcs-users
+userPassword:: e2NyeXB0fXg=
+gidNumber: 5005
+memberUid: admin
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-513
+sambaGroupType: 2
+displayName: Utilisateurs du domaine
+description: Domain Unix group
+
+dn: cn=Eleves,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: Eleves
+userPassword:: e2NyeXB0fXg=
+gidNumber: 5001
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1001
+sambaGroupType: 2
+displayName: Eleves
+description: Eleves du domaine
+memberUid: agras
+memberUid: bleryp
+memberUid: dantong
+memberUid: dubrunfg
+memberUid: fouberts
+memberUid: hinkatip
+memberUid: lelievrv
+memberUid: lerosiek
+memberUid: leterric
+memberUid: levesquv
+memberUid: mariec
+memberUid: michlaos
+memberUid: molletj
+memberUid: montcelc
+memberUid: schmitd
+memberUid: vignetc
+memberUid: cariteyd
+memberUid: caumeile
+memberUid: desveaum
+memberUid: fillatrl
+memberUid: habiba
+memberUid: herblins
+memberUid: lagadeca
+memberUid: lamys
+memberUid: le_glaua
+memberUid: leguillj
+memberUid: lepietrb
+memberUid: michelv
+memberUid: montagna
+memberUid: robergem
+memberUid: rouxelm
+memberUid: voisina
+memberUid: duboisf
+memberUid: etassec
+memberUid: fontains
+memberUid: giffauts
+memberUid: henaultm
+memberUid: houelb
+memberUid: lebruna
+memberUid: lecointm
+memberUid: ledemew
+memberUid: lelongl
+memberUid: sarbonia
+memberUid: sedel
+memberUid: simonf
+memberUid: tessonm
+memberUid: alixy
+memberUid: busnotc
+memberUid: delautrc
+memberUid: duvals
+memberUid: duval2
+memberUid: fleuryb
+memberUid: gautiers
+memberUid: let
+memberUid: lioeddim
+memberUid: mennierm
+memberUid: mettec
+memberUid: michele
+memberUid: renardm
+
+dn: cn=Profs,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: Profs
+userPassword:: e2NyeXB0fXg=
+gidNumber: 5002
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1002
+sambaGroupType: 2
+displayName: Profs
+description: Profs du domaine
+memberUid: chartiee
+memberUid: sandg
+memberUid: hugov
+memberUid: balzach
+memberUid: pascalb
+memberUid: goethej
+memberUid: christia
+memberUid: michelej
+memberUid: galloise
+memberUid: chaslesm
+memberUid: curiem
+memberUid: laplacep
+memberUid: pasteurl
+memberUid: berliozh
+memberUid: mimouna
+memberUid: eiffelg
+
+dn: cn=Administratifs,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+objectClass: posixGroup
+objectClass: top
+cn: Administratifs
+userPassword:: e2NyeXB0fXg=
+gidNumber: 5003
+memberUid: adminse3
+
+dn: cn=machines,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: machines
+userPassword:: e2NyeXB0fXg=
+gidNumber: 998
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-515
+sambaGroupType: 2
+displayName: machines
+description: Domain Unix group
+
+dn: ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Computers
+
+dn: ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Parcs
+
+dn: ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Rights
+
+dn: cn=se3_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: groupOfNames
+cn: se3_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=Annu_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: groupOfNames
+cn: Annu_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=sovajon_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+objectClass: groupOfNames
+cn: sovajon_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=system_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+objectClass: groupOfNames
+cn: system_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=computers_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+objectClass: groupOfNames
+cn: computers_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=printers_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+objectClass: groupOfNames
+cn: printers_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=echange_can_administrate,ou=Rights,ou=clg-demo,ou=homenet,ou=education,
+ o=gouv,c=fr
+objectClass: groupOfNames
+cn: echange_can_administrate
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=inventaire_can_read,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+objectClass: groupOfNames
+cn: inventaire_can_read
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=annu_can_read,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: groupOfNames
+cn: annu_can_read
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=profs,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=maintenance_can_write,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=g
+ ouv,c=fr
+objectClass: groupOfNames
+cn: maintenance_can_write
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=parc_can_view,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: groupOfNames
+cn: parc_can_view
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=parc_can_manage,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+objectClass: groupOfNames
+cn: parc_can_manage
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=firefox_is_admin,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+objectClass: groupOfNames
+cn: firefox_is_admin
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=no_Trash_user,ou=Rights,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: groupOfNames
+cn: no_Trash_user
+member: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: ou=Printers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Printers
+
+dn: sambaDomainName=CLG-DUPONTEL,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+sambaDomainName: CLG-DUPONTEL
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555
+sambaAlgorithmicRidBase: 1000
+objectClass: sambaDomain
+sambaNextUserRid: 1000
+sambaMinPwdLength: 5
+sambaPwdHistoryLength: 0
+sambaLogonToChgPwd: 0
+sambaMaxPwdAge: -1
+sambaMinPwdAge: 0
+sambaLockoutDuration: 30
+sambaLockoutObservationWindow: 30
+sambaLockoutThreshold: 0
+sambaForceLogoff: -1
+sambaRefuseMachinePwdChange: 0
+sambaNextRid: 1041
+
+dn: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: admin
+cn: Administrateur SE3
+sn: SE3
+givenName: Admin
+initials: Admin
+gecos: Administrateur  Se3,00000000,M,N
+mail: admin@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 5000
+gidNumber: 5005
+homeDirectory: /home/admin
+sambaPwdMustChange: 2147483647
+sambaAcctFlags: [U          ]
+sambaLMPassword: FFB67A52AC531164AAD3B435B51404EE
+sambaNTPassword: 538388DFE2BF2556833682EABF77CB10
+shadowLastChange: 1494520798
+userPassword:: e1NTSEF9dU5OQXRtOUY5WXJSaE5QVmVpcy90YjA2bzZoaWhBSnA=
+sambaPasswordHistory: 00000000000000000000000000000000000000000000000000000000
+ 00000000
+sambaPwdLastSet: 1494521253
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-500
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-512
+
+dn: uid=nobody,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: nobody
+uid: nobody
+description: samba guest domain account
+gecos: samba guest domain account
+loginShell: /bin/false
+sambaAcctFlags: [NU         ]
+sambaPwdMustChange: 2147483647
+sambaPwdCanChange: 0
+sambaKickoffTime: 2147483647
+sambaLogoffTime: 2147483647
+sambaLogonTime: 0
+sambaPwdLastSet: 0
+homeDirectory: /dev/null
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: organizationalPerson
+objectClass: top
+objectClass: person
+sn: nobody
+gidNumber: 65534
+sambaPrimaryGroupSID: S-1-5-32-546
+uidNumber: 65534
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-501
+
+dn: cn=nogroup,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+sambaGroupType: 2
+description: le groupe fantome
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+gidNumber: 65534
+sambaSID: S-1-5-32-546
+displayName: nogroup
+cn: nogroup
+memberUid: nobody
+
+dn: cn=invites,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: invites
+gidNumber: 999
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-514
+sambaGroupType: 4
+displayName: Domain Guests
+description: Invites du domaine
+
+dn: cn=se3dev,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: se3dev
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.210
+l: maitre
+description: SE3 Maitre
+
+dn: cn=overfill,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gidNumber: 1001
+description:: UGVyc29ubmVzIGTDg8KpcGFzc2FudCBsZXVyIHF1b3RhIGQgZXNwYWNlIGRpc3F1
+ ZSBzdXIgL2hvbWUgb3UgL3Zhci9zZTMu
+objectClass: posixGroup
+objectClass: top
+objectClass: sambaGroupMapping
+cn: overfill
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1003
+sambaGroupType: 2
+displayName: overfill
+
+dn: uid=adminse3,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: adminse3
+cn: 3 Adminse
+givenName: 3
+sn: Adminse
+initials: 3A
+mail: adminse3@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1001
+gidNumber: 5005
+homeDirectory: /home/adminse3
+gecos: 3 Adminse,00000000,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3002
+sambaPwdMustChange: 2147483647
+sambaAcctFlags: [U          ]
+sambaLMPassword: FFB67A52AC531164AAD3B435B51404EE
+sambaNTPassword: 538388DFE2BF2556833682EABF77CB10
+shadowLastChange: 1494521061
+userPassword:: e01ENX1ySWpldkxCSFBVY2d6VXVIbDVIK0tBPT0K
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: ou=Trash,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: organizationalUnit
+ou: Trash
+
+dn: uid=chartiee,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: chartiee
+cn: Emile Chartier
+givenName: Emile
+initials: emileC
+sn: Chartier
+mail: chartiee@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1002
+gidNumber: 5005
+homeDirectory: /home/chartiee
+gecos: Emile Chartier,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3004
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P4090
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=sandg,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: sandg
+cn: Georges Sand
+givenName: Georges
+initials: georgesS
+sn: Sand
+mail: sandg@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1003
+gidNumber: 5005
+homeDirectory: /home/sandg
+gecos: Georges Sand,19631212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3006
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P5333
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=hugov,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: hugov
+cn: Victor Hugo
+givenName: Victor
+initials: victorH
+sn: Hugo
+mail: hugov@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1004
+gidNumber: 5005
+homeDirectory: /home/hugov
+gecos: Victor Hugo,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3008
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1526
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=balzach,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: balzach
+cn: Honore Balzac
+givenName: Honore
+initials: honoreB
+sn: Balzac
+mail: balzach@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1005
+gidNumber: 5005
+homeDirectory: /home/balzach
+gecos: Honore Balzac,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3010
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1457
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=pascalb,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: pascalb
+cn: Blaise Pascal
+givenName: Blaise
+initials: blaiseP
+sn: Pascal
+mail: pascalb@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1006
+gidNumber: 5005
+homeDirectory: /home/pascalb
+gecos: Blaise Pascal,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3012
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P2124
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=goethej,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: goethej
+cn: Johann Goethe
+givenName: Johann
+initials: johannG
+sn: Goethe
+mail: goethej@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1007
+gidNumber: 5005
+homeDirectory: /home/goethej
+gecos: Johann Goethe,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3014
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P7231
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=christia,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: christia
+cn: Agatha Christie
+givenName: Agatha
+initials: agathaC
+sn: Christie
+mail: christia@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1008
+gidNumber: 5005
+homeDirectory: /home/christia
+gecos: Agatha Christie,19631212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3016
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P7997
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=michelej,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: michelej
+cn: Jules Michelet
+givenName: Jules
+initials: julesM
+sn: Michelet
+mail: michelej@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1009
+gidNumber: 5005
+homeDirectory: /home/michelej
+gecos: Jules Michelet,19490718,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3018
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: CB9E2393065437C136077A718CCDF409
+sambaNTPassword: C803B9E1AB5FBBE20BB2B6020F6E0383
+userPassword:: e01ENX1CUzU4MVZGeUxUMFkwY21oNSszMkpRPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1771
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=galloise,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: galloise
+cn: Evariste Gallois
+givenName: Evariste
+initials: evaristeG
+sn: Gallois
+mail: galloise@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1010
+gidNumber: 5005
+homeDirectory: /home/galloise
+gecos: Evariste Gallois,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3020
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1803
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=chaslesm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: chaslesm
+cn: Michel Chasles
+givenName: Michel
+initials: michelC
+sn: Chasles
+mail: chaslesm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1011
+gidNumber: 5005
+homeDirectory: /home/chaslesm
+gecos: Michel Chasles,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3022
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1141
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=curiem,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: curiem
+cn: Marie Curie
+givenName: Marie
+initials: marieC
+sn: Curie
+mail: curiem@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1012
+gidNumber: 5005
+homeDirectory: /home/curiem
+gecos: Marie Curie,19631212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3024
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1372
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=laplacep,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: laplacep
+cn: Pierre Laplace
+givenName: Pierre
+initials: pierreL
+sn: Laplace
+mail: laplacep@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1013
+gidNumber: 5005
+homeDirectory: /home/laplacep
+gecos: Pierre Laplace,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3026
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P3158
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=pasteurl,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: pasteurl
+cn: Louis Pasteur
+givenName: Louis
+initials: louisP
+sn: Pasteur
+mail: pasteurl@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1014
+gidNumber: 5005
+homeDirectory: /home/pasteurl
+gecos: Louis Pasteur,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3028
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P2385
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=berliozh,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: berliozh
+cn: Hector Berlioz
+givenName: Hector
+initials: hectorB
+sn: Berlioz
+mail: berliozh@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1015
+gidNumber: 5005
+homeDirectory: /home/berliozh
+gecos: Hector Berlioz,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3030
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P5662
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=mimouna,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: mimouna
+cn: Alain Mimoun
+givenName: Alain
+initials: alainM
+sn: Mimoun
+mail: mimouna@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1016
+gidNumber: 5005
+homeDirectory: /home/mimouna
+gecos: Alain Mimoun,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3032
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1405
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=eiffelg,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: eiffelg
+cn: Gustave Eiffel
+givenName: Gustave
+initials: gustaveE
+sn: Eiffel
+mail: eiffelg@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1017
+gidNumber: 5005
+homeDirectory: /home/eiffelg
+gecos: Gustave Eiffel,19631212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3034
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 188EC47E51EB25351D71060D896B7A46
+sambaNTPassword: 9EDCAE257F44CEF6DBC6E0291C0032EC
+userPassword:: e01ENX1pWUxPeHV3U0JOaVpQMHVrRmZFaFVBPT0=
+shadowLastChange: 1515535021
+employeeNumber: P1773
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=agras,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: agras
+cn: Sebastien Agra
+givenName: Sebastien
+initials: sebastienA
+sn: Agra
+mail: agras@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1018
+gidNumber: 5005
+homeDirectory: /home/agras
+gecos: Sebastien Agra,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3036
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535021
+employeeNumber: 02198
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=bleryp,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: bleryp
+cn: Pascaline Blery
+givenName: Pascaline
+initials: pascalineB
+sn: Blery
+mail: bleryp@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1019
+gidNumber: 5005
+homeDirectory: /home/bleryp
+gecos: Pascaline Blery,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3038
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02199
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=dantong,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: dantong
+cn: Guillaume Danton
+givenName: Guillaume
+initials: guillaumeD
+sn: Danton
+mail: dantong@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1020
+gidNumber: 5005
+homeDirectory: /home/dantong
+gecos: Guillaume Danton,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3040
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02200
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=dubrunfg,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: dubrunfg
+cn: Gaelle Dubrunfaut
+givenName: Gaelle
+initials: gaelleD
+sn: Dubrunfaut
+mail: dubrunfg@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1021
+gidNumber: 5005
+homeDirectory: /home/dubrunfg
+gecos: Gaelle Dubrunfaut,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3042
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02201
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=fouberts,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: fouberts
+cn: Segolene Foubert
+givenName: Segolene
+initials: segoleneF
+sn: Foubert
+mail: fouberts@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1022
+gidNumber: 5005
+homeDirectory: /home/fouberts
+gecos: Segolene Foubert,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3044
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02202
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=hinkatip,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: hinkatip
+cn: Pernelle Hinkati
+givenName: Pernelle
+initials: pernelleH
+sn: Hinkati
+mail: hinkatip@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1023
+gidNumber: 5005
+homeDirectory: /home/hinkatip
+gecos: Pernelle Hinkati,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3046
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02203
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lelievrv,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lelievrv
+cn: Virginie Lelievre
+givenName: Virginie
+initials: virginieL
+sn: Lelievre
+mail: lelievrv@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1024
+gidNumber: 5005
+homeDirectory: /home/lelievrv
+gecos: Virginie Lelievre,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3048
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02204
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lerosiek,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lerosiek
+cn: Karine Lerosier
+givenName: Karine
+initials: karineL
+sn: Lerosier
+mail: lerosiek@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1025
+gidNumber: 5005
+homeDirectory: /home/lerosiek
+gecos: Karine Lerosier,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3050
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02205
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=leterric,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: leterric
+cn: Celine Leterrier
+givenName: Celine
+initials: celineL
+sn: Leterrier
+mail: leterric@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1026
+gidNumber: 5005
+homeDirectory: /home/leterric
+gecos: Celine Leterrier,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3052
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02206
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=levesquv,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: levesquv
+cn: Valerie Levesque
+givenName: Valerie
+initials: valerieL
+sn: Levesque
+mail: levesquv@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1027
+gidNumber: 5005
+homeDirectory: /home/levesquv
+gecos: Valerie Levesque,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3054
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02207
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=mariec,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: mariec
+cn: Christophe Marie
+givenName: Christophe
+initials: christopheM
+sn: Marie
+mail: mariec@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1028
+gidNumber: 5005
+homeDirectory: /home/mariec
+gecos: Christophe Marie,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3056
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02208
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=michlaos,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: michlaos
+cn: Sonia Michlaoui
+givenName: Sonia
+initials: soniaM
+sn: Michlaoui
+mail: michlaos@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1029
+gidNumber: 5005
+homeDirectory: /home/michlaos
+gecos: Sonia Michlaoui,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3058
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02209
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=molletj,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: molletj
+cn: Justine Mollet
+givenName: Justine
+initials: justineM
+sn: Mollet
+mail: molletj@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1030
+gidNumber: 5005
+homeDirectory: /home/molletj
+gecos: Justine Mollet,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3060
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02210
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=montcelc,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: montcelc
+cn: Celine Montcel
+givenName: Celine
+initials: celineM
+sn: Montcel
+mail: montcelc@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1031
+gidNumber: 5005
+homeDirectory: /home/montcelc
+gecos: Celine Montcel,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3062
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02211
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=schmitd,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: schmitd
+cn: Delphine Schmit
+givenName: Delphine
+initials: delphineS
+sn: Schmit
+mail: schmitd@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1032
+gidNumber: 5005
+homeDirectory: /home/schmitd
+gecos: Delphine Schmit,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3064
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02212
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=vignetc,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: vignetc
+cn: Christine Vignet
+givenName: Christine
+initials: christineV
+sn: Vignet
+mail: vignetc@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1033
+gidNumber: 5005
+homeDirectory: /home/vignetc
+gecos: Christine Vignet,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3066
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02213
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=cariteyd,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: cariteyd
+cn: Delphine Caritey
+givenName: Delphine
+initials: delphineC
+sn: Caritey
+mail: cariteyd@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1034
+gidNumber: 5005
+homeDirectory: /home/cariteyd
+gecos: Delphine Caritey,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3068
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02214
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=caumeile,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: caumeile
+cn: Elodie Caumeil
+givenName: Elodie
+initials: elodieC
+sn: Caumeil
+mail: caumeile@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1035
+gidNumber: 5005
+homeDirectory: /home/caumeile
+gecos: Elodie Caumeil,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3070
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535022
+employeeNumber: 02215
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=desveaum,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: desveaum
+cn: Mylene Desveaux
+givenName: Mylene
+initials: myleneD
+sn: Desveaux
+mail: desveaum@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1036
+gidNumber: 5005
+homeDirectory: /home/desveaum
+gecos: Mylene Desveaux,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3072
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02216
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=fillatrl,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: fillatrl
+cn: Luc Fillatre
+givenName: Luc
+initials: lucF
+sn: Fillatre
+mail: fillatrl@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1037
+gidNumber: 5005
+homeDirectory: /home/fillatrl
+gecos: Luc Fillatre,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3074
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02217
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=habiba,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: habiba
+cn: Amina Habib
+givenName: Amina
+initials: aminaH
+sn: Habib
+mail: habiba@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1038
+gidNumber: 5005
+homeDirectory: /home/habiba
+gecos: Amina Habib,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3076
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02218
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=herblins,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: herblins
+cn: Sylvia Herbline
+givenName: Sylvia
+initials: sylviaH
+sn: Herbline
+mail: herblins@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1039
+gidNumber: 5005
+homeDirectory: /home/herblins
+gecos: Sylvia Herbline,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3078
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02219
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lagadeca,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lagadeca
+cn: Anne-claire Lagadec
+givenName: Anne-claire
+initials: anne-claireL
+sn: Lagadec
+mail: lagadeca@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1040
+gidNumber: 5005
+homeDirectory: /home/lagadeca
+gecos: Anne-claire Lagadec,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3080
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02220
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lamys,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lamys
+cn: Sophie Lamy
+givenName: Sophie
+initials: sophieL
+sn: Lamy
+mail: lamys@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1041
+gidNumber: 5005
+homeDirectory: /home/lamys
+gecos: Sophie Lamy,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3082
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02221
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=le_glaua,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: le_glaua
+cn: Adele Le glaunec
+givenName: Adele
+initials: adeleL
+sn: Le glaunec
+mail: le_glaua@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1042
+gidNumber: 5005
+homeDirectory: /home/le_glaua
+gecos: Adele Le glaunec,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3084
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02222
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=leguillj,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: leguillj
+cn: Julie Leguillon
+givenName: Julie
+initials: julieL
+sn: Leguillon
+mail: leguillj@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1043
+gidNumber: 5005
+homeDirectory: /home/leguillj
+gecos: Julie Leguillon,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3086
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02223
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lepietrb,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lepietrb
+cn: Blandine Lepietre
+givenName: Blandine
+initials: blandineL
+sn: Lepietre
+mail: lepietrb@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1044
+gidNumber: 5005
+homeDirectory: /home/lepietrb
+gecos: Blandine Lepietre,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3088
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02224
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=michelv,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: michelv
+cn: Valentin Michel
+givenName: Valentin
+initials: valentinM
+sn: Michel
+mail: michelv@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1045
+gidNumber: 5005
+homeDirectory: /home/michelv
+gecos: Valentin Michel,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3090
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02225
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=montagna,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: montagna
+cn: Anthony Montagne
+givenName: Anthony
+initials: anthonyM
+sn: Montagne
+mail: montagna@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1046
+gidNumber: 5005
+homeDirectory: /home/montagna
+gecos: Anthony Montagne,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3092
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02226
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=robergem,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: robergem
+cn: Magali Roberge
+givenName: Magali
+initials: magaliR
+sn: Roberge
+mail: robergem@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1047
+gidNumber: 5005
+homeDirectory: /home/robergem
+gecos: Magali Roberge,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3094
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02227
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=rouxelm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: rouxelm
+cn: Marc Rouxel
+givenName: Marc
+initials: marcR
+sn: Rouxel
+mail: rouxelm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1048
+gidNumber: 5005
+homeDirectory: /home/rouxelm
+gecos: Marc Rouxel,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3096
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02228
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=voisina,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: voisina
+cn: Aurelie Voisin
+givenName: Aurelie
+initials: aurelieV
+sn: Voisin
+mail: voisina@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1049
+gidNumber: 5005
+homeDirectory: /home/voisina
+gecos: Aurelie Voisin,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3098
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02229
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=duboisf,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: duboisf
+cn: Fanny Dubois
+givenName: Fanny
+initials: fannyD
+sn: Dubois
+mail: duboisf@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1050
+gidNumber: 5005
+homeDirectory: /home/duboisf
+gecos: Fanny Dubois,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3100
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02230
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=etassec,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: etassec
+cn: Celine Etasse
+givenName: Celine
+initials: celineE
+sn: Etasse
+mail: etassec@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1051
+gidNumber: 5005
+homeDirectory: /home/etassec
+gecos: Celine Etasse,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3102
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535023
+employeeNumber: 02231
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=fontains,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: fontains
+cn: Solene Fontaine
+givenName: Solene
+initials: soleneF
+sn: Fontaine
+mail: fontains@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1052
+gidNumber: 5005
+homeDirectory: /home/fontains
+gecos: Solene Fontaine,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3104
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02232
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=giffauts,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: giffauts
+cn: Stephanie Giffaut
+givenName: Stephanie
+initials: stephanieG
+sn: Giffaut
+mail: giffauts@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1053
+gidNumber: 5005
+homeDirectory: /home/giffauts
+gecos: Stephanie Giffaut,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3106
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02233
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=henaultm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: henaultm
+cn: Melanie Henault
+givenName: Melanie
+initials: melanieH
+sn: Henault
+mail: henaultm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1054
+gidNumber: 5005
+homeDirectory: /home/henaultm
+gecos: Melanie Henault,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3108
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02234
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=houelb,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: houelb
+cn: Benoit Houel
+givenName: Benoit
+initials: benoitH
+sn: Houel
+mail: houelb@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1055
+gidNumber: 5005
+homeDirectory: /home/houelb
+gecos: Benoit Houel,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3110
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02235
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lebruna,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lebruna
+cn: Aurore Lebrun
+givenName: Aurore
+initials: auroreL
+sn: Lebrun
+mail: lebruna@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1056
+gidNumber: 5005
+homeDirectory: /home/lebruna
+gecos: Aurore Lebrun,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3112
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02236
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lecointm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lecointm
+cn: Melanie Lecointe
+givenName: Melanie
+initials: melanieL
+sn: Lecointe
+mail: lecointm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1057
+gidNumber: 5005
+homeDirectory: /home/lecointm
+gecos: Melanie Lecointe,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3114
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02237
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=ledemew,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: ledemew
+cn: William Ledeme
+givenName: William
+initials: williamL
+sn: Ledeme
+mail: ledemew@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1058
+gidNumber: 5005
+homeDirectory: /home/ledemew
+gecos: William Ledeme,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3116
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02238
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lelongl,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lelongl
+cn: Luc Lelong
+givenName: Luc
+initials: lucL
+sn: Lelong
+mail: lelongl@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1059
+gidNumber: 5005
+homeDirectory: /home/lelongl
+gecos: Luc Lelong,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3118
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02239
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=sarbonia,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: sarbonia
+cn: Aurelie Sarboni
+givenName: Aurelie
+initials: aurelieS
+sn: Sarboni
+mail: sarbonia@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1060
+gidNumber: 5005
+homeDirectory: /home/sarbonia
+gecos: Aurelie Sarboni,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3120
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02240
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=sedel,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: sedel
+cn: Laetitia Sede
+givenName: Laetitia
+initials: laetitiaS
+sn: Sede
+mail: sedel@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1061
+gidNumber: 5005
+homeDirectory: /home/sedel
+gecos: Laetitia Sede,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3122
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02241
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=simonf,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: simonf
+cn: Florence Simon
+givenName: Florence
+initials: florenceS
+sn: Simon
+mail: simonf@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1062
+gidNumber: 5005
+homeDirectory: /home/simonf
+gecos: Florence Simon,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3124
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02242
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=tessonm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: tessonm
+cn: Marie Tesson
+givenName: Marie
+initials: marieT
+sn: Tesson
+mail: tessonm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1063
+gidNumber: 5005
+homeDirectory: /home/tessonm
+gecos: Marie Tesson,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3126
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02243
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=alixy,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: alixy
+cn: Yoann Alix
+givenName: Yoann
+initials: yoannA
+sn: Alix
+mail: alixy@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1064
+gidNumber: 5005
+homeDirectory: /home/alixy
+gecos: Yoann Alix,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3128
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02244
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=busnotc,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: busnotc
+cn: Corinne Busnot
+givenName: Corinne
+initials: corinneB
+sn: Busnot
+mail: busnotc@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1065
+gidNumber: 5005
+homeDirectory: /home/busnotc
+gecos: Corinne Busnot,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3130
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02245
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=delautrc,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: delautrc
+cn: Chloe Delautre
+givenName: Chloe
+initials: chloeD
+sn: Delautre
+mail: delautrc@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1066
+gidNumber: 5005
+homeDirectory: /home/delautrc
+gecos: Chloe Delautre,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3132
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535024
+employeeNumber: 02246
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=duvals,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: duvals
+cn: Sandra Duval
+givenName: Sandra
+initials: sandraD
+sn: Duval
+mail: duvals@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1067
+gidNumber: 5005
+homeDirectory: /home/duvals
+gecos: Sandra Duval,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3134
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02247
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=duval2,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: duval2
+cn: Sylvain Duval
+givenName: Sylvain
+initials: sylvainD
+sn: Duval
+mail: duval2@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1068
+gidNumber: 5005
+homeDirectory: /home/duval2
+gecos: Sylvain Duval,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3136
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02248
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=fleuryb,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: fleuryb
+cn: Brice Fleury
+givenName: Brice
+initials: briceF
+sn: Fleury
+mail: fleuryb@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1069
+gidNumber: 5005
+homeDirectory: /home/fleuryb
+gecos: Brice Fleury,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3138
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02249
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=gautiers,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: gautiers
+cn: Sebastien Gautier
+givenName: Sebastien
+initials: sebastienG
+sn: Gautier
+mail: gautiers@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1070
+gidNumber: 5005
+homeDirectory: /home/gautiers
+gecos: Sebastien Gautier,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3140
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02250
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=let,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: let
+cn: Thi Le
+givenName: Thi
+initials: thiL
+sn: Le
+mail: let@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1071
+gidNumber: 5005
+homeDirectory: /home/let
+gecos: Thi Le,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3142
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02251
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=lioeddim,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: lioeddim
+cn: Mohamed Lioeddine
+givenName: Mohamed
+initials: mohamedL
+sn: Lioeddine
+mail: lioeddim@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1072
+gidNumber: 5005
+homeDirectory: /home/lioeddim
+gecos: Mohamed Lioeddine,19871212,M,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3144
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02252
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=mennierm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: mennierm
+cn: Maud Mennier
+givenName: Maud
+initials: maudM
+sn: Mennier
+mail: mennierm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1073
+gidNumber: 5005
+homeDirectory: /home/mennierm
+gecos: Maud Mennier,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3146
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02253
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=mettec,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: mettec
+cn: Christelle Mette
+givenName: Christelle
+initials: christelleM
+sn: Mette
+mail: mettec@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1074
+gidNumber: 5005
+homeDirectory: /home/mettec
+gecos: Christelle Mette,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3148
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02254
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=michele,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: michele
+cn: Elodie Michel
+givenName: Elodie
+initials: elodieM
+sn: Michel
+mail: michele@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1075
+gidNumber: 5005
+homeDirectory: /home/michele
+gecos: Elodie Michel,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3150
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02255
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: uid=renardm,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: renardm
+cn: Marielle Renard
+givenName: Marielle
+initials: marielleR
+sn: Renard
+mail: renardm@demo.homenet.org
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+loginShell: /bin/bash
+uidNumber: 1076
+gidNumber: 5005
+homeDirectory: /home/renardm
+gecos: Marielle Renard,19871212,F,N
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-3152
+sambaPwdMustChange: 2147483647
+sambaAcctFlags:: W1UJCSAgXQ==
+sambaLMPassword: 492861694E6F02821D71060D896B7A46
+sambaNTPassword: 91E7C339D8C298C2CE710B09EE8987BC
+userPassword:: e01ENX1nc09uT255MU1VM0ppUEpxVTJZTG5RPT0=
+shadowLastChange: 1515535025
+employeeNumber: 02256
+sambaPwdLastSet: 1
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-513
+
+dn: cn=Classe_1ES1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Classe_1ES1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2000
+description: 1ES1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1005
+sambaGroupType: 2
+displayName: Classe_1ES1
+memberUid: agras
+memberUid: bleryp
+memberUid: dantong
+memberUid: dubrunfg
+memberUid: fouberts
+memberUid: hinkatip
+memberUid: lelievrv
+memberUid: lerosiek
+memberUid: leterric
+memberUid: levesquv
+memberUid: mariec
+memberUid: michlaos
+memberUid: molletj
+memberUid: montcelc
+memberUid: schmitd
+memberUid: vignetc
+
+dn: cn=Equipe_1ES1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Equipe_1ES1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2001
+description: 1ES1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1006
+sambaGroupType: 2
+displayName: Equipe_1ES1
+memberUid: hugov
+memberUid: balzach
+memberUid: sandg
+memberUid: laplacep
+memberUid: mimouna
+memberUid: goethej
+
+dn: cn=Classe_2DE10,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Classe_2DE10
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2002
+description: 2DE10
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1007
+sambaGroupType: 2
+displayName: Classe_2DE10
+memberUid: cariteyd
+memberUid: caumeile
+memberUid: desveaum
+memberUid: fillatrl
+memberUid: habiba
+memberUid: herblins
+memberUid: lagadeca
+memberUid: lamys
+memberUid: le_glaua
+memberUid: leguillj
+memberUid: lepietrb
+memberUid: michelv
+memberUid: montagna
+memberUid: robergem
+memberUid: rouxelm
+memberUid: voisina
+
+dn: cn=Equipe_2DE10,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Equipe_2DE10
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2003
+description: 2DE10
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1008
+sambaGroupType: 2
+displayName: Equipe_2DE10
+memberUid: pascalb
+memberUid: michelej
+memberUid: eiffelg
+memberUid: laplacep
+memberUid: mimouna
+memberUid: goethej
+memberUid: galloise
+memberUid: chaslesm
+memberUid: sandg
+
+dn: cn=Classe_TES1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Classe_TES1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2004
+description: TES1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1009
+sambaGroupType: 2
+displayName: Classe_TES1
+memberUid: duboisf
+memberUid: etassec
+memberUid: fontains
+memberUid: giffauts
+memberUid: henaultm
+memberUid: houelb
+memberUid: lebruna
+memberUid: lecointm
+memberUid: ledemew
+memberUid: lelongl
+memberUid: sarbonia
+memberUid: sedel
+memberUid: simonf
+memberUid: tessonm
+
+dn: cn=Equipe_TES1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Equipe_TES1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2005
+description: TES1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1010
+sambaGroupType: 2
+displayName: Equipe_TES1
+memberUid: chartiee
+memberUid: hugov
+memberUid: balzach
+memberUid: sandg
+memberUid: laplacep
+memberUid: mimouna
+memberUid: goethej
+memberUid: curiem
+
+dn: cn=Classe_TSAC1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Classe_TSAC1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2006
+description: TSAC1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1011
+sambaGroupType: 2
+displayName: Classe_TSAC1
+memberUid: alixy
+memberUid: busnotc
+memberUid: delautrc
+memberUid: duvals
+memberUid: duval2
+memberUid: fleuryb
+memberUid: gautiers
+memberUid: let
+memberUid: lioeddim
+memberUid: mennierm
+memberUid: mettec
+memberUid: michele
+memberUid: renardm
+
+dn: cn=Equipe_TSAC1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Equipe_TSAC1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 2007
+description: TSAC1
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1012
+sambaGroupType: 2
+displayName: Equipe_TSAC1
+memberUid: curiem
+memberUid: chartiee
+memberUid: pascalb
+memberUid: michelej
+memberUid: eiffelg
+memberUid: christia
+memberUid: mimouna
+memberUid: goethej
+
+dn: cn=Matiere_A-PLA,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_A-PLA
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ARTS PLASTIQUES
+gidNumber: 2008
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1013
+sambaGroupType: 2
+displayName: Matiere_A-PLA
+memberUid: mimouna
+
+dn: cn=Matiere_AGL1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_AGL1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ANGLAIS LV1
+gidNumber: 2009
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1014
+sambaGroupType: 2
+displayName: Matiere_AGL1
+memberUid: chartiee
+
+dn: cn=Matiere_AGL2,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_AGL2
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ANGLAIS LV2
+gidNumber: 2010
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1015
+sambaGroupType: 2
+displayName: Matiere_AGL2
+
+dn: cn=Matiere_ALL1,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ALL1
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ALLEMAND LV1
+gidNumber: 2011
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1016
+sambaGroupType: 2
+displayName: Matiere_ALL1
+
+dn: cn=Matiere_ALL2,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ALL2
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ALLEMAND LV2
+gidNumber: 2012
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1017
+sambaGroupType: 2
+displayName: Matiere_ALL2
+
+dn: cn=Matiere_ATRAV,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ATRAV
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ACCOMPAGNEMENT TRAVAIL PERSONNEL
+gidNumber: 2013
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1018
+sambaGroupType: 2
+displayName: Matiere_ATRAV
+
+dn: cn=Matiere_ISI,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ISI
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: INITIATION AUX SCIENCES DE L INGENIEUR
+gidNumber: 2014
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1019
+sambaGroupType: 2
+displayName: Matiere_ISI
+memberUid: galloise
+
+dn: cn=Matiere_TPE,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_TPE
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: TRAVAUX PERSONNELS ENCADRES
+gidNumber: 2015
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1020
+sambaGroupType: 2
+displayName: Matiere_TPE
+memberUid: galloise
+memberUid: chaslesm
+memberUid: laplacep
+memberUid: sandg
+
+dn: cn=Matiere_EDCIV,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_EDCIV
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: EDUCATION CIVIQUE
+gidNumber: 2016
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1021
+sambaGroupType: 2
+displayName: Matiere_EDCIV
+
+dn: cn=Matiere_EDMUS,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_EDMUS
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: EDUCATION MUSICALE
+gidNumber: 2017
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1022
+sambaGroupType: 2
+displayName: Matiere_EDMUS
+memberUid: goethej
+
+dn: cn=Matiere_EPS,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_EPS
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: EDUCATION PHYSIQUE ET SPORTIVE
+gidNumber: 2018
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1023
+sambaGroupType: 2
+displayName: Matiere_EPS
+memberUid: hugov
+memberUid: pascalb
+
+dn: cn=Matiere_ESP2,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ESP2
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ESPAGNOL LV2
+gidNumber: 2019
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1024
+sambaGroupType: 2
+displayName: Matiere_ESP2
+memberUid: curiem
+
+dn: cn=Matiere_FRANC,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_FRANC
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: FRANCAIS
+gidNumber: 2020
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1025
+sambaGroupType: 2
+displayName: Matiere_FRANC
+memberUid: balzach
+memberUid: michelej
+
+dn: cn=Matiere_HIGEO,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_HIGEO
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: HISTOIRE ET GEOGRAPHIE
+gidNumber: 2021
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1026
+sambaGroupType: 2
+displayName: Matiere_HIGEO
+memberUid: sandg
+memberUid: eiffelg
+
+dn: cn=Matiere_IDARH,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_IDARH
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITINERAIRE DECOUVERTE (ARTS HUMANITE)
+gidNumber: 2022
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1027
+sambaGroupType: 2
+displayName: Matiere_IDARH
+
+dn: cn=Matiere_IDAUT,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_IDAUT
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITINERAIRE DECOUVERTE (AUTRES)
+gidNumber: 2023
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1028
+sambaGroupType: 2
+displayName: Matiere_IDAUT
+
+dn: cn=Matiere_IDCTQ,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_IDCTQ
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITINERAIRE DECOUVERTE (CREATION TECHNIQ)
+gidNumber: 2024
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1029
+sambaGroupType: 2
+displayName: Matiere_IDCTQ
+
+dn: cn=Matiere_IDLCI,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_IDLCI
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITINERAIRE DECOUVERTE (LANGUES CIVILIS.)
+gidNumber: 2025
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1030
+sambaGroupType: 2
+displayName: Matiere_IDLCI
+
+dn: cn=Matiere_IDNCH,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_IDNCH
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITINERAIRE DECOUVERTE (NATURE CORPS HUM)
+gidNumber: 2026
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1031
+sambaGroupType: 2
+displayName: Matiere_IDNCH
+
+dn: cn=Matiere_ITA2,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_ITA2
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: ITALIEN LV2
+gidNumber: 2027
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1032
+sambaGroupType: 2
+displayName: Matiere_ITA2
+
+dn: cn=Matiere_LATIN,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_LATIN
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: LATIN
+gidNumber: 2028
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1033
+sambaGroupType: 2
+displayName: Matiere_LATIN
+
+dn: cn=Matiere_MATHS,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_MATHS
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: MATHEMATIQUES
+gidNumber: 2029
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1034
+sambaGroupType: 2
+displayName: Matiere_MATHS
+memberUid: laplacep
+memberUid: christia
+
+dn: cn=Matiere_PH-CH,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_PH-CH
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: PHYSIQUE-CHIMIE
+gidNumber: 2030
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1035
+sambaGroupType: 2
+displayName: Matiere_PH-CH
+
+dn: cn=Matiere_SOUTN,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_SOUTN
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: SOUTIEN
+gidNumber: 2031
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1036
+sambaGroupType: 2
+displayName: Matiere_SOUTN
+
+dn: cn=Matiere_SVT,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_SVT
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: SCIENCES DE LA VIE ET DE LA TERRE
+gidNumber: 2032
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1037
+sambaGroupType: 2
+displayName: Matiere_SVT
+
+dn: cn=Matiere_TECHN,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_TECHN
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: TECHNOLOGIE
+gidNumber: 2033
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1038
+sambaGroupType: 2
+displayName: Matiere_TECHN
+
+dn: cn=Matiere_VICLA,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_VICLA
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: VIE DE CLASSE
+gidNumber: 2034
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1039
+sambaGroupType: 2
+displayName: Matiere_VICLA
+
+dn: cn=Matiere_VISCO,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: Matiere_VISCO
+objectClass: top
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+description: VIE SCOLAIRE
+gidNumber: 2035
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1040
+sambaGroupType: 2
+displayName: Matiere_VISCO
+
+dn: cn=se3,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: se3
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+l: maitre
+description: SE3 Maitre
+destinationIndicator: intranet:intranet:tous
+ipHostNumber: 10.127.164.200
+
+dn: cn=my-machina5,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: my-machina5
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.25
+macAddress: --
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=essai$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fUttWXJwUkFsSUVFbkk=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30002
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: essai$
+uid: essai$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1157
+displayName: ESSAI$
+sambaAcctFlags: [W          ]
+sambaNTPassword: 9667AF141261A026F9B484DF963C8E85
+sambaPwdLastSet: 1350149315
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: uid=seven-pc$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fVRQRGZUVGJiNUlVWFk=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30000
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: seven-pc$
+uid: seven-pc$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1159
+displayName: SEVEN-PC$
+sambaNTPassword: AA61D2AFC889290E41A79C4DF7AF065A
+sambaPwdLastSet: 1351346460
+sambaAcctFlags: [W          ]
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=s202old,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s202old
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.161
+macAddress: 00:50:8d:f3:35:bc
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-d320-g4,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s202-d320-g4
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.162
+macAddress: 00:1a:a0:17:62:dd
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_dell320_2d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s200_dell320_2d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.120
+macAddress: 00:1a:a0:17:82:fe
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi_06,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cdi_06
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.26
+macAddress: 00:13:d3:b7:58:ea
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi_07,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cdi_07
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.27
+macAddress: 00:13:d3:b7:5c:e7
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s209-nec05-mat,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s209-nec05-mat
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.209
+macAddress: 00:19:db:58:43:78
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s211-d330-mat,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s211-d330-mat
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.211
+macAddress: 00:1d:09:12:5d:0a
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=upi-hpold-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: upi-hpold-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.41
+macAddress: 00:0d:9d:4f:1a:0e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s003-nec05sp-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s003-nec05sp-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.43
+macAddress: 00:1e:90:02:fe:e5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s110-nec07-hg,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s110-nec07-hg
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.110
+macAddress: 00:1e:90:01:f5:eb
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=scienc_port1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: scienc_port1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.45
+macAddress: 00:02:3f:07:db:0b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s006-nec05svt2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s006-nec05svt2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.46
+macAddress: 00:1e:90:02:fe:51
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s000-etu-hp6000,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s000-etu-hp6000
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.16
+macAddress: 00:0f:fe:fa:3d:b0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s008-nec07-svt1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s008-nec07-svt1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.9
+macAddress: 00:1e:90:02:f5:b2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=facto,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: facto
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.18
+macAddress: 00:0d:9d:4f:1b:8d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s109-d320-esp,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s109-d320-esp
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.62
+macAddress: 00:1a:a0:17:5e:4d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s205-d330-ang,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s205-d330-ang
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.205
+macAddress: 00:1e:c9:51:40:3d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s206_portall,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s206_portall
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.206
+macAddress: 00:21:70:70:aa:58
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200-nec05-01d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s200-nec05-01d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.113
+macAddress: 00:13:d3:b7:5c:e2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s112-d330-hg,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s112-d330-hg
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.112
+macAddress: 00:1e:c9:50:02:b6
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s113-d330-hg,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s113-d330-hg
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.113
+macAddress: 00:1e:c9:50:f6:a8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s101-nec05-fra,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s101-nec05-fra
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.101
+macAddress: 00:13:d3:b7:62:5b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s108-nec05-fra,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s108-nec05-fra
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.108
+macAddress: 00:13:d3:b7:60:aa
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s103-hp8100-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s103-hp8100-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.103
+macAddress: 3c:d9:2b:57:25:92
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=arts_pla_02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: arts_pla_02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.81
+macAddress: 00:0f:b5:47:0a:b4
+destinationIndicator: intranet:intranet:tous
+description: essai
+
+dn: cn=s102ap-d330-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s102ap-d330-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.82
+macAddress: 00:1e:c9:50:ef:75
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s102ap-d330-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s102ap-d330-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.88
+macAddress: 00:1e:c9:4f:c0:de
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s100ap-nec05,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s100ap-nec05
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.100
+macAddress: 00:13:d3:b7:5e:14
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s104em-nec07pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s104em-nec07pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.104
+macAddress: 00:1e:90:01:f9:e3
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=upi-hpold-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: upi-hpold-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.42
+macAddress: 00:0e:7f:f7:f0:33
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=upi-nec05-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: upi-nec05-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.39
+macAddress: 00:13:d3:b7:61:ff
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s111-nec05-hg,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s111-nec05-hg
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.109
+macAddress: 00:13:d3:b7:59:11
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi_02_nec2005,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: cdi_02_nec2005
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.22
+macAddress: 00:13:d3:b7:5d:d8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=tempo-nec05,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: tempo-nec05
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.250
+macAddress: 00:13:d3:b7:62:50
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_ilase,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s200_ilase
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.110
+macAddress: 00:80:77:03:c2:a0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_d320_7d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_d320_7d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.111
+macAddress: 00:1a:a0:3c:67:01
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=c8600-2b6c0e,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: c8600-2b6c0e
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.80
+macAddress: 00:80:87:2b:6c:0e
+destinationIndicator: internet:internet:tous
+
+dn: cn=s200_nec05_5d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s200_nec05_5d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.115
+macAddress: 00:1e:90:01:f6:c1
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_elo1_g1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_elo1_g1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.116
+macAddress: 00:11:09:41:25:a6
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_cn_elonex,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s200_cn_elonex
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.112
+macAddress: 00:11:09:41:25:d1
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_nec07_01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201_nec07_01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.41
+macAddress: 00:1e:90:02:fe:4c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_d320_g2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_d320_g2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.118
+macAddress: 00:1a:a0:17:61:ec
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_d320_4d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_d320_4d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.125
+macAddress: 00:1a:a0:3c:72:dd
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_d320_3d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_d320_3d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.126
+macAddress: 00:1a:a0:35:5a:d0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_ilase,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s201_ilase
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.180
+macAddress: 00:80:77:03:c2:74
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-nec07-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201-nec07-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.42
+macAddress: 00:19:21:3a:09:c0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-08,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-08
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.218
+macAddress: d4:85:64:a9:86:2d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-hpold-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201-hpold-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.48
+macAddress: 00:0d:9d:4e:a9:ac
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-dell320-6,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-dell320-6
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.40
+macAddress: 00:1a:a0:17:64:d2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_ilase,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s202_ilase
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.150
+macAddress: 00:80:77:03:c2:ae
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-nec05-d9,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s202-nec05-d9
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.151
+macAddress: 00:13:d3:b7:5d:da
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_nec05_d5,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s202_nec05_d5
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.152
+macAddress: 00:13:d3:b7:5d:e0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=copsy-vold,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: copsy-vold
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.52
+macAddress: 00:13:8f:46:87:0a
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_d330_01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s202_d330_01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.153
+macAddress: 00:1e:c9:50:f7:14
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=upi-d320-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: upi-d320-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.40
+macAddress: 00:1a:a0:35:5e:9c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-10,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-10
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.220
+macAddress: d4:85:64:b2:ce:2a
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-d320-g2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s202-d320-g2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.154
+macAddress: 00:1a:a0:35:5e:57
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_nec07_d10,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s202_nec07_d10
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.155
+macAddress: 00:1e:90:01:fb:28
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_elo_02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: s202_elo_02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.156
+macAddress: 00:11:09:41:25:d9
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_d330_02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s202_d330_02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.159
+macAddress: 00:1e:c9:50:ec:c2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_del320_g1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s202_del320_g1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.160
+macAddress: 00:1a:a0:17:69:f2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203_ilase,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s203_ilase
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.200
+macAddress: 00:80:77:80:12:f5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=sdp_dell320_1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: sdp_dell320_1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.101
+macAddress: 00:1a:a0:17:83:ae
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=sdp_dell320_2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: sdp_dell320_2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.102
+macAddress: 00:1a:a0:17:69:4c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=sdp_dell320_3,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: sdp_dell320_3
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.103
+macAddress: 00:1a:a0:3a:91:05
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_dell320_1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201_dell320_1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.35
+macAddress: 00:1a:a0:17:84:e7
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_dell320_3,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201_dell320_3
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.37
+macAddress: 00:1a:a0:17:81:22
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_dell320_d1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s202_dell320_d1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.163
+macAddress: 00:1a:a0:3c:72:9b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-d320-g3,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s202-d320-g3
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.165
+macAddress: 00:1a:a0:17:84:6f
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_dell320_9d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s200_dell320_9d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.119
+macAddress: 00:1a:a0:3c:6f:54
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=brn_cdi,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: brn_cdi
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.20
+macAddress: 00:80:77:03:c2:50
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi_01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cdi_01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.21
+macAddress: 00:13:d3:b7:56:b5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi_03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cdi_03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.23
+macAddress: 00:13:d3:b7:57:67
+destinationIndicator: internet:internet:tous
+
+dn: cn=cdi_5,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cdi_5
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.24
+macAddress: 00:1e:c9:4f:bc:83
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=d200-ilasecl,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: d200-ilasecl
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.140
+macAddress: 00:00:aa:a7:1b:a2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi-08-nec2005,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: cdi-08-nec2005
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.28
+macAddress: 00:13:d3:b7:60:43
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-hpold-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201-hpold-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.46
+macAddress: 00:0d:9d:4e:a9:19
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-dell320-4,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-dell320-4
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.38
+macAddress: 00:1a:a0:35:5a:7c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-elo1-g4,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s201-elo1-g4
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.45
+macAddress: 00:11:09:41:25:cd
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s004-seg-d330,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s004-seg-d330
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.4
+macAddress: 00:1e:c9:4f:c0:fe
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s105_fra01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s105_fra01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.105
+macAddress: 00:1e:c9:4f:c2:61
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s106-d330-em,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s106-d330-em
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.106
+macAddress: 00:1e:c9:51:40:36
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=copsy,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: copsy
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.14
+macAddress: 00:0b:6a:44:6e:a8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=keyser-laptop-new,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=go
+ uv,c=fr
+cn: keyser-laptop-new
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.7
+macAddress: 00:23:7d:97:a0:05
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=atseg-nec07-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: atseg-nec07-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.3
+macAddress: 00:1e:90:02:fc:27
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=assis-soc-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: assis-soc-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.14
+macAddress: 12:ac:45:79:ef:00
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-09,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-09
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.219
+macAddress: d4:85:64:a5:f6:a5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202prof_vb,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: s202prof_vb
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.170
+macAddress: 08:00:27:dd:19:c4
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s208-d330-ang,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s208-d330-ang
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.208
+macAddress: 00:e0:4c:a1:75:a3
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s204-hp6000-ang,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s204-hp6000-ang
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.204
+macAddress: 00:0f:fe:f3:e4:e6
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=kav_console,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: kav_console
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.10
+macAddress: 00:0f:fe:f3:e4:e4
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=atelier,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: atelier
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.12
+macAddress: 00:50:22:c8:6a:8b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s207-hp6000-ang,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s207-hp6000-ang
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.207
+macAddress: 00:0f:fe:f3:d6:fc
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_nec05_6d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s200_nec05_6d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.114
+macAddress: 00:13:d3:b7:62:42
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=tmp_elo1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: tmp_elo1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.127
+macAddress: 00:11:09:8d:3e:ce
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_elo1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s202_elo1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.157
+macAddress: 00:11:09:41:25:9d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s010_seg_elo,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s010_seg_elo
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.10
+macAddress: 00:11:09:41:25:6e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_del320_2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s202_del320_2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.158
+macAddress: 00:1a:a0:0d:aa:5c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.211
+macAddress: d4:85:64:a7:cf:f3
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.213
+macAddress: d4:85:64:0e:98:18
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-04,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-04
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.214
+macAddress: d4:85:64:a7:cf:ed
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_dell320_2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201_dell320_2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.36
+macAddress: 00:1d:09:0e:f7:2a
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs1-hp8200-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs1-hp8200-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.101
+macAddress: 80:c1:6e:f7:cd:00
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-07,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-07
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.217
+macAddress: d4:85:64:a9:86:3e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-11,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-11
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.221
+macAddress: d4:85:64:a9:86:3d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=et0021b73448af,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: et0021b73448af
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.90
+macAddress: 00:21:b7:34:48:af
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.212
+macAddress: d4:85:64:a5:f6:aa
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-06,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-06
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.216
+macAddress: d4:85:64:b2:ce:39
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-12,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-12
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.222
+macAddress: d4:85:64:a5:f6:b8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-05,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-05
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.215
+macAddress: d4:85:64:b2:ce:3d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s100ap-z200-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s100ap-z200-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.84
+macAddress: d4:85:64:a7:cf:ea
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s100ap-z200-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s100ap-z200-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.85
+macAddress: d4:85:64:a9:85:ec
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s102ap-z200-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s102ap-z200-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.86
+macAddress: d4:85:64:0e:98:60
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s100ap-z200-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s100ap-z200-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.83
+macAddress: d4:85:64:a9:86:36
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s102ap-z200-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s102ap-z200-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.89
+macAddress: d4:85:64:0e:98:09
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-13,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-13
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.223
+macAddress: d4:85:64:b8:1e:b0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-14,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-14
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.224
+macAddress: d4:85:64:b2:eb:e5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-15,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-15
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.225
+macAddress: d4:85:64:b8:1d:a7
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s203-hpz200-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s203-hpz200-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.230
+macAddress: d4:85:64:b8:1e:04
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=freenas,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: freenas
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.5
+macAddress: 00:14:22:0c:72:4e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=atseg-d320-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: atseg-d320-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.13
+macAddress: 00:1a:a0:3c:72:3e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s08-svt-php65,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s08-svt-php65
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.8
+macAddress: 1c:c1:de:b2:d2:ca
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s01-phy-php65,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s01-phy-php65
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.1
+macAddress: 1c:c1:de:b2:62:8f
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_nec05_d2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s200_nec05_d2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.117
+macAddress: 00:13:d3:b7:5d:3f
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cdi-nec05-07,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: cdi-nec05-07
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.6
+macAddress: 00:13:d3:b7:56:c3
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=lex460-s200,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: lex460-s200
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.31
+macAddress: 00:21:b7:e2:f0:09
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200-fuji,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: s200-fuji
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.122
+macAddress: 00:20:ed:56:be:7b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200_d330_8d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s200_d330_8d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.123
+macAddress: 00:1e:c9:51:2f:a8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s107_fra_hp1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s107_fra_hp1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.107
+macAddress: 00:0f:fe:f4:0b:0b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_nec05_02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201_nec05_02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.43
+macAddress: 00:13:d3:b7:5e:4c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201_nec05_01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201_nec05_01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.44
+macAddress: 00:13:d3:b7:5d:ee
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=et0021b76ca888,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: et0021b76ca888
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.30
+macAddress: 00:21:b7:6c:a8:88
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s002-etu-hp6000,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s002-etu-hp6000
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.17
+macAddress: 00:0f:fe:fa:3d:ce
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-hpold-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s201-hpold-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.47
+macAddress: 00:0d:9d:4f:1b:a4
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-dell-vost,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-dell-vost
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.33
+macAddress: b8:ac:6f:c3:e8:5f
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-dell330-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s201-dell330-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.34
+macAddress: 00:1e:c9:4f:1d:d9
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=cmobprof,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: cmobprof
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.250
+macAddress: 00:1a:73:6a:49:ea
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=prefa_nec05_pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: prefa_nec05_pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.11
+macAddress: 00:13:d3:b7:61:c0
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=las_cl_cdi,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: las_cl_cdi
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.29
+macAddress: 00:1b:a9:79:c3:a3
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=svt-port7-novo,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: svt-port7-novo
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.2
+macAddress: f0:de:f1:a6:1f:f8
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-dell320-5,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-dell320-5
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.39
+macAddress: 00:1a:a0:34:ca:c1
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202_prof_fuji,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s202_prof_fuji
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.169
+macAddress: 00:20:ed:bf:de:01
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-7-hp8100-1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s202-7-hp8100-1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.171
+macAddress: 3c:d9:2b:57:28:45
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-hp8100-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-hp8100-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.31
+macAddress: 3c:d9:2b:57:25:66
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s202-hp8100-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s202-hp8100-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.61
+macAddress: 3c:d9:2b:57:25:68
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-hp8100-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s201-hp8100-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.32
+macAddress: 3c:d9:2b:57:29:16
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200-hp8100-pr,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s200-hp8100-pr
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.1
+macAddress: 3c:d9:2b:57:25:c5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200-hp8100-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s200-hp8100-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.2
+macAddress: 3c:d9:2b:54:d8:8d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s102-hp8100-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: s102-hp8100-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.121
+macAddress: 3c:d9:2b:54:d8:88
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=loge-hp8100,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: loge-hp8100
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.15
+macAddress: 3c:d9:2b:54:d6:4d
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s212-hp8100-mat,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: s212-hp8100-mat
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.5
+macAddress: 3c:d9:2b:57:28:85
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s200-d320-10d,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: s200-d320-10d
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.3
+macAddress: 00:1a:a0:3c:6e:b7
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs2-hp8200-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs2-hp8200-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.111
+macAddress: 80:c1:6e:f8:0d:8e
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs2-hp8200-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs2-hp8200-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.112
+macAddress: 80:c1:6e:f7:cd:31
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs2-hp8200-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs2-hp8200-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.113
+macAddress: 80:c1:6e:f7:cd:83
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs2-hp8200-04,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs2-hp8200-04
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.114
+macAddress: 80:c1:6e:f7:cd:84
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs1-hp8200-02,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs1-hp8200-02
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.102
+macAddress: e8:39:35:57:48:14
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs1-hp8200-03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs1-hp8200-03
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.103
+macAddress: e8:39:35:57:47:de
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=segs1-hp8200-04,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+cn: segs1-hp8200-04
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.104
+macAddress: 80:c1:6e:fa:c1:42
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=profs_ilase,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: profs_ilase
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.91
+macAddress: 00:80:77:03:c2:6b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=lex460-upi,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: lex460-upi
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.19
+macAddress: 00:21:b7:a2:9f:91
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=lex460-s212,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: lex460-s212
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.80.32
+macAddress: 00:21:b7:a2:9f:39
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=p6715-3,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: p6715-3
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.83
+macAddress: 00:1a:4b:5b:26:e6
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=p6715-4,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: p6715-4
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.84
+macAddress: 00:1a:4b:5b:de:14
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=p6715-1,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: p6715-1
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.81
+macAddress: 00:1a:4b:5b:5e:41
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=p6715-2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: p6715-2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.82.82
+macAddress: 00:1a:4b:5b:fe:92
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=dell-mod2013,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: dell-mod2013
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.62
+macAddress: 78:45:c4:31:1f:35
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=s201-d390-01,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: s201-d390-01
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 172.19.83.4
+macAddress: 78:45:c4:31:1f:36
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=newx,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: newx
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.235
+macAddress: --
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=newxp,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fUlPWDdCc212RmtWYlk=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30004
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+cn: newxp
+uid: newxp
+
+dn: uid=sp3unat$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fVxpOGFmZmF6ekJrUVU=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30011
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: sp3unat$
+uid: sp3unat$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1180
+displayName: SP3UNAT$
+sambaNTPassword: FFD618915F1C696301B334E2652B9B92
+sambaPwdLastSet: 1392303573
+sambaAcctFlags: [W          ]
+description: xp de merde
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=sp3unat,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: sp3unat
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.229
+macAddress: 00:0C:29:01:87:CA
+manager: uid=mimouna,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=newimp,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: newimp
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.4
+macAddress: 00:0c:29:bb:cf:4c
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=client-linux2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: client-linux2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.60
+macAddress: 00:0c:29:6a:aa:e5
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=newone,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: newone
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.236
+macAddress: 00:0c:29:1e:99:2b
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=android-90e47e185de54298,ou=Computers,ou=clg-demo,ou=homenet,ou=educati
+ on,o=gouv,c=fr
+cn: android-90e47e185de54298
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.51
+macAddress: d8:50:e6:6d:29:32
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=w7-dev-wheezy$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fTNcVmpDM05Ub0J0cVU=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30015
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: w7-dev-wheezy$
+uid: w7-dev-wheezy$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1184
+displayName: W7-DEV-WHEEZY$
+sambaAcctFlags: [W          ]
+sambaNTPassword: 7C4BAE1AFF6BF80986C3ED8E003B6C07
+sambaPwdLastSet: 1505448478
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=w7-dev-wheezy,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+cn: w7-dev-wheezy
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+macAddress: 00:0C:29:6F:7B:BE
+ipHostNumber: 10.127.164.8
+manager: uid=hugov,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=winsp3-dev2$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+gecos: machine
+userPassword:: e2NyeXB0fTBZUDdOQTlJTkVkQzI=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30016
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: winsp3-dev2$
+uid: winsp3-dev2$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1185
+displayName: WINSP3-DEV2$
+sambaAcctFlags: [W          ]
+sambaNTPassword: 93B0E85DF181008220E83B94AF0F5593
+sambaPwdLastSet: 1516433555
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=winsp3-dev2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: winsp3-dev2
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+manager: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+ipHostNumber: 10.127.164.51
+macAddress: 00:0C:29:70:6B:5F
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=xp-sp3-dev,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: xp-sp3-dev
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.38
+macAddress: --
+manager: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=autoinst,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: autoinst
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+manager: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+ipHostNumber: 10.127.164.6
+macAddress: 00:0C:29:E5:B1:4F
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=autoinst$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fXZXZ3h5cnJxLnlXRE0=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30018
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: autoinst$
+uid: autoinst$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1188
+displayName: AUTOINST$
+sambaAcctFlags: [W          ]
+sambaNTPassword: BAE40D8ABFF9C818A7D7F6DD28CAC5C0
+sambaPwdLastSet: 1516954825
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=sp3unatnew,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: sp3unatnew
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.52
+macAddress: 00:0c:29:e2:0c:f2
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=keyser-system-product-name,ou=Computers,ou=clg-demo,ou=homenet,ou=educa
+ tion,o=gouv,c=fr
+cn: keyser-system-product-name
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.5
+macAddress: 20:cf:30:4c:41:95
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=franck-novo,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: franck-novo
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.10
+macAddress: 10:4a:7d:9f:e4:67
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=win7-64bvm$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+gecos: machine
+userPassword:: e2NyeXB0fXNDWm53WDhnVlZVQUU=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30020
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: win7-64bvm$
+uid: win7-64bvm$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1190
+displayName: WIN7-64BVM$
+sambaAcctFlags: [W          ]
+sambaNTPassword: 14D7ADB0250DA490DBD035338AAC61E3
+sambaPwdLastSet: 1516952274
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=win7-64bvm,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: win7-64bvm
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.8
+macAddress: 00:0C:29:5A:15:30
+manager: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+destinationIndicator: intranet:intranet:tous
+
+dn: cn=win7x64-2018cl,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: win7x64-2018cl
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+ipHostNumber: 10.127.164.9
+macAddress: 00:0C:29:CF:F2:E0
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=w7-auto-m$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+gecos: machine
+userPassword:: e2NyeXB0fXcyWmNaYnFIVGRPUUE=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30021
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: w7-auto-m$
+uid: w7-auto-m$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1191
+displayName: W7-AUTO-M$
+sambaAcctFlags: [W          ]
+sambaNTPassword: AE1BAEEC8F05A8D0ECC961A0293F1607
+sambaPwdLastSet: 1516954898
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=w7-auto-m,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+cn: w7-auto-m
+objectClass: top
+objectClass: ipHost
+objectClass: ieee802Device
+objectClass: organizationalRole
+manager: uid=admin,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+ipHostNumber: 10.127.164.11
+macAddress: 00:0C:29:C6:B7:5A
+destinationIndicator: intranet:intranet:tous
+
+dn: uid=win7x64-2018cl$,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+gecos: machine
+userPassword:: e2NyeXB0fUFPVFhiRmlCRkQ5WnM=
+homeDirectory: /dev/null
+gidNumber: 998
+uidNumber: 30022
+loginShell: /bin/false
+objectClass: shadowAccount
+objectClass: posixAccount
+objectClass: account
+objectClass: top
+objectClass: sambaSamAccount
+cn: win7x64-2018cl$
+uid: win7x64-2018cl$
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1192
+displayName: WIN7X64-2018CL$
+sambaNTPassword: B5828DA94AACC099972D34B479213647
+sambaPwdLastSet: 1516952257
+sambaAcctFlags: [W          ]
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-
+
+dn: cn=portables_profs,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=f
+ r
+cn: portables_profs
+objectClass: groupOfNames
+member: cn=c8600-2b6c0e,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+member: cn=cdi_03,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+
+dn: cn=salle05,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=seven-pc,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+member: cn=s05ilas,ou=Printers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=keyser-tst,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+member: cn=client-linux,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+objectClass: groupOfNames
+cn: salle05
+
+dn: cn=portables_eleves,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+cn: portables_eleves
+objectClass: groupOfNames
+member: cn=ordi-bidon,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+
+dn: cn=portables_internes,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+cn: portables_internes
+objectClass: groupOfNames
+member: cn=ordi-bidon,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+
+dn: cn=playonlinux,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=client-linux,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+member: cn=clinux-gnome,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+objectClass: groupOfNames
+cn: playonlinux
+
+dn: cn=essai,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=client-linux,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+objectClass: groupOfNames
+cn: essai
+
+dn: cn=s202,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=client-linux,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gou
+ v,c=fr
+member: cn=las202,ou=Printers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=client-linux2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=go
+ uv,c=fr
+member: cn=newimp,ou=Printers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=winsp3-wheezy,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=go
+ uv,c=fr
+objectClass: groupOfNames
+cn: s202
+
+dn: cn=sp3,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=winsp3-wheezy,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=go
+ uv,c=fr
+objectClass: groupOfNames
+cn: sp3
+
+dn: cn=dev,ou=Parcs,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+member: cn=w7-dev-wheezy,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=go
+ uv,c=fr
+member: cn=winsp3-dev2,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv
+ ,c=fr
+member: cn=sp3unatnew,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+member: cn=autoinst,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=
+ fr
+member: cn=win7-64bvm,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,
+ c=fr
+member: cn=win7x64-2018cl,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=g
+ ouv,c=fr
+member: cn=w7-auto-m,ou=Computers,ou=clg-demo,ou=homenet,ou=education,o=gouv,c
+ =fr
+objectClass: groupOfNames
+cn: dev
+
+dn: cn=root,ou=Groups,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+objectClass: posixGroup
+objectClass: sambaGroupMapping
+gidNumber: 0
+cn: root
+memberUid: root
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-1041
+sambaGroupType: 2
+displayName: Roots
+description: Roots
+
+dn: uid=root,ou=People,ou=clg-demo,ou=homenet,ou=education,o=gouv,c=fr
+uid: root
+sn: Se3
+cn: root Se3
+gecos: root Se3,,,
+mail: root@demo.homenet.org
+loginShell: /bin/true
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: sambaSamAccount
+uidNumber: 0
+sambaPwdMustChange: 2147483647
+gidNumber: 0
+shadowLastChange: 1468229295
+homeDirectory: /root
+sambaLMPassword: FFB67A52AC531164AAD3B435B51404EE
+sambaNTPassword: 538388DFE2BF2556833682EABF77CB10
+sambaPasswordHistory: 00000000000000000000000000000000000000000000000000000000
+ 00000000
+userPassword:: e1NTSEF9UjYrYVpLZGU2RmVnak5uZGRENll4SWxualBIcDcxVis=
+sambaPwdLastSet: 1
+sambaAcctFlags: [DU         ]
+sambaSID: S-1-5-21-3090069703-3667237465-1667192555-0
+sambaPrimaryGroupSID: S-1-5-21-3090069703-3667237465-1667192555-0
+
