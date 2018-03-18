@@ -1,6 +1,6 @@
-===================================================================================================
+===============================================================
 Procédure d'installation automatique d'un container LXC SE4-AD 
-===================================================================================================
+===============================================================
 
 .. sectnum::
 .. contents:: Table des matières
@@ -12,31 +12,20 @@ Ce document a pour but de décrire précisément la procédure d'installation au
 * Installation du container avec export des données importantes de la machine SE3, à savoir tout ce qui concerne l'annuaire et samba
 * La finalisation de la configuration du container avec réintégration des données précédentes et peuplement de l'AD 
 
-Ce documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de LXC.
+Cette documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de LXC.
  
 
 .. _documentation: install-se4AD.rst
 
 
-
-Se procurer le script d'installation 
-====================================
-Le script d'installation se trouve sur l'espace Github du projet. Pour le récupérer, exécuter la commande suivante : ::
-
- wget https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/usr/share/se3/sbin/install_se4lxc.sh
-  
-
-Le script sera packagé dans le paquet ``sambaedu-config`` sous peu et ainsi disponible directement sur un serveur se3 installant ce paquet avec la méthode habituelle.
-
-
 Déroulement de l'installation
 =============================
-Une fois le script récupéré d'une façon ou d'une autre, il suffit de le lancer sans argument.
-Si l'on considère que le script a été téléchargé dans /usr/share/se3/sbin et que l'on a pris soin de le rendre exécutable : ::
+A partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier /usr/share/se3/sbin.
 
- cd /usr/share/se3/sbin/
- wget https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/usr/share/se3/sbin/install_se4lxc.sh
- chmod +x install_se4lxc.sh
+La commande à lancer est donc la suivante :
+
+.. Code::
+
  /usr/share/se3/sbin/install_se4lxc.sh
 
 
@@ -87,6 +76,9 @@ Paramétrage du container SE4
 
 Viennent ensuite quelques questions sur la configuration du container.
 
+Choisir une IP et un nom
+........................
+
 On commence par saisir l'IP. Si le container est dans le même subnet que le serveur principal, il suffit de compléter le début de l'IP suggérée. 
 
 .. Attention :: un container est considéré comme une autre machine, avec une adresse indépendante, donc ce ne sera pas la même ip que le SE3.
@@ -99,7 +91,8 @@ De même on donne un nom au container. Le choix par défaut semble correct :).
 .. figure:: images/lxc_nom_container.png
 
 
-Choix du nom de domaine.
+Choix du nom de domaine
+.......................
 
 .. Attention :: Un point tout particulier est à apporter au domaine AD. En mode active directory il correspond au domaine DNS sur lequel Le serveur AD sera serveur de nom. Par défaut le nom de domaine AD proposé sera le domaine DNS actuel du Se3. Vous pouvez utiliser ce choix ou le modifier à votre convenance. Le fait que toutes les machines clientes seront sur cette même zone DNS distribuée par le DHCP est également à prendre en compte. Il faut donc bien réfléchir à ce choix si l'on veut obtenir quelque chose de cohérent au final.
 
@@ -112,7 +105,8 @@ Ce nom de domaine devra être composé d'au moins deux parties séparées par un
 
 .. figure:: images/lxc_nom_domaine.png
 
-
+Résumé des paramètres avant lancement de l'installation
+.......................................................
 
 Un récapitulatif de l'ensemble des paramètres saisis précédemment est affiché
 
