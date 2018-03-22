@@ -7,13 +7,13 @@ Génération d'un preseed et installation automatique d'un serveur SE4-AD
 
 Introduction
 ============
-Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur SE4 Active Directory en utilisant un preseed généré au préalable sur le serveur se3 contenant les données d'origine. L’installation se déroule en trois temps:
+Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur SE4 Active Directory en utilisant un preseed généré au préalable sur le serveur se3 contenant les données d'origine. L’installation se déroule en trois temps :
 
 * Lancement du script permettant de générer le preseed à partir des réponses fournies 
-* Installation du serveur avec le preseed et pré-configuration de ce dernier 
-* La finalisation de la configuration du serveur sous debian Stretch avec réintégration des données précédentes et peuplement de l'AD 
+* Installation automatique du serveur avec le preseed depuis un boot PXE ou un support CD / clé USB
+* La finalisation de la configuration du serveur sous debian Stretch avec réintégration des données LDAP précédentes et peuplement de l'AD 
 
-Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici à savoir un serveur autonome ou virtualisé mais s'applique également aux containers LXC.
+Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers LXC.
  
 
 .. _documentation: install-se4AD.rst
@@ -47,7 +47,7 @@ Après le message de bienvenue, un court résumé des paramètres réseau actuel
 
 
 
-Ces valeurs serviront de base pour la configuration réseau du serveur AD. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une à l'aide de boites de dialogue.
+Ces valeurs serviront de base pour la configuration réseau du serveur AD. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une.
 
 Paramétrage réseau du futur SE4-AD
 ----------------------------------
@@ -59,7 +59,7 @@ Choix d'une IP et d'un nom
 
 On commence par saisir l'IP du serveur se4-AD. S'il est dans le même subnet que l'actuel serveur Se3, il suffit de compléter le début de l'IP suggérée. 
 
-.. Attention :: Il faut bien saisir avec une adresse indépendante, donc pas la même IP que le Se3.
+.. Attention :: Il faut bien saisir une adresse indépendante, donc pas la même IP que le Se3.
 
 .. figure:: images/gen_preseed3.png
 
@@ -95,7 +95,7 @@ Si tout parait correct, on peut confirmer. Dans le cas contraire, il sera propos
 Génération du preseed et configuration du TFTP
 ----------------------------------------------
 
-A partir des éléments saisis précédemment, le script va déposer le preseed ainsi que les fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du se3. Le TFTP du se3 est également configuré de sorte de pouvoir être utilisé pour cette installation. 
+A partir des éléments saisis précédemment, le script va déposer le preseed ainsi que les fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du se3. La configuration du TFTP du se3 est également modifiée. 
 
 .. figure:: images/gen_preseed7.png
 
@@ -110,20 +110,37 @@ Vous pouvez effectuer l'installation de deux façons :
 
 
 
-Installation du serveur en utilisant le preseed généré
-======================================================
+Installation du serveur en utilisant le preseed 
+===============================================
 
 Il s'agit maintenant d'utiliser le preseed généré précédemment.
 
-Il faut commencer par démarrer le futur serveur se4AD, soit par un boot PXE, soit sur son support CD ou clé USB. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même preseed.
 
-Dans le cas d'un cd, il faudra donner l'url du preseed ::
+Choix du support d'installation
+-------------------------------
+
+Il faut commencer par démarrer l'installation du futur serveur se4AD, soit par un boot PXE, soit sur son support CD ou clé USB. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même preseed.
+
+
+Lancer l'installation depuis un cd ou une clé USB
+.................................................
+
+Si vous optez pour cette solution, Il faudra donner l'url du preseed en passant par le mode avancé ::
  auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
  
-Cas de l'installation en utilisant le boot PXE
-----------------------------------------------
+ 
+ .. figure:: images/se4_preseed_cdboot1.png
+ 
+ 
+Une des possibilité est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'ip du se3 et en faisant attention que le clavier est en qwerty au boot.
 
-On effectue un boot PXE, on choisit ``Maintenance`` 
+ .. figure:: images/se4_preseed_cdboot2.png
+ 
+ 
+Lancer l'installation en utilisant le boot PXE
+..............................................
+
+Si vous optez pour cette solution, il suffit d'effectue un boot PXE et de choisir ``Maintenance`` 
 
 
 .. figure:: images/se4_preseed_boot1.png
@@ -175,7 +192,7 @@ Vient enfin le message final, signalant que le serveur est prêt à rebooter.
 
 .. figure:: images/se4_preseed_final.png
 
-A cette étape, vous disposez d'une debian stretch installé contenant tous les anciens fichiers de configuration de l'ancien annuaire. Il vous reste à lancer cette machine  et finaliser sa configuration. Pour cela, on se reportera à cette documentation_ détaillant les étapes nécessaires afin à l'obtention de votre SE4AD pleinement fonctionnel.
+A cette étape, vous disposez d'une debian stretch installée contenant tous les anciens fichiers de configuration de l'ancien annuaire. Il vous reste à lancer cette machine et vous y connecter en tant que root afin d'en finaliser sa configuration automatique. Pour cela, on se reportera à cette documentation_ détaillant les étapes nécessaires à l'obtention de votre SE4AD pleinement fonctionnel.
 
 .. _documentation: install-se4AD.rst
 
