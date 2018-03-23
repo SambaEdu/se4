@@ -29,7 +29,7 @@ La commande à lancer est donc la suivante :
 
 .. Code::
 
- /usr/share/se3/sbin/gen_preseed_se4ad.sh
+ /usr/share/se3/sbin/gen_se4preseed.sh
  
  
 
