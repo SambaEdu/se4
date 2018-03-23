@@ -189,7 +189,7 @@ Concretement, cela veut dire que lorsqu'un utilisateur s'authentifie, son ticket
 - Il n'est pas possible de changer d'identité au cours d'une session, il faut au minimum fermer le navigateur.
 - La SSO est pénible si on n'a pas de certificats SSL valides. Il faut donc prévoir un mécanisme pour en obtenir chez LetsEncrypt, ce qui peut être complexe si le DNS interne n'est pas cohérent avec l'extérieur...
 
-# test
+# test
 
 le module auth_kerb d'apache est pourri... Impossible d'avoir un fonctionnement stable.
 

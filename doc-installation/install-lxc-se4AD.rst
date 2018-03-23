@@ -5,22 +5,27 @@ Procédure d'installation automatique d'un container LXC SE4-AD
 .. sectnum::
 .. contents:: Table des matières
 
+
 Introduction
 ============
-Ce document a pour but de décrire précisément la procédure d'installation automatique d'un container LXC hébergeant SE4 Active Directory. L’installation se déroule en deux temps :
 
-* Installation du container avec export des données importantes de la machine SE3, à savoir tout ce qui concerne l'annuaire et samba
-* La finalisation de la configuration du container avec réintégration des données précédentes et peuplement de l'AD 
+Ce document a pour but de décrire précisément la procédure d'installation automatique d'un container ``LXC`` hébergeant ``SE4 Active Directory (Se4-AD)``.
 
-Cette documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de LXC.
+L’installation se déroule en deux temps :
+
+* Installation du container avec export des données importantes de la machine ``Se3``, à savoir tout ce qui concerne l'annuaire et samba
+* La finalisation de la configuration du container avec réintégration des données précédentes et peuplement de l'``AD (Active Directory)`` 
+
+Cette documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de ``LXC``.
  
 
-.. _documentation: install-se4AD.rst
+.. _documentation: install-se4AD.rst#installation-et-configuration-de-la-machine-se4-ad-sur-stretch
 
 
 Déroulement de l'installation
 =============================
-A partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier /usr/share/se3/sbin.
+
+À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier ``/usr/share/se3/sbin``.
 
 La commande à lancer est donc la suivante :
 
