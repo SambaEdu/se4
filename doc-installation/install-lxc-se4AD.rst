@@ -19,7 +19,7 @@ L’installation se déroule en deux temps :
 Cette documentation s’attardera plus précisément sur la première partie. La seconde partie est traitée à part dans une autre documentation_ car elle n'est pas propre à l'utilisation de ``LXC``.
  
 
-.. _documentation : install-se4AD.rst#_installation-et-configuration-de-la-machine-se4-ad-sur-stretch_
+.. _documentation : `install-se4AD.rst#_installation-et-configuration-de-la-machine-se4-ad-sur-stretch_`
 
 
 Déroulement de l'installation de ``LXC``
