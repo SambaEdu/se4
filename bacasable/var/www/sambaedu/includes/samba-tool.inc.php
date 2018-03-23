@@ -245,9 +245,37 @@ function groupexist ($cn) {
      * Return true if cn group exist
      */
     
+    global $ldap_server, $ldap_port, $dn;
+    
+    $contenu=array("name");
+    $ds = ldap_connect("ldap://".$ldap_server,$ldap_port);;  
+    if ($ds) {
+        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
+        $ret = ldap_sasl_bind($ds, 'null', 'null', 'GSSAPI');
+        if ( $ret ) {
+            $r = ldap_search ($ds,$dn["groups"],"cn=$cn", $contenu);
+            $info = ldap_get_entries($ds, $r);
+            if ($info["count"] > 0) { 
+                return true; 
+            } else {
+                return false;
+            }    
+        } else {
+            echo "Echec du bind sasl";
+            return false;
+        }
+    } else {
+        echo "Impossible de se connecter au serveur LDAP";
+        return false;
+    } 
+    
 }
 
 function groupadd ($cn, $inou, $description) {
+    
+    global $dn;
+    
     /* 
      * Principe :
      * samba-tool group add Classe_TARCU --groupou='ou=2TC,ou=groups' --description="Groupe Classe TARCU"
@@ -263,20 +291,30 @@ function groupadd ($cn, $inou, $description) {
     /*
      * Return true if group is create false in other cases
      */
-    
-    $command="group add $cn --groupou='ou=$inou, ou=groups' --description='$description'";
-    $RES= sambatool ( $command );
+    if ( !empty($cn) && !empty($inou) && !empty($description)) {
+        
+        // creation du ou si il n'existe pas 
+        if ( !ouexist($inou,$dn["groups"]) ) {
+            ouadd ($inou, $dn["groups"]);
+        }    
+        
+        $command="group add $cn --groupou='ou=$inou, ou=groups' --description='$description'";
+        $RES= sambatool ( $command );
  
-    if ( count($RES) == 1 ) {
-    	$group = explode(" ", $RES[0]); 
-        if (  $group[2] = $cn ) {
-            return true;
+        if ( count($RES) == 1 ) {
+            $group = explode(" ", $RES[0]); 
+            if (  $group[2] = $cn ) {
+                return true;
+            } else { 
+                return false;
+            }
         } else { 
             return false;
         }
-    } else { 
-        return false;
-    }    	
+        
+    } else {
+        return fasle;
+    }
 }	
 
 function groupdel ($cn) {
@@ -314,14 +352,17 @@ function groupaddmember ( $cn, $ingroup) {
     
 }
 
+function groupaddlistmembers ( $cnlist, $ingroup) {
+        
+}
+
 function groupdelmember ($cn, $ingroup) {
     /*
      * group removemembers <groupname> <listofmembers> [options]
      */
-    
 }
 
-function groupdelallmember ($ingroup) {
+function groupdelallmembers ($ingroup) {
     
 }
 
