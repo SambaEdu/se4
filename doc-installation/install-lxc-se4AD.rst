@@ -53,7 +53,9 @@ Ces valeurs serviront de base pour la configuration de la machine ``LXC`` par la
 Installation de ``LXC`` et configuration de la carte réseau en mode pont
 ------------------------------------------------------------------------
 
-``LXC`` n'est pas installé par défaut sur les ``Se3 Wheezy``. Par ailleurs seule la version 1.0 est disponible sur les dépôts ``Debian Wheezy``. La version 1.1 étant plus aboutie, elle sera récupérée sur les dépôts ``Debian Backport`` ou le dépôt ``SambaEdu`` lui-même.
+Après le message de bienvenue et une éventuelle modification de paramètres, l'installation de ``LXC`` s'effectue.
+
+**Remarque :** ``LXC`` n'est pas installé par défaut sur les ``Se3 Wheezy``. Par ailleurs seule la version 1.0 est disponible sur les dépôts ``Debian Wheezy``. La version 1.1 étant plus aboutie, elle sera récupérée sur les dépôts ``Debian Backport`` ou le dépôt ``SambaEdu`` lui-même.
 
 
 .. figure:: images/lxc_package.png
