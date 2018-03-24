@@ -7,19 +7,19 @@ SambaEdu4 - évolution de SambaEdu3
 Objectifs
 ---------
 
--  contrôleur de domaine AD, pouvant soit fonctionner de façon isolée en
+-  Contrôleur de domaine AD, pouvant soit fonctionner de façon isolée en
    important directement les utilisateurs depuis les bases Siecle/STS,
    soit être intégré dans une infrastructure fédératrice AD gérée au
    niveau des rectorats ou nationale.
--  Intégration automatisée de postes Windows 7 et 10, de postes Linux,
--  serveur de fichiers SMB, avec gestion des instantanés (shadow copy)
+-  Intégration automatisée de postes Windows 7 et 10, de postes GNU/Linux,
+-  Serveur de fichiers SMB, avec gestion des instantanés (shadow copy)
    basé sur ZFS
--  serveur d'impression SMB/CUPS, avec intégration possible avec la
+-  Serveur d'impression SMB/CUPS, avec intégration possible avec la
    solution de gestion centralisée PaperCut (payante)
--  déploiement et mises à jour centralisée des logiciels à l'aide de
+-  Déploiement et mises à jour centralisée des logiciels à l'aide de
    WPKG et Wsusoffline
--  solution de clonage
--  intégration avec un cloud seafile/seadrive
+-  Solution de clonage
+-  Intégration avec un cloud seafile/seadrive
 
 Techniquement, le serveur est construit sur debian 9 stretch, avec Samba
 4.5.x et eventuellement ZFSonLinux ou dcache. Les paquets sont
