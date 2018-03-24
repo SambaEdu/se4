@@ -36,17 +36,17 @@ Deux types de serveurs sont envisagés :
 
 -  Support physique :
 
--  serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache
+   -  serveur de type "collège" : 2 disques SATA 2-4 To en raid 1 + cache
    SSD avec 'Dcache'
--  serveurs de type "lycée" : N > 4 disques SATA en ZFS raid10 + cache
+   -  serveurs de type "lycée" : N > 4 disques SATA en ZFS raid10 + cache
    SSD, cluster iscsi ?
 
 -  Serveurs virtuels ou conteneurs LXC :
 
--  vm "AD" avec le serveur AD, ``netlogon`` et ``sysvol``
--  vm "NAS" avec les partages de fichiers samba, l'interface web, dhcp,
+   -  vm "AD" avec le serveur AD, ``netlogon`` et ``sysvol``
+   -  vm "NAS" avec les partages de fichiers samba, l'interface web, dhcp,
    ipxe, et le serveur d'impression
--  vm "cloud" avec seafile et nginx
+   -  vm "cloud" avec seafile et nginx
 
 Il est possible de conserver la partie "NAS" sur le serveur physique,
 l'avantage potentiel étant de meilleurs performances pour les accès
