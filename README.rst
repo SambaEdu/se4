@@ -81,9 +81,12 @@ pages ``annuaire``, ``importation``, ``partages`` et ``parcs`` sont conservées.
 Roadmap
 -------
 
--  Mettre à disposition des développeurs une VM stretch/samba4.5/SE3
-   avec un annuaire /colormigré en AD servant de base de travail pour mettre
-   le code se3 en compatibilité AD                             **☑ Fait**
++---------------------------------------------------------------------+-----------+
+|Mettre à disposition des développeurs une VM ``stretch/samba4.5/SE3``|           |
+|avec un annuaire migré en AD servant de base de travail pour mettre  |           |
+|le code se3 en compatibilité AD                                      | **☑ Fait**|
++---------------------------------------------------------------------+-----------+
+
 -  Avoir une VM migrée AD fonctionnelle pour les pages principales :
    annuaire, import (siecle/sts), partages, parcs **En cours**
 -  Mise en place d'une arborescence permettant de générer des paquets.
