@@ -45,7 +45,7 @@ Deux types de serveurs sont envisagés :
 
    -  vm « AD » avec le serveur AD, ``netlogon`` et ``sysvol``
    -  vm « NAS » avec les partages de fichiers ``samba``, l'interface ``web``, ``dhcp``,
-   ``ipxe``, et le serveur d'impression
+      ``ipxe``, et le serveur d'impression
    -  vm « cloud » avec ``seafile`` et ``nginx``
 
 Il est possible de conserver la partie « NAS » sur le serveur physique,
