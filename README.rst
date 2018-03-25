@@ -26,7 +26,7 @@ Techniquement, le serveur est construit sur debian 9 stretch, avec Samba
 construits en respectant le standard Debian pour pouvoir être mis à jour
 facilement, et donc suivre les versions Debian.
 
-matériel et stockage
+Matériel et stockage
 --------------------
 
 Proxmox 5.x est une excellente base de virtualisation libre. Mais
@@ -65,7 +65,7 @@ de journalisation.
 Le « NAS » doit pouvoir executer des scripts de manipulation de fichiers,
 soit via samba root preexec, soit à distance depuis l'interface : en
 gros les sudo actuels deviennent du ssh -> faire un paquet
-sambaedu-scripts à déployer sur les "NAS", ou déployer en scp ?
+sambaedu-scripts à déployer sur les « NAS », ou déployer en scp ?
 
 Un nouveau projet
 ------------------
@@ -76,14 +76,14 @@ sera fait pour simplifier le passage de *Se3* vers *Se4*.
 
 Dans un premier temps toutes les pages de l'interface faisant doublon
 avec les outils de la console AD GPO ne seront pas repris : seules les
-pages annuaire, importation, partages et parcs sont conservées.
+pages ``annuaire``, ``importation``, ``partages`` et ``parcs`` sont conservées.
 
 Roadmap
 -------
 
 -  Mettre à disposition des développeurs une VM stretch/samba4.5/SE3
    avec un annuaire /colormigré en AD servant de base de travail pour mettre
-   le code se3 en compatibilité AD **Fait**
+   le code se3 en compatibilité AD                             **☑ Fait**
 -  Avoir une VM migrée AD fonctionnelle pour les pages principales :
    annuaire, import (siecle/sts), partages, parcs **En cours**
 -  Mise en place d'une arborescence permettant de générer des paquets.
