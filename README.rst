@@ -81,20 +81,27 @@ pages ``annuaire``, ``importation``, ``partages`` et ``parcs`` sont conservées.
 Roadmap
 -------
 
-+---------------------------------------------------------------------+-----------+
-|Mettre à disposition des développeurs une VM ``stretch/samba4.5/SE3``|           |
-|avec un annuaire migré en AD servant de base de travail pour mettre  |           |
-|le code se3 en compatibilité AD                                      | **☑ Fait**|
-+---------------------------------------------------------------------+-----------+
++-------------------------------------------------------------------+----------------+
+| Mettre à disposition des développeurs une VM                      |                |
+| ``stretch/samba4.5/SE3`` avec un annuaire migré en AD servant     |                |
+| de base de travail pour mettre le code se3 en compatibilité AD    | **☑ Fait**     |
++-------------------------------------------------------------------+----------------+
+| Avoir une VM migrée AD fonctionnelle pour les pages principales : |                |          
+| ``annuaire``, ``import`` (siecle/sts), ``partages``, ``parcs``    | **☐ En cours** |
++-------------------------------------------------------------------+----------------+
+| Mise en place d'une arborescence permettant de générer des        |                |
+| paquets.                                                          | **✋À faire**  |
++-------------------------------------------------------------------+----------------+
+| Travail sur l'interopérabilité : intégration des clients          |                |
+| GNU/Linux, SSO pour sites ou applis diverses...                   | **✋À faire**  |
++-------------------------------------------------------------------+----------------+
+| ``wpkg`` et ``clonage``                                           | **✋À faire**  |
++-------------------------------------------------------------------+----------------+
+| Migration depuis se3                                              | **✋En cours** |
++-------------------------------------------------------------------+----------------+
+| Intégration à l'interface d'outils ``GPO``                            | **✋À faire**  |
++-------------------------------------------------------------------+----------------+
 
--  Avoir une VM migrée AD fonctionnelle pour les pages principales :
-   annuaire, import (siecle/sts), partages, parcs **En cours**
--  Mise en place d'une arborescence permettant de générer des paquets.
--  travail sur l'interopérabilité : intégration des clients linux, SSO
-   pour sites ou applis diverses...
--  ``wpkg`` et ``clonage``,
--  Migration depuis se3 **En cours**
--  Intégration à l'interface d'outils GPO
 
 Documentations en rapport avec le développement de SE4
 ------------------------------------------------------
