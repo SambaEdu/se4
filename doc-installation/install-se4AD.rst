@@ -1,9 +1,10 @@
-================================================================
-Installation et configuration de la machine SE4-AD sur Stretch 
-================================================================
+======================================================================
+Installation et configuration de la machine ``SE4-AD`` sur ``Stretch``
+======================================================================
 
 .. sectnum::
 .. contents:: Table des matières
+
 
 Introduction
 ============
@@ -15,11 +16,11 @@ La machine pourra être soit une machine virtuelle ou bien un container LXC, au 
 
 * Machine LXC : Elle est installée depuis le serveur de fichiers Se3 qui se chargera d'y déposer tous les fichiers configuration.
 
-* Avantages :
+ * Avantages :
  
- * **Léger et facile à déployer** On peut monter une machine stretch tout en étant sur une machine se3 wheezy pour tester l'annuaire.
- 
- * Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
+  * **Léger et facile à déployer** On peut monter une machine stretch tout en étant sur une machine se3 wheezy pour tester l'annuaire.
+  
+  * Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
 
 
 Déroulement de l'installation
