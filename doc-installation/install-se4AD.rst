@@ -68,20 +68,21 @@ Installation de Samba
 .. figure:: images/se4ad_dl_fini_confirm.png
 
 
+Mise en place du serveur ``openldap`` local et import des anciennes données
+---------------------------------------------------------------------------
 
-Mise en place du serveur openldap local et import des anciennes données
------------------------------------------------------------------------
+Un serveur ``ldap`` est activé de façon temporaire afin de disposer des données de l'ancien serveur. Les différents éléments de configuration sont récupérés à partir du fichier ``sambaedu.config.tgz``. (d'où provient ce fichier ?)
 
-Un serveur ldap est activé de façon temporaire afin de disposer des données de l'ancien serveur. Les différents éléments de configuration sont récupérés à partir du fichier sambaedu.config.tgz.
+L'archive ``ldif`` de sauvegarde de l'annuaire est ensuite incorporé avant de lancer le service.
 
-Le ldif de sauvegarde est ensuite incorporé avant de lancer le service. Quelques opérations de nettoyage ou mise en conformité sont également effectuées afin de faciliter la migration vers AD.
+Quelques opérations de nettoyage ou mise en conformité sont également effectuées afin de faciliter la migration vers ``AD``.
 
 
 .. figure:: images/se4ad_ldap_import.png
 
 
-Migration des données openldap vers Samba AD avec sambatool
------------------------------------------------------------
+Migration des données ``openldap`` vers ``Samba AD`` avec ``sambatool``
+-----------------------------------------------------------------------
 
 Il s'agit de l'étape cruciale de toute l'opération. L'outil sambatool est utilisé en mode ``classicupgrade`` afin d'abonder l'active Directory. Le script utilise les différents éléments de configuration issus de l'ancien serveur, à savoir :
 
