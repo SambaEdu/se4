@@ -123,10 +123,10 @@ Le compte qui gère l'``AD`` se nomme désormais ``Administrator``. Un mot de pa
 .. figure:: images/se4ad_pass_admin.png
 
 
-**Attention :** le mot de passe du compte ``Administrator`` requiert un certain niveau de complexité :  
-* 8 caractères minimum
-* Un mélange de lettres et de chiffres
-* Au moins un caractère spécial
+**Attention :** le mot de passe du compte ``Administrator`` requiert un certain niveau de complexité :
+ * 8 caractères minimum
+ * Un mélange de lettres et de chiffres
+ * Au moins un caractère spécial
 
 La politique de mot de passe est ensuite assouplie pour les autres comptes.
 
