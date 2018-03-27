@@ -9,42 +9,34 @@ Installation et configuration de la machine ``SE4-AD`` sur ``Stretch``
 Introduction
 ============
 
-La machine pourra être soit une machine virtuelle ou bien un container LXC, au choix. L'installation automatique décrite ici prend en compte les deux cas de figure.
+La machine ``SE4-AD`` sur ``Stretch`` pourra être soit une machine virtuelle ou bien un container ``LXC``, au choix. L'installation automatique décrite ici prend en compte les deux cas de figure.
 
-* Machine virtuelle : A la suite de l'installation de debian Stretch avec le preseed, le script d'installation sera lancé lors de la première connexion root afin de paramétrer se4-AD. 
+* Machine virtuelle : À la suite de l'installation de ``Debian Stretch`` avec le fichier preseed, le script d'installation sera lancé lors de la première connexion en ``root`` afin de paramétrer ``Se4-AD``.
 
+* Machine ``LXC`` : Elle est installée depuis le serveur de fichiers ``Se3`` qui se chargera d'y déposer tous les fichiers configuration.
 
-* Machine LXC : Elle est installée depuis le serveur de fichiers Se3 qui se chargera d'y déposer tous les fichiers configuration.
-
- * Avantages :
- 
-  * **Léger et facile à déployer** On peut monter une machine stretch tout en étant sur une machine se3 wheezy pour tester l'annuaire.
+**Avantages de la machine ``LXC`` :** Léger et facile à déployer, on peut monter une machine ``Debian Stretch`` tout en étant sur une machine ``Se3 Wheezy`` pour tester l'annuaire.
   
-  * Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
+Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
 
 
 Déroulement de l'installation
 =============================
 
-A l'installation de la machine virtuelle ou du container, le script d'installation a été poussé sur la machine dans /root. Il se lance immédiatement au login root à l'aide d'un .profile modifié pour ce faire.
-
-
+À l'installation de la machine virtuelle ou du container ``LXC``, le script d'installation a été poussé sur la machine dans le répertoire ``/root``. Il se lance immédiatement au login en ``root`` à l'aide d'un fichier ``.profile`` modifié pour ce faire.
 
 Accueil
 -------
 
 .. figure:: images/se4ad_title.png
 
-
-
 Après le message de bienvenue, La liste de choix s'affiche. 
-
 
 .. figure:: images/se4ad_type_action.png
 
 Quelques précisions sur chacune des options 
 
-#. Installation classique : Cas détaillé ici. Il s'agit d'effectuer l'installation et la configuration d'un se4-AD avec import des données de l'annuaire du serveur Se3 d'origine vers l'Active Directory.
+#. Installation classique : Cas détaillé ici. Il s'agit d'effectuer l'installation et la configuration d'un ``se4-AD`` avec import des données de l'annuaire du serveur ``Se3`` d'origine vers l'``Active Directory``.
 
 #. Téléchargement des paquets uniquement. Utile pour des tests ou la réalisation d'un master de machine virtuelle. Tous les paquets utiles sont téléchargés dans le cache sans forcément être installés. Cela rend l'installation indépendante de toute configuration.
 
@@ -57,7 +49,7 @@ L'installation débute par le téléchargement des paquets principaux et leur co
 
 Concernant ce dernier il est à noter deux choses :
 
-* Les clés publiques, si elles existent sont automatiquement récupérées du serveur Se3 si l'on a effectué l'installation d'un container LXC
+* Les clés publiques, si elles existent sont automatiquement récupérées du serveur Se3 si l'on a effectué l'installation d'un container ``LXC``
 * La version 7 de SSH (donc sur Debian Stretch) bannit l'utilisation des clés de type DSS. Seules les clés RSA sont encore supportées. Par conséquent si vous utilisiez des clés DSS, il faudra les refaire en RSA.
 
 .. figure:: images/se4ad_primo_packages.png  
