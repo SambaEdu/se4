@@ -40,11 +40,11 @@ Après le message de bienvenue, La liste de choix s'affiche :
 
 Quelques précisions sur chacune des options :
 
-#. Installation classique : Cas détaillé ici. Il s'agit d'effectuer l'installation et la configuration d'un ``se4-AD`` avec import des données de l'annuaire du serveur ``Se3`` d'origine vers l'``Active Directory``.
+#. Installation classique : cas détaillé ici. Il s'agit d'effectuer l'installation et la configuration d'un ``se4-AD`` avec import des données de l'annuaire du serveur ``Se3`` d'origine vers l'``Active Directory``.
 
-#. Téléchargement des paquets uniquement. Utile pour des tests ou la réalisation d'un master de machine virtuelle. Tous les paquets utiles sont téléchargés dans le cache sans forcément être installés. Cela rend l'installation indépendante de toute configuration.
+#. Téléchargement des paquets uniquement : utile pour des tests ou la réalisation d'un master de machine virtuelle. Tous les paquets utiles sont téléchargés dans le cache sans forcément être installés. Cela rend l'installation indépendante de toute configuration.
 
-#. Configuration du réseau : Le but est uniquement de modifier la configuration réseau de la machine. À noter que cette configuration doit être effectuée avant le déroulement d'une installation classique.
+#. Configuration du réseau : le but est uniquement de modifier la configuration réseau de la machine. À noter que cette configuration doit être effectuée avant le déroulement d'une installation classique.
 
 
 Installation des paquets prioritaires et téléchargement des paquets samba
@@ -52,18 +52,19 @@ Installation des paquets prioritaires et téléchargement des paquets samba
 
 L'installation débute par le téléchargement des paquets principaux et leur configuration. C'est par exemple le cas pour le serveur ``SSH``.
 
+.. figure:: images/se4ad_primo_packages.png  
+
+
 Concernant le serveur ``SSH``, il est à noter deux choses :
 
 * Les clés publiques, si elles existent, sont automatiquement récupérées du serveur ``Se3`` si l'on a effectué l'installation d'un container ``LXC``
 * La version 7 de ``SSH`` (donc sur ``Debian Stretch``) bannit l'utilisation des clés de type ``DSS``. Seules les clés ``RSA`` sont encore supportées. Par conséquent si vous utilisiez des clés ``DSS``, il faudra les refaire en ``RSA``.
 
-.. figure:: images/se4ad_primo_packages.png  
-
-Le script attend votre confirmation avant de poursuivre.
-
 
 Installation de Samba
 ---------------------
+
+Après le téléchargement des paquets, le script attend votre confirmation avant de poursuivre :
 
 .. figure:: images/se4ad_dl_fini_confirm.png
 
