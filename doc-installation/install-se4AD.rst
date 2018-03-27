@@ -84,36 +84,40 @@ Quelques opérations de nettoyage ou mise en conformité sont également effectu
 Migration des données ``openldap`` vers ``Samba AD`` avec ``sambatool``
 -----------------------------------------------------------------------
 
-Il s'agit de l'étape cruciale de toute l'opération. L'outil sambatool est utilisé en mode ``classicupgrade`` afin d'abonder l'active Directory. Le script utilise les différents éléments de configuration issus de l'ancien serveur, à savoir :
+Il s'agit de l'étape cruciale de toute l'opération. L'outil ``sambatool`` est utilisé en mode ``classicupgrade`` afin d'abonder l'``active Directory``.
 
-* smb.conf dont certains paramètres ont été modifiés
-* les données de l'annuaire LDAP
-* les anciens fichier TDB
+Le script utilise les différents éléments de configuration issus de l'ancien serveur, à savoir :
 
-.. Note :: Toutes ces données sont récupérées depuis /etc/sambaedu
+* ``smb.conf`` dont certains paramètres ont été modifiés
+* les données de l'annuaire ``LDAP``
+* les anciens fichiers ``TDB``
+
+**Note :** Toutes ces données sont récupérées depuis le répertoire ``/etc/sambaedu``.
 
 .. figure:: images/se4ad_lancement_migration_ad.png
 
-La migration s'est déroulée sans erreur, le service LDAP est arrêté afin de libérer le port 389 . 
+
+La migration s'est déroulée sans erreur, le service ``LDAP`` est arrêté afin de libérer le port 389.
 
 .. figure:: images/se4ad_migration_ad_ok.png
 
 
-Lancement de Samba en mode AD et import des branches LDAP propres à SE3
------------------------------------------------------------------------
+Lancement de ``Samba`` en mode ``AD`` et import des branches ``LDAP`` propres à ``SE3``
+---------------------------------------------------------------------------------------
 
-Le service samba AD-DC peut désormais être lancé
+Le service ``samba AD-DC`` peut désormais être lancé :
 
 .. figure:: images/se4ad_lancement_ad_modldb.png
 
-Durant cette opération, tous les éléments de l'annuaire propres à SambaEdu n'ayant pas été pris en charge par sambatool sont créées ou positionnés dans les branches ad-hoc.
+Durant cette opération, tous les éléments de l'annuaire propres à ``SambaEdu`` n'ayant pas été pris en charge par ``sambatool`` sont créées ou positionnés dans les branches ad-hoc.
 
-.. Note :: Un système de temporisation  est ensuite mis en place afin d'attendre la disponibilité de l'annuaire AD car le tout premier lancement prend jusqu'à quelques minutes.
+**Note :** Un système de temporisation  est ensuite mis en place afin d'attendre la disponibilité de l'annuaire ``AD`` car le tout premier lancement prend jusqu'à quelques minutes.
 
-Choix du mot de passe de l'administrateur AD
---------------------------------------------
 
-Le compte qui gère l'AD se nomme désormais ``Administrator``. Un mot de passe aléatoire a été initialisé lors de la migration, il convient donc de le modifier afin d'en choisir le contenu.
+Choix du mot de passe de l'administrateur ``AD``
+------------------------------------------------
+
+Le compte qui gère l'``AD`` se nomme désormais ``Administrator``. Un mot de passe aléatoire a été initialisé lors de la migration, il convient donc de le modifier afin d'en choisir le contenu.
 
 .. figure:: images/se4ad_pass_admin.png
 
