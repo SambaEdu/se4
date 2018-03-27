@@ -15,7 +15,7 @@ La machine ``SE4-AD`` sur ``Stretch`` pourra être soit une machine virtuelle ou
 
 * Machine ``LXC`` : Elle est installée depuis le serveur de fichiers ``Se3`` qui se chargera d'y déposer tous les fichiers configuration.
 
-**Avantages de la machine ``LXC`` :** Léger et facile à déployer, on peut monter une machine ``Debian Stretch`` tout en étant sur une machine ``Se3 Wheezy`` pour tester l'annuaire.
+**Avantages de la machine **``LXC`` **:** léger et facile à déployer, on peut monter une machine ``Debian Stretch`` tout en étant sur une machine ``Se3 Wheezy`` pour tester l'annuaire.
   
 Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
 
@@ -23,9 +23,10 @@ Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine f
 Déroulement de l'installation
 =============================
 
-À l'installation de la machine virtuelle ou du container ``LXC``, le script d'installation a été poussé sur la machine dans le répertoire ``/root``. Il se lance immédiatement au login en ``root`` à l'aide d'un fichier ``.profile`` modifié pour ce faire.
+À l'installation de la machine virtuelle ou du container ``LXC``, le script d'installation a été poussé sur la machine (qu'elle soit virtuelle ou un container) dans le répertoire ``/root`` de cette machine.
 
-*Nota : compte root de quelle machine ? Je suppose qu'il doit s'agir soit de la machine virtuelle, soit du container selon le choix effectitué. Franck, peux-tu confirmer ?*
+Le script se lance immédiatement au login en ``root`` sur cette machine, à l'aide d'un fichier ``.profile`` qui a été modifié pour ce lancement automatique.
+
 
 Accueil
 -------
