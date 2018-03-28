@@ -119,7 +119,7 @@ Il s'agit maintenant d'utiliser le fichier ``preseed`` généré précédemment 
 Choix du support d'installation
 -------------------------------
 
-Il faut commencer par démarrer l'installation du futur serveur ``Se4-AD``, soit par un boot ``PXE``, soit sur son support ``CD` ou clé ``USB``. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même fichier ``preseed``.
+Il faut commencer par démarrer l'installation du futur serveur ``Se4-AD``, soit par un boot ``PXE``, soit sur son support ``CD`` ou clé ``USB``. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même fichier ``preseed``.
 
 
 Lancer l'installation depuis un ``CD`` ou une clé ``USB``
