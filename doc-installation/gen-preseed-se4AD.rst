@@ -26,15 +26,14 @@ Cette documentation s’attardera plus précisément sur les deux premières par
 Déroulement du script générant le fichier preseed
 =================================================
 
-À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier /usr/share/se3/sbin.
+À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier ``/usr/share/se3/sbin``.
 
 La commande à lancer est donc la suivante :
 
 .. Code::
 
  /usr/share/se3/sbin/gen_se4preseed.sh
- 
- 
+
 
 
 Accueil
