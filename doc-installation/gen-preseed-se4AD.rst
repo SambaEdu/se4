@@ -126,7 +126,11 @@ Lancer l'installation depuis un ``CD`` ou une clé ``USB``
 .........................................................
 
 Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``preseed`` en passant par le mode avancé :
- auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
+
+.. Code::
+
+auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
+
 
  .. figure:: images/se4_preseed_cdboot1.png
  
