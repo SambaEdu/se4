@@ -1,6 +1,7 @@
-=========================================================================
-Génération d'un preseed et installation automatique d'un serveur SE4-AD 
-=========================================================================
+=======================================================================================
+Génération d'un fichier ``preseed`` et installation automatique d'un serveur ``SE4-AD``
+=======================================================================================
+
 
 .. sectnum::
 .. contents:: Table des matières
@@ -23,8 +24,8 @@ Cette documentation s’attardera plus précisément sur les deux premières par
 .. _documentation: install-se4AD.rst
 
 
-Déroulement du script générant le fichier preseed
-=================================================
+Déroulement du script générant le fichier ``preseed``
+=====================================================
 
 À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier ``/usr/share/se3/sbin``.
 
