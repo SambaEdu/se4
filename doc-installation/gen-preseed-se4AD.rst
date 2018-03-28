@@ -5,25 +5,28 @@ Génération d'un preseed et installation automatique d'un serveur SE4-AD
 .. sectnum::
 .. contents:: Table des matières
 
+
 Introduction
 ============
-Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur SE4 Active Directory en utilisant un preseed généré au préalable sur le serveur se3 contenant les données d'origine. L’installation se déroule en trois temps :
 
-* Lancement du script permettant de générer le preseed à partir des réponses fournies 
-* Installation automatique du serveur avec le preseed depuis un boot PXE ou un support CD / clé USB
-* La finalisation de la configuration du serveur sous debian Stretch avec réintégration des données LDAP précédentes et peuplement de l'AD 
+Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur ``SE4 Active Directory`` en utilisant un fichier ``preseed`` généré au préalable sur le serveur ``Se3`` contenant les données d'origine.
 
-Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers LXC.
+L’installation se déroule en trois temps :
+
+* Lancement du script permettant de générer le fichier ``preseed`` à partir des réponses fournies
+* Installation automatique du serveur avec le fichier ``preseed`` depuis un boot ``PXE`` ou un support ``CD`` / clé ``USB``
+* La finalisation de la configuration du serveur sous ``Debian Stretch`` avec réintégration des données ``LDAP`` précédentes et peuplement de l'``AD``
+
+Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers ``LXC``.
  
 
 .. _documentation: install-se4AD.rst
 
 
+Déroulement du script générant le fichier preseed
+=================================================
 
-Déroulement du script générant le preseed
-=========================================
-
-A partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier /usr/share/se3/sbin.
+À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier /usr/share/se3/sbin.
 
 La commande à lancer est donc la suivante :
 
