@@ -113,7 +113,7 @@ Vous pouvez effectuer l'installation de deux façons :
 Installation du serveur en utilisant le fichier ``preseed``
 ===========================================================
 
-Il s'agit maintenant d'utiliser le fichier ``preseed`` généré précédemment.
+Il s'agit maintenant d'utiliser le fichier ``preseed`` généré précédemment ; deux possibilités sont possibles comme l'a détaillé le message précédent.
 
 
 Choix du support d'installation
@@ -125,18 +125,17 @@ Il faut commencer par démarrer l'installation du futur serveur ``Se4-AD``, soit
 Lancer l'installation depuis un ``CD`` ou une clé ``USB``
 .........................................................
 
-Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``preseed`` en passant par le mode avancé ::
+Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``preseed`` en passant par le mode avancé :
  auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
- 
- 
+
  .. figure:: images/se4_preseed_cdboot1.png
  
  
-Une des possibilités est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'``ip`` du ``Se3`` et en faisant attention que le clavier est en ``qwerty`` au boot.
+Une des possibilités est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'``ip`` du ``Se3`` et en faisant attention que le clavier est configuré en ``qwerty`` au boot alors que vous utilisez sans doute un clavier ``azerty``.
 
- .. figure:: images/se4_preseed_cdboot2.png
- 
- 
+.. figure:: images/se4_preseed_cdboot2.png
+
+
 Lancer l'installation en utilisant le boot ``PXE``
 ..................................................
 
@@ -144,7 +143,7 @@ Si vous optez pour cette solution, il suffit d'effectuer un boot ``PXE`` et de c
 
 .. figure:: images/se4_preseed_boot1.png
 
-puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture ``AMD64`` est supportée.
+puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture ``amd64`` est supportée.
 
 .. figure:: images/se4_preseed_boot2.png
 
@@ -152,18 +151,20 @@ puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule 
 Déroulement de la suite de l'installation
 ------------------------------------------
 
-Quelque soit la méthode employée (PXE / CD /Clé USB), une fois le preseed chargé la suite est automatique, à commencer par le partitionnement. 
+Quelque soit la méthode employée (``PXE`` / ``CD`` /Clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique, à commencer par le partitionnement. 
+
 
 Partitionnement
 ................
 
-.. Attention :: Lors de cette étape toutes les données du disque sont effacées sans avertissement. 
+**Attention :** lors de cette étape toutes les données du disque sont effacées sans avertissement.
 
 Les partitions suivantes sont créés. Selon la taille du disque disponible, l'outil de partitionnement va moduler les tailles des partitions selon l'espace disque tout en respectant les règles suivantes :
 
-* Partition Racine d'un minimum de 5Go, 10Go de préférence voire 20Go s'il reste de la place.
-* Partition /var , 10Go de préférence et plus s'il reste de la place disponible, 
-* Partition Swap de 16Go ou 200% de la ram au minimum
+* Partition Racine ``/`` d'un minimum de 5Go, 10Go de préférence voire 20Go s'il reste de la place
+* Partition ``/var`` , 10Go de préférence et plus s'il reste de la place disponible
+* Partition ``Swap`` de 16Go ou 200% de la ``ram`` au minimum
+
 
 Installation du système
 .......................
