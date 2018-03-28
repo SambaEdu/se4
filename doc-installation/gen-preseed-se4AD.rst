@@ -75,31 +75,31 @@ Choix du nom de domaine
 
 Ce nom de domaine devra être composé d'au moins deux parties séparées par un point. Dans notre exemple, il y en a trois.
  
-* La première partie correspond au domaine samba. Appelé également workgroup, cet élément ne **ne doit pas absolument pas dépasser 15 caractères**. A noter également qu'il n'est pas souhaitable de reprendre celui de Se3, à savoir l'habituel "sambaedu3" afin d'éviter tout conflit.
+* La première partie correspond au domaine ``samba``. Appelé également ``workgroup``, cet élément **ne doit absolument pas dépasser 15 caractères**. À noter également qu'il n'est pas souhaitable de reprendre celui de ``Se3``, à savoir l'habituel "sambaedu3" afin d'éviter tout conflit.
 
-* La ou les parties suivantes correspondent à ce que l'on nomme le suffixe DNS
-
+* La ou les parties suivantes correspondent à ce que l'on nomme le suffixe ``DNS``
 
 .. figure:: images/gen_preseed5.png
 
-Résumé des paramètres avant génération du preseed
-.................................................
 
-Un récapitulatif de l'ensemble des paramètres saisis précédemment est affiché
+Résumé des paramètres avant génération du fichier preseed
+.........................................................
+
+Un récapitulatif de l'ensemble des paramètres saisis précédemment est affiché :
 
 .. figure:: images/gen_preseed6.png
 
-Si tout parait correct, on peut confirmer. Dans le cas contraire, il sera proposé de corriger chaque paramètre.
+Si tout paraît correct, on peut confirmer. Dans le cas contraire, il sera proposé de corriger chaque paramètre.
 
 
-Génération du preseed et configuration du TFTP
-----------------------------------------------
+Génération du fichier ``preseed`` et configuration du serveur ``TFTP``
+----------------------------------------------------------------------
 
-A partir des éléments saisis précédemment, le script va déposer le preseed ainsi que les fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du se3. La configuration du TFTP du se3 est également modifiée. 
+À partir des éléments saisis précédemment, le script va déposer le fichier ``preseed`` ainsi que les fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du ``Se3``. La configuration du serveur ``TFTP`` du ``Se3`` est également modifiée.
 
 .. figure:: images/gen_preseed7.png
 
-Tous les fichiers sont en place pour démarrer l'installation automatique de notre se4-AD
+Tous les fichiers sont en place pour démarrer l'installation automatique de notre ``se4-AD``
 
 .. figure:: images/gen_preseed8.png
 
