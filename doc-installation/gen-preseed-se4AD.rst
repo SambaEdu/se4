@@ -154,7 +154,7 @@ puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule 
 Déroulement de la suite de l'installation
 ------------------------------------------
 
-Quelque soit la méthode employée (``PXE`` / ``CD`` /Clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique, à commencer par le partitionnement. 
+Quelque soit la méthode employée (``PXE`` / ``CD`` / Clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique, à commencer par le partitionnement. 
 
 
 Partitionnement
@@ -162,7 +162,7 @@ Partitionnement
 
 **Attention :** lors de cette étape toutes les données du disque sont effacées sans avertissement.
 
-Les partitions suivantes sont créés. Selon la taille du disque disponible, l'outil de partitionnement va moduler les tailles des partitions selon l'espace disque tout en respectant les règles suivantes :
+Les 3 partitions ci-dessous sont créés. Selon la taille du disque disponible, l'outil de partitionnement va moduler les tailles des partitions selon l'espace disque tout en respectant les règles suivantes :
 
 * Partition Racine ``/`` d'un minimum de 5Go, 10Go de préférence voire 20Go s'il reste de la place
 * Partition ``/var`` , 10Go de préférence et plus s'il reste de la place disponible
@@ -180,10 +180,11 @@ La suite consiste à installer les logiciels complémentaires. Cela prend quelqu
 
 .. figure:: images/se4_preseed_softs.png
 
-Configuration de Grub
-.....................
 
-Grub est installé afin de rendre le système bootable
+Configuration de ``Grub``
+.........................
+
+``Grub`` est installé afin de rendre le système bootable.
 
 .. figure:: images/se4_preseed_grub.png
 
@@ -195,7 +196,10 @@ Vient enfin le message final, signalant que le serveur est prêt à rebooter.
 
 .. figure:: images/se4_preseed_final.png
 
-A cette étape, vous disposez d'une debian stretch installée contenant tous les anciens fichiers de configuration de l'ancien annuaire. Il vous reste à lancer cette machine et vous y connecter en tant que root afin d'en finaliser sa configuration automatique. Pour cela, on se reportera à cette documentation_ détaillant les étapes nécessaires à l'obtention de votre SE4AD pleinement fonctionnel.
+À cette étape, vous disposez d'une ``Debian Stretch`` installée contenant tous les anciens fichiers de configuration de l'ancien annuaire.
+
+Il vous reste à lancer cette machine et vous y connecter en tant que ``root`` afin d'en finaliser sa configuration automatique. Pour cela, on se reportera à la documentation_ détaillant les étapes nécessaires à l'obtention de votre ``SE4-AD`` pleinement fonctionnel.
 
 .. _documentation: install-se4AD.rst
+
 
