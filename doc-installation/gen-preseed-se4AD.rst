@@ -154,7 +154,7 @@ puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule 
 Déroulement de la suite de l'installation
 ------------------------------------------
 
-Quelque soit la méthode employée (``PXE`` / ``CD`` / Clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique, à commencer par le partitionnement. 
+Quelque soit la méthode employée (``PXE`` / ``CD`` / clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique. Vous trouverez, ci-dessous, quelques commentaires sur certaines étapes de cette installation, à commencer par le partitionnement.
 
 
 Partitionnement
