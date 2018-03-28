@@ -73,7 +73,7 @@ Choix du nom de domaine
 
 **Attention :** un point tout particulier est à apporter au domaine ``AD``. En mode Active Directory il correspond au domaine ``DNS`` sur lequel le serveur ``AD`` sera serveur de nom. Par défaut le nom de domaine ``AD`` proposé sera le domaine ``DNS`` actuel du ``Se3``. Vous pouvez utiliser ce choix ou le modifier à votre convenance. Le fait que toutes les machines clientes seront sur cette même zone ``DNS`` distribuée par le serveur ``DHCP`` est également à prendre en compte. Il faut donc bien réfléchir à ce choix si l'on veut obtenir quelque chose de cohérent au final.
 
-Ce nom de domaine devra être composé d'au moins deux parties séparées par un point. Dans notre exemple, il y en a trois.
+Ce nom de domaine devra être composé d'au moins deux parties séparées par un point. Dans notre exemple, il y en a quatre.
  
 * La première partie correspond au domaine ``samba``. Appelé également ``workgroup``, cet élément **ne doit absolument pas dépasser 15 caractères**. À noter également qu'il n'est pas souhaitable de reprendre celui de ``Se3``, à savoir l'habituel "sambaedu3" afin d'éviter tout conflit.
 
