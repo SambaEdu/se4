@@ -15,7 +15,7 @@ L’installation se déroule en trois temps :
 
 * Lancement du script permettant de générer le fichier ``preseed`` à partir des réponses fournies
 * Installation automatique du serveur avec le fichier ``preseed`` depuis un boot ``PXE`` ou un support ``CD`` / clé ``USB``
-* La finalisation de la configuration du serveur sous ``Debian Stretch`` avec réintégration des données ``LDAP`` précédentes et peuplement de l'``AD``
+* La finalisation de la configuration du serveur sous ``Debian Stretch`` avec réintégration des données ``LDAP`` précédentes et peuplement de l'annuaire Active Directory ``AD``
 
 Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers ``LXC``.
  
@@ -41,15 +41,11 @@ Accueil
 
 .. figure:: images/gen_preseed1.png
 
-Après le message de bienvenue, un court résumé des paramètres réseau actuel détectés est affiché. 
-
+Après le message de bienvenue, un court résumé des paramètres réseau actuel détectés est affiché :
 
 .. figure:: images/gen_preseed2.png
 
-
-
-
-Ces valeurs serviront de base pour la configuration réseau du serveur AD. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une.
+Ces valeurs serviront de base pour la configuration réseau du serveur ``AD``. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une.
 
 Paramétrage réseau du futur SE4-AD
 ----------------------------------
