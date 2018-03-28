@@ -105,7 +105,7 @@ Tous les fichiers sont en place pour démarrer l'installation automatique de not
 
 Vous pouvez effectuer l'installation de deux façons : 
 
-* En utilisant le fichier ``preseed`` généré via le serveur ``TFTP` du ``Se3`` en bootant en ``PXE`` et en choisissant l'option adéquate, détaillée plus loin dans ce document.
+* En utilisant le fichier ``preseed`` généré via le serveur ``TFTP`` du ``Se3`` en bootant en ``PXE`` et en choisissant l'option adéquate, détaillée plus loin dans ce document.
 * En utilisant le fichier ``preseed`` généré et son propre support d'installation ``Debian Stretch`` sur ``CD`` ou clé ``USB``.
 
 
