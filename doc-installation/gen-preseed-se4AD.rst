@@ -99,56 +99,55 @@ Génération du fichier ``preseed`` et configuration du serveur ``TFTP``
 
 .. figure:: images/gen_preseed7.png
 
-Tous les fichiers sont en place pour démarrer l'installation automatique de notre ``se4-AD``
+Tous les fichiers sont en place pour démarrer l'installation automatique de notre ``se4-AD``. Un message de confirmation :
 
 .. figure:: images/gen_preseed8.png
 
 Vous pouvez effectuer l'installation de deux façons : 
 
-* En utilisant le TFTP du Se3 en bootant en PXE et en choisissant l'option adéquate, détaillée plus loin dans ce document.
-* En utilisant le preseed généré et son propre support d'installation debian Stretch sur CD ou clé USB.
+* En utilisant le fichier ``preseed`` généré via le serveur ``TFTP` du ``Se3`` en bootant en ``PXE`` et en choisissant l'option adéquate, détaillée plus loin dans ce document.
+* En utilisant le fichier ``preseed`` généré et son propre support d'installation ``Debian Stretch`` sur ``CD`` ou clé ``USB``.
 
 
 
-Installation du serveur en utilisant le preseed 
-===============================================
+Installation du serveur en utilisant le fichier ``preseed``
+===========================================================
 
-Il s'agit maintenant d'utiliser le preseed généré précédemment.
+Il s'agit maintenant d'utiliser le fichier ``preseed`` généré précédemment.
 
 
 Choix du support d'installation
 -------------------------------
 
-Il faut commencer par démarrer l'installation du futur serveur se4AD, soit par un boot PXE, soit sur son support CD ou clé USB. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même preseed.
+Il faut commencer par démarrer l'installation du futur serveur ``Se4-AD``, soit par un boot ``PXE``, soit sur son support ``CD` ou clé ``USB``. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même fichier ``preseed``.
 
 
-Lancer l'installation depuis un cd ou une clé USB
-.................................................
+Lancer l'installation depuis un ``CD`` ou une clé ``USB``
+.........................................................
 
-Si vous optez pour cette solution, Il faudra donner l'url du preseed en passant par le mode avancé ::
+Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``preseed`` en passant par le mode avancé ::
  auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
  
  
  .. figure:: images/se4_preseed_cdboot1.png
  
  
-Une des possibilité est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'ip du se3 et en faisant attention que le clavier est en qwerty au boot.
+Une des possibilités est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'``ip`` du ``Se3`` et en faisant attention que le clavier est en ``qwerty`` au boot.
 
  .. figure:: images/se4_preseed_cdboot2.png
  
  
-Lancer l'installation en utilisant le boot PXE
-..............................................
+Lancer l'installation en utilisant le boot ``PXE``
+..................................................
 
-Si vous optez pour cette solution, il suffit d'effectue un boot PXE et de choisir ``Maintenance`` 
-
+Si vous optez pour cette solution, il suffit d'effectuer un boot ``PXE`` et de choisir l'entrée ``Maintenance`` 
 
 .. figure:: images/se4_preseed_boot1.png
 
-puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture AMD64 est supportée.
-
+puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture ``AMD64`` est supportée.
 
 .. figure:: images/se4_preseed_boot2.png
+
 
 Déroulement de la suite de l'installation
 ------------------------------------------
