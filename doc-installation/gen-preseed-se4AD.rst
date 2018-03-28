@@ -129,7 +129,7 @@ Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``prese
 
 .. Code::
 
-auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
+ auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
 
 .. figure:: images/se4_preseed_cdboot1.png
 
