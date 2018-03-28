@@ -35,7 +35,6 @@ La commande à lancer est donc la suivante :
  /usr/share/se3/sbin/gen_se4preseed.sh
 
 
-
 Accueil
 -------
 
@@ -47,21 +46,23 @@ Après le message de bienvenue, un court résumé des paramètres réseau actuel
 
 Ces valeurs serviront de base pour la configuration réseau du serveur ``AD``. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une.
 
-Paramétrage réseau du futur SE4-AD
-----------------------------------
+
+Paramétrage réseau du futur ``SE4-AD``
+--------------------------------------
 
 Viennent ensuite quelques questions sur la configuration réseau.
 
-Choix d'une IP et d'un nom
-..........................
 
-On commence par saisir l'IP du serveur se4-AD. S'il est dans le même subnet que l'actuel serveur Se3, il suffit de compléter le début de l'IP suggérée. 
+Choix d'une adresse ``IP`` et d'un nom
+......................................
 
-.. Attention :: Il faut bien saisir une adresse indépendante, donc pas la même IP que le Se3.
+On commence par saisir l'``IP`` du serveur ``Se4-AD``. S'il est dans le même subnet que l'actuel serveur ``Se3``, il suffit de compléter le début de l'``IP`` suggérée.
+
+**Attention :** Il faut bien saisir une adresse indépendante, donc pas la même ``IP`` que celle du ``Se3``.
 
 .. figure:: images/gen_preseed3.png
 
-De même on donne un nom au serveur AD. Le choix par défaut semble correct :).  
+De même, on donne un nom au serveur ``AD``. Le choix par défaut semble correct :).
 
 .. figure:: images/gen_preseed4.png
 
@@ -69,7 +70,7 @@ De même on donne un nom au serveur AD. Le choix par défaut semble correct :).
 Choix du nom de domaine
 .......................
 
-.. Attention :: Un point tout particulier est à apporter au domaine AD. En mode active directory il correspond au domaine DNS sur lequel Le serveur AD sera serveur de nom. Par défaut le nom de domaine AD proposé sera le domaine DNS actuel du Se3. Vous pouvez utiliser ce choix ou le modifier à votre convenance. Le fait que toutes les machines clientes seront sur cette même zone DNS distribuée par le DHCP est également à prendre en compte. Il faut donc bien réfléchir à ce choix si l'on veut obtenir quelque chose de cohérent au final.
+**Attention :** un point tout particulier est à apporter au domaine ``AD``. En mode Active Directory il correspond au domaine ``DNS`` sur lequel le serveur ``AD`` sera serveur de nom. Par défaut le nom de domaine ``AD`` proposé sera le domaine ``DNS`` actuel du ``Se3``. Vous pouvez utiliser ce choix ou le modifier à votre convenance. Le fait que toutes les machines clientes seront sur cette même zone ``DNS`` distribuée par le serveur ``DHCP`` est également à prendre en compte. Il faut donc bien réfléchir à ce choix si l'on veut obtenir quelque chose de cohérent au final.
 
 Ce nom de domaine devra être composé d'au moins deux parties séparées par un point. Dans notre exemple, il y en a trois.
  
