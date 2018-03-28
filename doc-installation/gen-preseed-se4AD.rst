@@ -131,10 +131,9 @@ Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``prese
 
 auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
 
+.. figure:: images/se4_preseed_cdboot1.png
 
- .. figure:: images/se4_preseed_cdboot1.png
- 
- 
+
 Une des possibilités est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'``ip`` du ``Se3`` et en faisant attention que le clavier est configuré en ``qwerty`` au boot alors que vous utilisez sans doute un clavier ``azerty``.
 
 .. figure:: images/se4_preseed_cdboot2.png
