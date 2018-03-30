@@ -1,0 +1,3 @@
+# fichiers du paquet sambadu-boot-server
+usr/share/sambaedu/sbin/makedhcpconf.sh
+etc/apache2/sites-available/diconf.conf
