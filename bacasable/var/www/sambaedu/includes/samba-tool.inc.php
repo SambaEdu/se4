@@ -2,7 +2,7 @@
    /**
    * Librairie de fonctions utilisees dans l'interface d'administration
 
-   * @Version $Id: samba-tool.inc.php  2018-16-03  jlcf $
+   * @Version $Id: samba-tool.inc.php  2018-29-03  jlcf $
 
    * @Projet  SambaEdu
 
@@ -232,10 +232,10 @@ function oudel ($ou, $dn_parent) {
   removemembers  - Remove members from an AD group.
  */
 
-function grouplist () {
+function grouplist ($filter) {
     
     /*
-     * Return a array of cn
+     * Return a array of cn répondant au critere filter
      */
 }
 
@@ -303,7 +303,7 @@ function groupadd ($cn, $inou, $description) {
  
         if ( count($RES) == 1 ) {
             $group = explode(" ", $RES[0]); 
-            if (  $group[2] = $cn ) {
+            if (  $group[2] == $cn ) {
                 return true;
             } else { 
                 return false;
@@ -337,7 +337,7 @@ function groupdel ($cn) {
  
     if ( count($RES) == 1 ) {
     	$group = explode(" ", $RES[0]); 
-        if (  $group[2] = $cn ) {
+        if (  $group[2] == $cn ) {
             return true;
         } else { 
             return false;
@@ -350,6 +350,30 @@ function groupdel ($cn) {
 
 function groupaddmember ( $cn, $ingroup) {
     
+    /*
+     * Return true if cn is add in ingroup false in other cases
+     */
+    
+    // le cn et le groupe exist ?
+    if ( userexist ($cn) && groupexist ($ingroup) ) {
+        // Ajout du cn in group
+        $command="group addmembers $ingroup $cn";
+        $RES= sambatool ( $command );
+        
+        if ( count($RES) == 1 ) {
+            $ERROR = explode(":", $RES[0]); 
+            if (  $ERROR[0] == "ERROR(exception)" ) {
+                return false;
+            } else { 
+                return true;
+            }
+        } else { 
+            return false;
+        } 
+        
+    } else {
+        return false;
+    }
 }
 
 function groupaddlistmembers ( $cnlist, $ingroup) {
@@ -357,13 +381,32 @@ function groupaddlistmembers ( $cnlist, $ingroup) {
 }
 
 function groupdelmember ($cn, $ingroup) {
+    
     /*
-     * group removemembers <groupname> <listofmembers> [options]
+     * Return true if cn is remove of ingroup false in other cases
      */
+    
+    // le cn et le groupe exist ?
+    if ( userexist ($cn) && groupexist ($ingroup) ) {
+        // Remove du cn in group
+        $command="group removemembers $ingroup $cn";
+        $RES= sambatool ( $command );
+        
+        if ( count($RES) == 1 ) {
+            $ERROR = explode(":", $RES[0]); 
+            if (  $ERROR[0] == "ERROR(exception)" ) {
+                return false;
+            } else { 
+                return true;
+            }
+        } else { 
+            return false;
+        } 
+        
+    } else {
+        return false;
+    }
 }
 
-function groupdelallmembers ($ingroup) {
-    
-}
 
 ?>
