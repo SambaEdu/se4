@@ -1,4 +1,4 @@
-#!/bin/bassh
+#!/bin/bash
 # postinst script for sambaedu-ad-dc
 #
 # see: dh_installdeb(1)
