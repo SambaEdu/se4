@@ -33,14 +33,20 @@ echo "###       BOOT OPTIONS          ##########################################
 echo "next-server  $config_tftp_server;">>$conf
 # booter ipxe.lkrn, puis la conf ipxe :
 # script ipxe statique avent install de sambaedu-ipxe, puis page php
-echo "if exists user-class and option user-class = \"sambaedu\" \{">>$conf
-#echo "    filename \"http://$config_tftp_server:909/ipxe/boot.php?mac=\$\{net0/mac\}\";">>$conf  
-echo "    filename \"$config_ipxe_boot_command\";">>$conf  
+echo "if option client-architecture = encode-int ( 16, 16 ) \{">>$conf
+# uefi 
+echo "     option vendor-class-identifier \"HTTPClient\";">>$conf
+echo "     filename \"$config_ipxe_url/ipxe.efi\";">>$conf
 echo "\} else \{">>$conf
-echo "    filename \"$config_unatt_filename\";">>$conf
+# bios
+echo "   if exists user-class and option user-class = \"sambaedu\" \{">>$conf
+#echo "    filename \"http://$config_tftp_server:909/ipxe/boot.php?mac=\$\{net0/mac\}\";">>$conf  
+echo "        filename \"$config_ipxe_url/$config_ipxe_script\";">>$conf  
+echo "   \} else \{">>$conf
+echo "        filename \"$config_ipxe_url/ipxe.lkrn\";">>$conf
+echo "   \}">>$conf
 echo "\}">>$conf
-
-# fichier supplémentaire
+# fichier option supplémentaire
 if [ -n "$config_extra_option" ]; then
 	echo "include \"$config_extra_option\";">>$conf
 fi

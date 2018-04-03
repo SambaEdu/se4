@@ -1,0 +1,36 @@
+#!ipxe
+console --x 1024 --y 768 --picture ipxe-se3.png
+:menu
+menu Preboot eXecution Environment
+set menu-default exit
+set menu-timeout 1000
+item --gap -- ---------------------------------------------------Menu----------------------------------------------------
+item --key 1 Se4AD  (1) Installation du serveur Active Directory Sambaedu
+item --key 2 Se4FS  (2) Installation du serveur de fichiers Sambaedu
+item --key 3 Debian  (3) Installation Debian de base
+item --key 4 shell  (4) Shell iPXE
+item --key 0 exit  (0) Quitter iPXE et booter le disque dur
+choose --default ${menu-default} --timeout ${menu-timeout} selected && goto ${selected} || exit 0
+
+
+:Se4AD
+kernel http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/linux
+initrd http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/initrd.gz
+initrd ###_URL_DICONF_###se4ad.preseed preseed.cfg
+boot
+:Se4FS
+kernel http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/linux
+initrd http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/initrd.gz
+initrd ###_URL_DICONF_###se4fs.preseed preseed.cfg
+boot
+:Debian
+kernel http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/linux
+initrd http://ftp.debian.org/debian/dists/stretch/main/installer-amd64/current/images/netboot/debian-installer/amd64/initrd.gz
+boot
+:shell
+echo iPXE shell...
+shell
+:exit
+echo Booting harddisk ...
+sanboot --no-describe --drive 0x80
+

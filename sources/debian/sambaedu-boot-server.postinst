@@ -20,9 +20,14 @@ set -e
 
 case "$1" in
     configure)
-        /usr/share/sambaedu/sbin/makedhcpdconf.sh        
+        . /usr/share/sambaedu/includes/config.inc.sh
+        /usr/share/sambaedu/sbin/makedhcpdconf.sh
+        write_param /etc/apache2/sites.available/diconf.conf config_se4ad_ip
+        write_param /etc/apache2/sites.available/diconf.conf config_se4fs_ip      
         a2ensite diconf.conf
         apachectl restart
+        write_param /boot/boot.pxe config_
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
