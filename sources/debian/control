@@ -1,4 +1,4 @@
-Source: sambaedu-master
+Source: sambaedu
 Section: net
 Priority: optional
 Maintainer: Denis Bonnenfant <denis.bonnenfant@sambaedu.org>
@@ -11,44 +11,18 @@ Homepage: https://sambaedu.org
 Package: sambaedu-config
 Architecture: all
 Depends:  ${misc:Depends}
-Description: infrastructure de configuration Sambaedu
-Configuration de l'infrastructure serveurs sambaedu. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
+Description: infrastructure de configuration Sambaedu.
+ Configuration de l'infrastructure serveurs sambaedu. Le kit samba-edu est un  ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
 
 Package: sambaedu-boot-server
 Architecture: all
 Depends:  ${misc:Depends}, tftp, ipxe, isc-dhcp-server, apache2, sambaedu-config
-Description: configuration minimale dhcp et tftp permettant la configuration sambaedu et le boot ipxe
-Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
+Description: configuration minimale dhcp et tftp permettant la configuration sambaedu et le boot ipxe.
+ Assistance a l'installation d'un serveur de fichiers Samba. Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
 
 Package: sambaedu-ad-dc
 Architecture: all
 Depends:  ${misc:Depends}, sambaedu-boot-server
-Description: configuration d'une machine virtuelle ou conteneur pour le DC sambaedu
-Configuration d'un serveur controleur de domaine AD samba. Ce paquet contient des scripts de configuration lxc ou preseed pour creer une machine distincte. Ce paquet sera en erreur tant que le controleur de domaine ne sera pas actif.  Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-ad-client
-Architecture: all
-Depends:  ${misc:Depends}, sambaedu-config, sambaedu-ad-dc, samba, winbind, libnss-winbind, samba-dsdb-modules, ntp, krb5-user
-Description: configuration membre du domaine Sambaedu
-Configuration d'un serveur ou d'un poste de travail en tant que membre d'un domaine AD samba.  Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-fileserver
-Architecture: all
-Depends:  ${misc:Depends}, sambaedu-ad-client, samba-vfs-modules
-Suggests: zfsutils-linux
-Description: Serveur de fichiers du domaine Sambaedu
-Configuration d'un serveur de fichiers du domaine AD samba.  Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-web
-Architecture: all
-Depends:  ${misc:Depends}, sambaedu-ad-client, php7.0-fpm, php7.0-mysql, default-mysql-server
-Description: Interface web du domaine Sambaedu
-Configuration de l'interface web d'administration Sambaedu.  Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
-Package: sambaedu-web-dhcp
-Architecture: all
-Depends:  ${misc:Depends}, sambaedu-web
-Description: Module d'administration du serveur dhcp sambaedu
-Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
-
+Description: configuration d'une machine virtuelle ou conteneur pour le DC sambaedu.
+ Configuration d'un serveur controleur de domaine AD samba. Ce paquet contient des scripts de configuration lxc ou preseed pour creer une machine distincte. Ce paquet sera en erreur tant que le controleur de domaine ne sera pas actif.  Le kit samba-edu est un ensemble de scripts et de fichiers de configuration permettant de fournir aux etablissements scolaires une configuration "cle en main" d'un serveur Samba Active Directory DC.
 

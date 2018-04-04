@@ -7,6 +7,8 @@
 
 . /usr/share/sambaedu/includes/config.inc.sh
 
+sed -i "s/INTERFACESv4=.*$/INTERFACESv4=\"$config_dhcp_iface\"/" /etc/default/isc-dhcp-server
+
 conf=/etc/dhcp/dhcpd.conf
 
 echo "################################################################################">$conf
@@ -16,39 +18,48 @@ echo "allow booting;">>$conf
 echo "allow bootp;">>$conf
 echo "authoritative;">>$conf
 
-echo "option domain-name \"$config_domain_name;\"">>$conf
-echo "option domain-search \"$config_domain_name;\"">>$conf
-echo "option domain-name-servers \"$config_se4ad_ip;\"">>$conf
-
-echo "max-lease-time $config_max_bail;">>$conf
-echo "default-lease-time $config_normal_bail;">>$conf
+echo "option domain-name \"$config_dhcp_domain_name\";">>$conf
+echo "max-lease-time $config_dhcp_max_lease;">>$conf
+echo "default-lease-time $config_dhcp_default_lease;">>$conf
 
 echo "option wpad-url code 252 = string;">>$conf
-echo "option wpad-url \"$config_wpad\";">>$conf
+echo "option client-arch code 93 = unsigned integer 16;">>$conf
 
-echo "option netbios-name-servers \"$config_se4ad_ip\";">>$conf
-
+if  [ -n "$config_wpad" ]; then
+    echo "option wpad-url \"$config_wpad\";">>$conf
+fi
+if [ -n "$config_se4ad_ip" ]; then
+    echo "option domain-name-servers \"$config_se4ad_ip\";">>$conf
+    echo "option netbios-name-servers \"$config_se4ad_ip\";">>$conf
+fi
 # boot ipxe
 echo "###       BOOT OPTIONS          ##############################################">>$conf
-echo "next-server  $config_tftp_server;">>$conf
+echo "next-server  $config_dhcp_tftp_server;">>$conf
 # booter ipxe.lkrn, puis la conf ipxe :
 # script ipxe statique avent install de sambaedu-ipxe, puis page php
-echo "if option client-architecture = encode-int ( 16, 16 ) \{">>$conf
-# uefi 
-echo "     option vendor-class-identifier \"HTTPClient\";">>$conf
-echo "     filename \"$config_ipxe_url/ipxe.efi\";">>$conf
-echo "\} else \{">>$conf
-# bios
-echo "   if exists user-class and option user-class = \"sambaedu\" \{">>$conf
-#echo "    filename \"http://$config_tftp_server:909/ipxe/boot.php?mac=\$\{net0/mac\}\";">>$conf  
-echo "        filename \"$config_ipxe_url/$config_ipxe_script\";">>$conf  
-echo "   \} else \{">>$conf
-echo "        filename \"$config_ipxe_url/ipxe.lkrn\";">>$conf
-echo "   \}">>$conf
-echo "\}">>$conf
+echo "if exists client-arch {
+     if option client-arch = 00:00 {
+         if exists user-class and option user-class = \"sambaedu\" {
+             filename \"${config_ipxe_url}${config_ipxe_script}\"; 
+         } else {
+             filename \"${config_ipxe_url}ipxe.lkrn\";
+         }
+     } elsif option client-arch = 00:06 {
+       filename \"bin-i386/ipxe.efi\";
+     } elsif option client-arch = 00:07 {
+       option vendor-class-identifier \"HTTPClient\";
+       filename \"${config_ipxe_url}ipxe.efi\";
+     } elsif option client-arch = 00:09 {
+       filename \"bin-x86_64-efi/ipxe.efi\";
+     } elsif option client-arch = 00:0a {
+       filename \"bin-arm32-efi/ipxe.efi\";
+     } elsif option client-arch = 00:0b {
+       filename \"bin-arm64-efi/ipxe.efi\";
+     }
+}">>$conf
 # fichier option supplémentaire
 if [ -n "$config_extra_option" ]; then
-	echo "include \"$config_extra_option\";">>$conf
+	echo "include \"$config_dhcp_extra_option\";">>$conf
 fi
 
 # reseaux
@@ -67,13 +78,13 @@ if [ -n "$config_vlan" ]; then
         if [ -n "${!RESEAU}" ]; then 
             echo "">>$conf
 		    echo "#####  SUBNETS DECLARATION #########">>$conf
-		    echo "subnet ${!RESEAU} netmask ${!MASQUE} \{">>$conf
+		    echo "subnet ${!RESEAU} netmask ${!MASQUE} {">>$conf
 		    echo "    range ${!BEGIN_RANGE} ${!END_RANGE};">>$conf
 		    echo "    option routers ${!GATEWAY};">>$conf
 		    if [ -n "${!EXTRA_OPTION}" ]; then
 		        echo "    include \"${!EXTRA_OPTION}\";">>$conf
 		    fi
-		    echo "\}">>$conf
+		    echo "}">>$conf
         fi
     done
 else
@@ -86,13 +97,13 @@ else
 
     echo "">>$conf
     echo "#####  SUBNETS DECLARATION #########">>$conf
-	echo "subnet ${RESEAU} netmask ${MASQUE} \{">>$conf
-	echo "    range ${BEGIN_RANGE} ${END_RANGE};">>$conf
-	echo "    option routers ${GATEWAY};">>$conf
-	if [ -n "${EXTRA_OPTION}" ]; then
-	   echo "    include \"${EXTRA_OPTION}\";">>$conf
-	fi
-	echo "\}">>$conf
+    echo "subnet $RESEAU netmask $MASQUE {">>$conf
+    echo "    range $BEGIN_RANGE $END_RANGE;">>$conf
+    echo "    option routers $GATEWAY;">>$conf
+    if [ -n "$EXTRA_OPTION" ]; then
+        echo "    include \"$EXTRA_OPTION\";">>$conf
+    fi
+    echo "}">>$conf
 fi
 
 # reservations
@@ -103,7 +114,7 @@ if [ -e /etc/dhcp/reservations.conf ] ; then
     echo "include \"/etc/dhcp/reservations.conf\";" >> $conf
 fi
 
-systemctl reload isc-dhcp-server.service
+systemctl restart isc-dhcp-server.service
 
 
 

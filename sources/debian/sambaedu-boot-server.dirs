@@ -1,5 +1,4 @@
 # dossiers du paquet sambadu-config
 etc/sambaedu/sambaedu.conf.d
-#usr/share/sambaedu/includes
 #usr/share/sambaedu/sbin
 

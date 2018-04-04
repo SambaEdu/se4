@@ -1,0 +1,15 @@
+# configuration sambaedu
+dhcp_on_boot="1"
+dhcp_iface=
+dhcp_begin_range=""
+dhcp_end_range=""
+dhcp_dns_server_prim=""
+dhcp_gateway=""
+dhcp_wins=""
+dhcp_ntp=""
+dhcp_max_lease="7200"
+dhcp_default_lease="600"
+dhcp_domain_name=""
+dhcp_tftp_server=""
+ipxe_script="boot.ipxe"
+
