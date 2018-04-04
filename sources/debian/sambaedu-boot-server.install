@@ -1,4 +1,5 @@
 # fichiers du paquet sambadu-boot-server
 usr/share/sambaedu/sbin/make_dhcpd_conf.sh
 usr/share/doc/sambaedu-boot-server/*.conf.example
+var/www/boot/boot.ipxe
 
