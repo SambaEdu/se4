@@ -190,59 +190,36 @@ function ldap_get_right($type,$login)
     $nom="cn=" . $login . "," . $dn["people"];
 
     $ret="N";
-
-    $ldap = ldap_connect ("ldaps://".$ldap_server, $ldap_port);
+ 
+   // Connect and sasl bind
+    $ldap = ldap_connect ("ldap://".$ldap_server, $ldap_port);
     if ( !$ldap ) {
-        echo "Error connecting to LDAP server";
+        echo "Error connecting to SambaEdu AD";
     } else {
-        if ( $adminDn != "")
-            $r = ldap_bind ( $ldap, $adminDn, $adminPw );     // bind as administrator
-        else
-            $r = ldap_bind ( $ldap ); // bind as anonymous
-
-        if (!$r)
-            echo "Invalid Admin's login for LDAP Server";
-        else {
+        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+        $r = ldap_sasl_bind($ldap, 'null', 'null', 'GSSAPI');
+        if ( ! $r ) {      
+            echo "Bind error to SambaEdu AD";
+        } else { 
+ 
             // Recherche du nom exact
             $search_filter = "(member=$nom)";
-            //$ret=ldap_get_right_search ($type,$search_filter,$ldap,$base_search);
             $ret=ldap_get_right_search ($type,$search_filter,$ldap);
-/*
-            if ($ret=="N") {
-            // Recherche sur les Posixgroups d'appartenance
-                $result1 = @ldap_list ( $ldap, $dn["groups"], "memberUid=$login", array ("cn") );
-                if ($result1) {
-                $info = @ldap_get_entries ( $ldap, $result1 );
-                   if ( $info["count"]) {
-                    $loop=0;
-                    while (($loop < $info["count"]) && ($ret=="N")){
-                        $search_filter = "(member=cn=".$info[$loop]["cn"][0].",".$dn["groups"].")";
-                        //$ret=ldap_get_right_search ($type,$search_filter,$ldap,$base_search,$search_attributes);
-                        $ret=ldap_get_right_search ($type,$search_filter,$ldap);
-                        $loop++;
-                    }
-                }
-                @ldap_free_result ( $result1 );
-                }
-            }
-*/
-            #if ($ret=="N") {
             // Recherche sur les GroupsOfNames d'appartenance
                 $result1 = @ldap_list ( $ldap, $dn["groups"], "member=cn=$login,".$dn["people"], array ("cn") );
                 if ($result1) {
                 	$info = @ldap_get_entries ( $ldap, $result1 );
               		if ( $info["count"]) {
-                    	$loop=0;
-                    	while (($loop < $info["count"]) && ($ret=="N")){
+                            $loop=0;
+                            while (($loop < $info["count"]) && ($ret=="N")){
                         		$search_filter = "(member=cn=".$info[$loop]["cn"][0].",".$dn["groups"].")";
-                        		//$ret=ldap_get_right_search ($type,$search_filter,$ldap,$base_search,$search_attributes);
                         		$ret=ldap_get_right_search ($type,$search_filter,$ldap);
                         		$loop++;
-                    	}
+                            }
                 	}
                 	@ldap_free_result ( $result1 );
                 }
-            #}
         }
     	ldap_close ($ldap);
     }
