@@ -20,6 +20,23 @@
 
 //=================================================
 
+function bind_ad_gssapi() {
+   /*
+    * établit une connexion avec l'AD en GSSAPI
+    */
+
+global $ldap_server, $ldap_port,$dn;
+
+$d_s = ldap_connect("ldap://".$ldap_server,$ldap_port);
+if ($d_s) {
+   ldap_set_option($d_s, LDAP_OPT_PROTOCOL_VERSION, 3);
+   ldap_set_option($d_s, LDAP_OPT_REFERRALS, 0);
+   $r_=ldap_sasl_bind($d_s, '', '', 'GSSAPI');
+}
+return array ($d_s,$r_,$dn);
+}
+
+
 /**
 * Verification du couple login / mot de passe d'un utilisateur
 
@@ -144,6 +161,8 @@ function close_session()
 * @Return
 */
 
+
+
 function ldap_get_right_search ($type,$search_filter,$ldap)
 {
     global $dn,$login;
@@ -190,7 +209,7 @@ function ldap_get_right($type,$login)
     $nom="cn=" . $login . "," . $dn["people"];
 
     $ret="N";
- 
+
    // Connect and sasl bind
     $ldap = ldap_connect ("ldap://".$ldap_server, $ldap_port);
     if ( !$ldap ) {
@@ -199,10 +218,10 @@ function ldap_get_right($type,$login)
         ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
         $r = ldap_sasl_bind($ldap, 'null', 'null', 'GSSAPI');
-        if ( ! $r ) {      
+        if ( ! $r ) {
             echo "Bind error to SambaEdu AD";
-        } else { 
- 
+        } else {
+
             // Recherche du nom exact
             $search_filter = "(member=$nom)";
             $ret=ldap_get_right_search ($type,$search_filter,$ldap);

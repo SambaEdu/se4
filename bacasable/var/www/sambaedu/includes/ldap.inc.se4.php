@@ -23,10 +23,16 @@ require_once ("lang.inc.php");
 bindtextdomain('sambaedu-core', "/var/www/sambaedu/locale");
 textdomain('sambaedu-core');
 
+//pour utiliser bind_ad_gssapi
+include_once "functions.inc.php";
+
 // Pour activer/desactiver la modification du givenName (Prenom) lors de la modification dans annu/mod_user_entry.php
 $corriger_givenname_si_diff = "n";
 
 //fonctions validées se4
+
+
+
 
 function search_machines($filter, $branch) {
 
@@ -38,9 +44,6 @@ function search_machines($filter, $branch) {
 
      * @Return 	Retourne un tableau avec les machines
      */
-   global $ldap_server, $ldap_port, $adminDn, $adminPw, $dn;
-
-    global $error;
 
     // Initialisation
     $computers=array();
@@ -59,9 +62,7 @@ function search_machines($filter, $branch) {
             "cn"
         );
 
-    $ds = @ldap_connect ("ldaps://".$ldap_server, $ldap_port);
-    if ($ds) {
-        $r = @ldap_bind ( $ds, $adminDn, $adminPw ); // bind as administrator
+       list($ds,$r,$dn)=bind_ad_gssapi(); // @ldap_bind ( $ds, $adminDn, $adminPw ); // bind as administrator
         if ($r) {
             $result = @ldap_list($ds, $dn[$branch], $filter, $ldap_computer_attr);
             @ldap_sort($ds, $result, "cn");
@@ -71,7 +72,7 @@ function search_machines($filter, $branch) {
                     for ($loop = 0; $loop < $info["count"]; $loop++) {
                         $computers[$loop]["cn"] = $info[$loop]["cn"][0];
                         if ("$branch" == "computers") {
-                            $computers[$loop]["displayname"] = $info[$loop]["displayname"][0];
+                            $computers[$loop]["displayname"] = (isset($info[$loop]["displayname"][0])?$info[$loop]["displayname"][0]:"");
                             if(isset($info[$loop]["dnshostname"][0])) {$computers[$loop]["dnshostname"] = $info[$loop]["dnshostname"][0];}
                             if(isset($info[$loop]["location"][0])) {$computers[$loop]["location"] = $info[$loop]["location"][0];}
                             if(isset($info[$loop]["description"][0])) {$computers[$loop]["description"] = utf8_decode($info[$loop]["description"][0]);}
@@ -82,10 +83,7 @@ function search_machines($filter, $branch) {
                 @ldap_free_result($result);
             }
         }
-
-        @ldap_close($ds);
-    }
-
+       @ldap_close($ds);
     return $computers;
 }
 
