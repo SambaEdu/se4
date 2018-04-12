@@ -553,8 +553,8 @@ function is_member_group($cn, $ingroup, $avec_array_groups_members=false) {
     global $array_groups_members;
 
     if($avec_array_groups_members) {
-        if((isset($avec_array_groups_members[$ingroup])) {
-            if(in_array($cn, $avec_array_groups_members[$ingroup])) {
+        if(isset($array_groups_members[$ingroup])) {
+            if(in_array($cn, $array_groups_members[$ingroup])) {
                 return true;
             }
             else {
