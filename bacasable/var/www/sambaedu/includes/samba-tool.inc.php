@@ -53,7 +53,7 @@ function sambatool ($command) {
     global $debug;
 
     if(isset($config['crobLdapTotallyDegraded'])) {
-        if($debug=='y') {echo("/usr/bin/samba-tool $command -U Administrator --password=".$config['adminPw']." -H ldap://$ldap_server"."\n");}
+        if($debug=='y') {echo("/usr/bin/samba-tool $command -U Administrator --password=XXXXXXXXXXXX -H ldap://$ldap_server"."\n");}
         exec ("/usr/bin/samba-tool $command -U Administrator --password=".$config['adminPw']." -H ldap://$ldap_server", $RET);
     }
     else {
@@ -360,6 +360,7 @@ function groupadd ($cn, $inou, $description) {
 
     global $dn;
     global $debug;
+    global $error;
 
     /* 
      * Principe :
@@ -376,13 +377,20 @@ function groupadd ($cn, $inou, $description) {
     /*
      * Return true if group is create false in other cases
      */
-    if ( !empty($cn) && !empty($inou) && !empty($description)) {
-        
-        // creation du ou si il n'existe pas 
-        if ( !ouexist($inou,$dn["groups"]) ) {
-            ouadd ($inou, $dn["groups"]);
-        }    
-        $command="group add ". escapeshellarg($cn) . " --groupou=ou=" . escapeshellarg($inou). ",ou=groups --description=".escapeshellarg($description);
+    //if ( !empty($cn) && !empty($inou) && !empty($description)) {
+    if ( !empty($cn) && !empty($description)) {
+
+        if(empty($inou)) {
+            $command="group add ". escapeshellarg($cn) . " --groupou=ou=groups --description=".escapeshellarg($description);
+        }
+        else {
+            // creation du ou si il n'existe pas 
+            if ( !ouexist($inou,$dn["groups"]) ) {
+                ouadd ($inou, $dn["groups"]);
+            }
+
+            $command="group add ". escapeshellarg($cn) . " --groupou=ou=" . escapeshellarg($inou). ",ou=groups --description=".escapeshellarg($description);
+        }
         $RES= sambatool ( $command );
  
         if ( count($RES) == 1 ) {
@@ -390,13 +398,30 @@ function groupadd ($cn, $inou, $description) {
             if (  $group[2] == $cn ) {
                 return true;
             } else { 
+                $error="La création du groupe a retourné ".$group[2]." au lieu de ".$cn."\n";
                 return false;
             }
         } else { 
+            if ( count($RES) == 0 ) {
+                $error="La création du groupe n'a rien retourné.\n";
+            }
+            else {
+                $error="La création du groupe a retourné ".count($RES)." réponses (???).\n";
+            }
             return false;
         }
         
     } else {
+        $error='';
+        if(empty($cn)) {
+           $error.="Le CN du groupe ne peut pas être vide.\n";
+        }
+        //if(empty($inou)) {
+        //   $error.="L'OU du groupe ne peut pas être vide.\n";
+        //}
+        if(empty($description)) {
+           $error.="La description du groupe ne peut pas être vide.\n";
+        }
         return false;
     }
 }
@@ -451,14 +476,12 @@ function groupaddmember ( $cn, $ingroup) {
 
     if($debug=='y') {
         echo "groupaddmember ( $cn, $ingroup)\n";
-        echo "cn=$cn\n";
-        echo "ingroup=$ingroup\n";
     }
 
     if ( userexist ($cn) && groupexist ($ingroup) ) {
         // Ajout du cn in group
         $command="group addmembers ". escapeshellarg($ingroup) ." ". escapeshellarg($cn);
-        if($debug=='y') {echo "command : $command<br />\n";}
+        //if($debug=='y') {echo "command : $command<br />\n";}
         $RES= sambatool ( $command );
         
         if ( count($RES) == 1 ) {
@@ -523,14 +546,37 @@ function groupdelmember ($cn, $ingroup) {
     }
 }
 
-function is_member_group($cn, $ingroup) {
+function is_member_group($cn, $ingroup, $avec_array_groups_members=false) {
     /*
     Return true if user $cn is member of group $ingroup
     */
-    $command = "group listmembers ".$ingroup;
-    $RES = sambatool ($command); 
-    $key = array_search($cn, $RES);
-    if ( !empty($key) ) return true; else return false;
+    global $array_groups_members;
+
+    if($avec_array_groups_members) {
+        if((isset($avec_array_groups_members[$ingroup])) {
+            if(in_array($cn, $avec_array_groups_members[$ingroup])) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            $command = "group listmembers ".$ingroup;
+            $RES = sambatool ($command); 
+            $array_groups_members[$ingroup]=$RES;
+            $key = array_search($cn, $RES);
+            //if ( !empty($key) ) return true; else return false;
+            if("$key"!="") return true; else return false;
+        }
+    }
+    else {
+        $command = "group listmembers ".$ingroup;
+        $RES = sambatool ($command); 
+        $key = array_search($cn, $RES);
+        //if ( !empty($key) ) return true; else return false;
+        if("$key"!="") return true; else return false;
+    }
 }
 
 function get_array_group_members($ingroup) {
