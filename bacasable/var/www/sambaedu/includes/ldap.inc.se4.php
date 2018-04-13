@@ -55,17 +55,17 @@ function search_machines($filter, $branch) {
             "displayname", // Nom netbios avec $
             "dnshostname", // FDQN
             "location", // Emplacement
-            "description"        // Description de la machine
-        );
+            "description",        // Description de la machine
+            "iphostnumber");
     else
         $ldap_computer_attr = array(
             "cn"
         );
 
-       list($ds,$r,$dn)=bind_ad_gssapi(); // @ldap_bind ( $ds, $adminDn, $adminPw ); // bind as administrator
+       list($ds,$r,$dn)=bind_ad_gssapi();
         if ($r) {
-            $result = @ldap_list($ds, $dn[$branch], $filter, $ldap_computer_attr);
-            @ldap_sort($ds, $result, "cn");
+            $result = ldap_list($ds, $dn[$branch], $filter, $ldap_computer_attr);
+            ldap_sort($ds, $result, "cn");
             if ($result) {
                 $info = ldap_get_entries($ds, $result);
                 if ($info["count"]) {
@@ -76,14 +76,14 @@ function search_machines($filter, $branch) {
                             if(isset($info[$loop]["dnshostname"][0])) {$computers[$loop]["dnshostname"] = $info[$loop]["dnshostname"][0];}
                             if(isset($info[$loop]["location"][0])) {$computers[$loop]["location"] = $info[$loop]["location"][0];}
                             if(isset($info[$loop]["description"][0])) {$computers[$loop]["description"] = utf8_decode($info[$loop]["description"][0]);}
+                            if(isset($info[$loop]["iphostnumber"][0])) {$computers[$loop]["ipHostNumber"] = utf8_decode($info[$loop]["iphostnumber"][0]);}
                         }
                     }
                 }
-
                 @ldap_free_result($result);
             }
         }
-       @ldap_close($ds);
+        @ldap_close($ds);
     return $computers;
 }
 

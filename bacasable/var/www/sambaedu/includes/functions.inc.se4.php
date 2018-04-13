@@ -25,15 +25,15 @@ function bind_ad_gssapi() {
     * établit une connexion avec l'AD en GSSAPI
     */
 
-global $ldap_server, $ldap_port,$dn;
+    global $ldap_server, $ldap_port,$dn;
 
-$d_s = ldap_connect("ldap://".$ldap_server,$ldap_port);
-if ($d_s) {
-   ldap_set_option($d_s, LDAP_OPT_PROTOCOL_VERSION, 3);
-   ldap_set_option($d_s, LDAP_OPT_REFERRALS, 0);
-   $r_=ldap_sasl_bind($d_s, '', '', 'GSSAPI');
-}
-return array ($d_s,$r_,$dn);
+    $d_s = ldap_connect("ldap://".$ldap_server,$ldap_port);
+    if ($d_s) {
+        ldap_set_option($d_s, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($d_s, LDAP_OPT_REFERRALS, 0);
+        $r_=ldap_sasl_bind($d_s, '', '', 'GSSAPI');
+    }
+    return array ($d_s,$r_,$dn);
 }
 
 
