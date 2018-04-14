@@ -188,7 +188,7 @@ aucun changement
 Le Nom Prénom,le sexe, la date de naissance étaient stockés dans "geCos". On prend un chanp qui ne sert à rien  "physicaldeliveryofficename"
 
 # Client linux
+tout est ici : https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member
 
-Travail en cours... Prévoir la récupération du keytab pour enregistrement unique.
-
+Attention généralement les autres sites disent plein de conneries... En particulier il n'est pas nécessaire d'activer les extensions unix rfc2732, qui ne font que compliquer enormément la configuration. 
 
