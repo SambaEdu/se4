@@ -9,7 +9,7 @@ Samba4 permet plusieurs modes d'accès à l'annuaire AD :
 ## élévation des privilèges
 On crée un utilisateur www-se3, administrateur du domaine avec un password aléatoire. Ce compte permettra d'effectuer toutes les opérations ldap, samba-tool et rpc directement avec les droits admin, sans avoir besoin de sudo
 
-on exporte une clé avec la commande : 
+on exporte une clé avec la commande : **attention operation uniqueemnt possible sur le AD-DC**
 ```
 samba-tool user create www-se3 --description="Utilisateur admin de l'interface web" --random-password
 samba-tool user setexpiry www-se3 --noexpiry
