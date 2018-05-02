@@ -1,6 +1,6 @@
-=======================================================================================
-Génération d'un fichier ``preseed`` et installation automatique d'un serveur ``SE4-AD``
-=======================================================================================
+=================================================================================================
+Génération des fichiers ``preseed`` et installation automatique d'un serveur ``SE4-AD`` et SE4-FS
+=================================================================================================
 
 
 .. sectnum::
@@ -10,22 +10,23 @@ Génération d'un fichier ``preseed`` et installation automatique d'un serveur `
 Introduction
 ============
 
-Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur ``SE4 Active Directory`` en utilisant un fichier ``preseed`` généré au préalable sur le serveur ``Se3`` contenant les données d'origine.
+Ce document a pour but de décrire précisément la procédure d'installation automatique d'un serveur ``SE4 Active Directory`` ou ``SE4 File Server`` en utilisant un fichier ``preseed`` généré au préalable sur le serveur ``Se3`` contenant les données d'origine.
 
-L’installation se déroule en trois temps :
+L’installation complète des deux serveurs se déroule selon l'ordre suivant :
 
-* Lancement du script permettant de générer le fichier ``preseed`` à partir des réponses fournies
-* Installation automatique du serveur avec le fichier ``preseed`` depuis un boot ``PXE`` ou un support ``CD`` / clé ``USB``
-* La finalisation de la configuration du serveur sous ``Debian Stretch`` avec réintégration des données ``LDAP`` précédentes et peuplement de l'annuaire Active Directory ``AD``
+* Lancement du script permettant de générer les fichiers ``preseed`` à partir des réponses fournies
+* Installation automatique du serveur SE4-AD avec le fichier ``preseed`` depuis un boot ``PXE`` ou un support ``CD`` / clé ``USB``, puis après reboot, la finalisation de sa configuration avec réintégration des données ``LDAP`` issues du SE3 d'origine et peuplement de l'annuaire Active Directory ``AD``
+* Installation automatique du serveur SE4-FS puis configuration de ce dernier selon des modalités similaires. A noter qu'il est indispensable d'avoir un Serveur Active Directory pleinement fonctionnel avant d'installer le se4-FS.
 
-Cette documentation s’attardera plus précisément sur les deux premières parties. La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers ``LXC``.
+
+Cette documentation s’attardera plus précisément sur la génération des preseed ainsi que la première partie de l'installation du se4-AD (ce sera similaire pour SE4-FS). La finalisation étant détaillée dans une autre documentation_ car elle n'est pas propre au type d'installation évoqué ici (serveur autonome ou virtualisé), mais s'applique également aux containers ``LXC``.
  
 
 .. _documentation: install-se4AD.rst
 
 
-Déroulement du script générant le fichier ``preseed``
-=====================================================
+Déroulement du script générant les fichiers ``preseed``
+=======================================================
 
 À partir du moment où le paquet ``sambaedu-config`` est installé, le script se trouve dans le dossier ``/usr/share/se3/sbin``.
 
@@ -48,10 +49,17 @@ Après le message de bienvenue, un court résumé des paramètres réseau actuel
 Ces valeurs serviront de base pour la configuration réseau du serveur ``AD``. Si elles ne sont pas correctes, il suffit de répondre ``non``. Dans ce cas il sera possible de préciser les bonnes valeurs une par une.
 
 
-Paramétrage réseau du futur ``SE4-AD``
---------------------------------------
+Paramétrage du futur ``SE4-AD``
+-------------------------------
 
-Viennent ensuite quelques questions sur la configuration réseau.
+Viennent ensuite quelques questions sur la configuration du serveur SE4-AD.
+
+Choix du disque pour l'installation
+...................................
+
+La première chose à indiquer est l'unité de disque sur laquelle l'installation sera effectuée. Sauf cas particulier, il suffit de confirmer le choix par défaut. 
+
+.. figure:: images/gen_preseed_se4ad_disk_choice.png
 
 
 Choix d'une adresse ``IP`` et d'un nom
@@ -82,38 +90,97 @@ Ce nom de domaine devra être composé d'au moins deux parties séparées par un
 .. figure:: images/gen_preseed5.png
 
 
-Résumé des paramètres avant génération du fichier preseed
-.........................................................
+Résumé des paramètres
+.....................
 
 Un récapitulatif de l'ensemble des paramètres saisis précédemment est affiché :
 
 .. figure:: images/gen_preseed6.png
 
-Si tout paraît correct, on peut confirmer. Dans le cas contraire, il sera proposé de corriger chaque paramètre.
+Si tout paraît correct, on peut confirmer. Dans le cas contraire, il sera proposé de corriger individuellement chaque paramètre.
+
+Paramétrage du futur ``SE4-FS``
+-------------------------------
+
+Le script va désormais proposer la pré-configuration du serveur SE4-FS. Sauf cas particulier, on procédera également à la génération du ``preseed`` pour ce serveur.
+
+.. figure:: images/gen_preseed_se4fs_confirm.png
+
+Choix d'une adresse ``IP`` et d'un nom
+......................................
+
+On commence par saisir l'``IP`` du serveur ``Se4-FS``. S'il est dans le même subnet que l'actuel serveur ``Se3``, il suffit de compléter le début de l'``IP`` suggérée.
+
+.. figure:: images/gen_preseed_se4fs_ip.png
+
+Puis on confirme son nom.
+
+.. figure:: images/gen_preseed_se4fs_name.png
+
+Un résumé des paramètres réseau est ensuite affiché.
 
 
-Génération du fichier ``preseed`` et configuration du serveur ``TFTP``
-----------------------------------------------------------------------
+.. figure:: images/gen_preseed_se4fs_lan.png
 
-À partir des éléments saisis précédemment, le script va déposer le fichier ``preseed`` ainsi que les fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du ``Se3``. La configuration du serveur ``TFTP`` du ``Se3`` est également modifiée.
+
+Choix du disque et taille des partitions
+........................................
+
+On commence par choisir le disque à utiliser pour l'installation
+
+.. figure:: images/gen_preseed_se4fs_disk_choice.png
+
+Vient ensuite le choix de la tailles de partitions. La seconde valeur appelée ``optimale`` est la plus importante car c'est celle que l'on désire obtenir. Le programme de partitionnement essaiera de fixer cette dernière prioritairement dans la mesure du possible.
+
+On paramètre la partition racine. Les valeurs par défaut peuvent être appliquées
+
+.. figure:: images/gen_preseed_se4fs_partroot
+
+puis la partition /var. Les valeurs par défaut peuvent être appliquées
+
+.. figure:: images/gen_preseed_se4fs_partvar
+
+puis la partition /home. Les valeurs sont à adapter en fonction de la taille du disque.
+
+.. figure:: images/gen_preseed_se4fs_parthome
+
+Et enfin la partition /var/sambaedu. Les valeurs sont à adapter 
+
+.. figure:: images/gen_preseed_se4fs_partvarse
+
+La configuration se termine par un résumé des paramètre saisies à l'exception de la partition swap qui n'est pas paramétrable.
+
+
+.. figure:: images/gen_preseed_se4fs_recap_part
+
+
+
+Export des données, génération des ``preseed`` et configuration du serveur ``PXE / TFTP``
+-----------------------------------------------------------------------------------------
+
+À partir des éléments saisis précédemment, le script va exécuter plusieurs tâches :
+
+* Export des données importantes comme les données ldap, les fichiers tdb de samba ou les réservation DHCP
+* Ecriture des fichiers ``preseed`` et fichiers de configuration nécessaires à l'installation dans le dossier ``/var/www/diconf`` les rendant ainsi disponibles sur le serveur web du ``Se3``. 
+* Modification de la configuration du serveur ``TFTP`` du ``Se3`` afin que ce dernier puisse être utilisé pour installer ``SE4-AD`` et ``SE4-FS`` en mode ``PXE``.
 
 .. figure:: images/gen_preseed7.png
 
-Tous les fichiers sont en place pour démarrer l'installation automatique de notre ``se4-AD``. Un message de confirmation :
+Tous les fichiers sont en place pour démarrer l'installation automatique de notre ``se4-AD`` comme de notre ``se4-FS`` . Un message de confirmation indique comment procéder.
 
 .. figure:: images/gen_preseed8.png
 
-Vous pouvez effectuer l'installation de deux façons : 
+Vous pouvez donc effectuer l'installation de deux façons : 
 
 * En utilisant le fichier ``preseed`` généré via le serveur ``TFTP`` du ``Se3`` en bootant en ``PXE`` et en choisissant l'option adéquate, détaillée plus loin dans ce document.
 * En utilisant le fichier ``preseed`` généré et son propre support d'installation ``Debian Stretch`` sur ``CD`` ou clé ``USB``.
 
 
 
-Installation du serveur en utilisant le fichier ``preseed``
-===========================================================
+Installation du SE4-AD ou SE4-FS en utilisant son fichier ``preseed``
+=====================================================================
 
-Il s'agit maintenant d'utiliser le fichier ``preseed`` généré précédemment ; deux possibilités sont possibles comme l'a détaillé le message précédent.
+Il s'agit maintenant d'utiliser les fichiers ``preseed`` généré précédemment. **Leur utilisation étant identique, seul le cas  du SE4-AD sera détaillé**.
 
 
 Choix du support d'installation
@@ -151,10 +218,10 @@ puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule 
 .. figure:: images/se4_preseed_tftp_install.png
 
 
-Déroulement de la suite de l'installation
-------------------------------------------
+Déroulement de la suite de l'installation : cas du SE4-AD
+-------------------------------------------------------------
 
-Quelque soit la méthode employée (``PXE`` / ``CD`` / clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique. Vous trouverez, ci-dessous, quelques commentaires sur certaines étapes de cette installation, à commencer par le partitionnement.
+Quelque soit la méthode employée (``PXE`` / ``CD`` / clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique. Vous trouverez, ci-dessous, quelques commentaires sur certaines étapes de cette installation.
 
 
 Partitionnement
@@ -201,5 +268,9 @@ Vient enfin le message final, signalant que le serveur est prêt à rebooter.
 Il vous reste à lancer cette machine et vous y connecter en tant que ``root`` afin d'en finaliser sa configuration automatique. Pour cela, on se reportera à la documentation_ détaillant les étapes nécessaires à l'obtention de votre ``SE4-AD`` pleinement fonctionnel.
 
 .. _documentation: install-se4AD.rst
+
+Une documentation similaire  détaille quant à elle la `finalisation de l'installation du serveur SE4-FS`_
+
+.. _finalisation de l'installation du serveur SE4-FS: install-se4FS.rst
 
 
