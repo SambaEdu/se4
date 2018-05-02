@@ -148,7 +148,7 @@ Si vous optez pour cette solution, il suffit d'effectuer un boot ``PXE`` et de c
 
 puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture ``amd64`` est supportée.
 
-.. figure:: images/se4_preseed_boot2.png
+.. figure:: images/se4_preseed_tftp_install.png
 
 
 Déroulement de la suite de l'installation
