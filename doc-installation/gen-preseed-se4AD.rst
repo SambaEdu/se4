@@ -134,24 +134,24 @@ Vient ensuite le choix de la tailles de partitions. La seconde valeur appelée `
 
 On paramètre la partition racine. Les valeurs par défaut peuvent être appliquées
 
-.. figure:: images/gen_preseed_se4fs_partroot
+.. figure:: images/gen_preseed_se4fs_partroot.png
 
 puis la partition /var. Les valeurs par défaut peuvent être appliquées
 
-.. figure:: images/gen_preseed_se4fs_partvar
+.. figure:: images/gen_preseed_se4fs_partvar.png
 
 puis la partition /home. Les valeurs sont à adapter en fonction de la taille du disque.
 
-.. figure:: images/gen_preseed_se4fs_parthome
+.. figure:: images/gen_preseed_se4fs_parthome.png
 
 Et enfin la partition /var/sambaedu. Les valeurs sont à adapter 
 
-.. figure:: images/gen_preseed_se4fs_partvarse
+.. figure:: images/gen_preseed_se4fs_partvarse.png
 
 La configuration se termine par un résumé des paramètre saisies à l'exception de la partition swap qui n'est pas paramétrable.
 
 
-.. figure:: images/gen_preseed_se4fs_recap_part
+.. figure:: images/gen_preseed_se4fs_recap_part.png
 
 
 
