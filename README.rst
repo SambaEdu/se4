@@ -44,21 +44,22 @@ Roadmap
 Mise en place d'outils et de VM
 ...............................
 
+
+
 +-------------------------------------------------------------------+----------------+
 | Mettre à disposition des développeurs une VM                      |                |
 | ``stretch/samba4.5/SE3`` avec un annuaire migré en AD servant     |                |
 | de base de travail pour mettre le code se3 en compatibilité AD    | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
-| Avoir une VM migrée AD fonctionnelle pour les pages principales : |                |          
+| Avoir une VM migrée AD fonctionnelle pour les pages principales : |                |
 | ``annuaire``, ``import`` (siecle/sts), ``partages``, ``parcs``    | **☐ En cours** |
 +-------------------------------------------------------------------+----------------+
 | Mise en place d'une arborescence permettant de générer des        |                |
 | paquets.                                                          | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
 | Travail sur l'interopérabilité : intégration des clients          |                |
-| GNU/Linux, SSO pour sites ou applis diverses...                   | **✋À faire**   |
+| GNU/Linux, SSO pour sites ou applis diverses...                   | **✋À faire**  |
 +-------------------------------------------------------------------+----------------+
-
 
 Etat des développements  
 .......................
@@ -67,9 +68,9 @@ Etat des développements
 
 
 +-------------------------------------------------------------------+----------------+
-| Écriture du script d'installation de la machine LXC SE4AD         | **☑ Fait**     |  
+| Écriture du script d'installation de la machine LXC SE4AD         | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
-| Écriture du script de génération du fichier preseed SE4-AD        | **☑ Fait**     | 
+| Écriture du script de génération du fichier preseed SE4-AD        | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
 | Packaging de l'ensemble dans le paquet sambaedu-config            | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
@@ -80,6 +81,8 @@ Etat des développements
 
 * Mise en place des paquets debian pour SE4-FS
 
+
+
 +-------------------------------------------------------------------+----------------+
 | Définition de la structure et du nommage des paquets              | **☑ Fait**     |
 +-------------------------------------------------------------------+----------------+
@@ -89,9 +92,9 @@ Etat des développements
 +-------------------------------------------------------------------+----------------+
 | Migration depuis se3                                              | **☐ En cours** |
 +-------------------------------------------------------------------+----------------+
-| ``sambaedu-wpkg`` et ``sambaedu-clonage``                         | **✋À faire**   |
+| ``sambaedu-wpkg`` et ``sambaedu-clonage``                         | **✋À faire**  |
 +-------------------------------------------------------------------+----------------+
-| Intégration à l'interface d'outils ``GPO``                        | **✋À faire**   |
+| Intégration à l'interface d'outils ``GPO``                        | **✋À faire**  |
 +-------------------------------------------------------------------+----------------+
 
 Matériel et stockage
