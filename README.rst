@@ -38,64 +38,11 @@ Dans un premier temps toutes les pages de l'interface faisant doublon
 avec les outils de la console AD GPO ne seront pas repris : seules les
 pages ``annuaire``, ``importation``, ``partages`` et ``parcs`` sont conservées.
 
-Roadmap
--------
+Feuille de route
+----------------
 
-Mise en place d'outils et de VM
-...............................
+L'état d'avancement du projet SambaEdu est disponible dans la `partie dédiée de Github <https://github.com/orgs/SambaEdu/projects?query=is%3Aopen+sort%3Aname-asc>`__
 
-
-
-+-------------------------------------------------------------------+----------------+
-| Mettre à disposition des développeurs une VM                      |                |
-| ``stretch/samba4.5/SE3`` avec un annuaire migré en AD servant     |                |
-| de base de travail pour mettre le code se3 en compatibilité AD    | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Avoir une VM migrée AD fonctionnelle pour les pages principales : |                |
-| ``annuaire``, ``import`` (siecle/sts), ``partages``, ``parcs``    | **☐ En cours** |
-+-------------------------------------------------------------------+----------------+
-| Mise en place d'une arborescence permettant de générer des        |                |
-| paquets.                                                          | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Travail sur l'interopérabilité : intégration des clients          |                |
-| GNU/Linux, SSO pour sites ou applis diverses...                   | **✋À faire**  |
-+-------------------------------------------------------------------+----------------+
-
-Etat des développements  
-.......................
-
-* Partie migration et installation des serveurs SE4AD - SE4FS
-
-
-+-------------------------------------------------------------------+----------------+
-| Écriture du script d'installation de la machine LXC SE4AD         | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Écriture du script de génération du fichier preseed SE4-AD        | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Packaging de l'ensemble dans le paquet sambaedu-config            | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Écriture du script de vérification du bon état de l'AD            | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Écriture du script de migration Se3 → Se4-FS sous Stretch         | **☐ En cours** |
-+-------------------------------------------------------------------+----------------+
-
-* Mise en place des paquets debian pour SE4-FS
-
-
-
-+-------------------------------------------------------------------+----------------+
-| Définition de la structure et du nommage des paquets              | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Paquet sambaedu-config version Stretch                            | **☑ Fait**     |
-+-------------------------------------------------------------------+----------------+
-| Paquet sambaedu-web-common                                        | **☐ En cours** |
-+-------------------------------------------------------------------+----------------+
-| Migration depuis se3                                              | **☐ En cours** |
-+-------------------------------------------------------------------+----------------+
-| ``sambaedu-wpkg`` et ``sambaedu-clonage``                         | **✋À faire**  |
-+-------------------------------------------------------------------+----------------+
-| Intégration à l'interface d'outils ``GPO``                        | **✋À faire**  |
-+-------------------------------------------------------------------+----------------+
 
 Matériel et stockage
 --------------------
