@@ -89,15 +89,15 @@ sambaedu-scripts à déployer sur les « NAS », ou déployer en scp ?
 Documentations en rapport avec le développement de SE4
 ------------------------------------------------------
 
--  `communication avec AD - API <API.md>`__
--  `Notes diverses <notes.md>`__
+-  `communication avec AD - API <documentation/developpement/API.md>`__
+-  `Notes diverses <documentation/developpement/notes.md>`__
 -  `Règles d'utilisations et structures des fichiers de
-   conf <Fichiers_de_conf.md>`__
--  `Install\_proxmox - configuration matériel <Install_proxmox.md>`__
--  `Modèle de données manipulé par SambaEdu <Modele.md>`__
--  `Structure du paquet debian SE4 <Paquets%20Debian.md>`__
--  `Supprimer Mysql pour les paramètres <Virer_mysql.md>`__
+   conf <documentation/developpement/Fichiers_de_conf.md>`__
+-  `Install\_proxmox - configuration matériel <documentation/developpement/Install_proxmox.md>`__
+-  `Modèle de données manipulé par SambaEdu <documentation/developpement/Modele.md>`__
+-  `Structure du paquet debian SE4 <documentation/developpement/Paquets%20Debian.md>`__
+-  `Supprimer Mysql pour les paramètres <documentation/developpement/Virer_mysql.md>`__
 -  `installation stretch - concepts (deprecated car géré par
-   script) <install_stretch.md>`__
--  `migration ldap-->AD Principes <migration-ldap.md>`__
--  `Configuration Apache en mode fast\_cgi + suexec <apache.md>`__
+   script) <documentation/developpement/install_stretch.md>`__
+-  `migration ldap-->AD Principes <documentation/developpement/migration-ldap.md>`__
+-  `Configuration Apache en mode fast\_cgi + suexec <documentation/developpement/apache.md>`__
