@@ -13,17 +13,15 @@ La machine ``SE4-AD`` sur ``Stretch`` pourra être soit une machine virtuelle ou
 
 * Machine virtuelle : À la suite de l'installation de ``Debian Stretch`` avec le fichier preseed, le script d'installation sera lancé lors de la première connexion en ``root`` afin de paramétrer ``Se4-AD``.
 
-* Machine ``LXC`` : Elle est installée depuis le serveur de fichiers ``Se3`` qui se chargera d'y déposer tous les fichiers configuration.
-
-**Avantages de la machine LXC :** léger et facile à déployer, on peut monter une machine ``Debian Stretch`` tout en étant sur une machine ``Se3 Wheezy`` pour tester l'annuaire.
+* Machine ``LXC`` : Elle est installée depuis le serveur de fichiers ``Se3`` qui se chargera d'y déposer tous les fichiers configuration. Avantage: LXC est léger et facile à déployer, on peut monter une machine ``Debian Stretch`` tout en étant sur une machine ``Se3 Wheezy`` pour tester l'annuaire.
   
-Dans un cas comme dans l'autre, tout sera automatique. On conserve une machine fonctionnelle durant toute la phase de migration et on s'assure de la compatibilité de l'annuaire.
+** Dans un cas comme dans l'autre, tout sera automatique, et surtout, on conserve une machine SE3 fonctionnelle durant toute la phase de migration. Enfin on s'assure de la compatibilité de l'annuaire existant avec AD.**
 
 
 Déroulement de l'installation
 =============================
 
-À l'installation de la machine virtuelle ou du container ``LXC``, le script d'installation a été poussé sur la machine (qu'elle soit virtuelle ou un container) dans le répertoire ``/root`` de cette machine.
+À l'installation de la machine virtuelle ou du container ``LXC``, le script d'installation a été poussé sur la machine (qu'elle soit virtuelle ou un container) dans le répertoire ``/root``.
 
 Le script se lance immédiatement au login en ``root`` sur cette machine, à l'aide d'un fichier ``.profile`` qui a été modifié pour ce lancement automatique.
 
@@ -138,3 +136,9 @@ Fin de L'installation
 
 L'installation se termine avec le changement du mot de passe du compte ``root``. Il va de soit qu'il devra être différent du compte ``Administrator`` qui gère l'``AD``.
 
+
+Conclusion 
+==========
+
+Voila votre serveur SE4AD installé, vous pouvez passer à la suite de l'installation avec le serveur SE4FS 
+voir https://github.com/SambaEdu/se4/blob/master/documentation/installation/gen-preseed-se4AD.rst#installation-du-se4-ad-ou-se4-fs-en-utilisant-son-fichier-preseed
