@@ -32,7 +32,7 @@ Un nouveau projet
 
 Bien que la plupart du code soit repris de SE3, il ne s'agit pas d'une
 mise à jour, mais d'un projet parallèle. Cela n'empêche pas que tout
-est  fait pour simplifier le passage de *Se3* vers *Se4* notà l'aide du paquet dédié `sambaedu-config. <https://github.com/SambaEdu/sambaedu-config>`__
+est  fait pour simplifier le passage de *Se3* vers *Se4* notamment à l'aide du paquet dédié `sambaedu-config. <https://github.com/SambaEdu/sambaedu-config>`__ qui s'installe sur le Se3.
 
 Dans un premier temps toutes les pages de l'interface faisant doublon
 avec les outils de la console AD GPO ne seront pas reprises : seules les
@@ -52,7 +52,7 @@ Comme l'équipe Samba le préconise, le serveur AD et le serveur de fichiers son
 Solution basée sur la virtualisation
 ....................................
 
-Deux types de serveurs sont donnés ci-dessous à titre d'exemple. Bien dimentionner son serveur est primordial si l'on mettre en place la virtualisation dans les meilleures conditions et ainsi bénéficier de performances optimales :
+Deux types de serveurs sont donnés ci-dessous à titre d'exemple. Bien dimentionner son serveur est primordial si l'on veut mettre en place la virtualisation dans les meilleures conditions et ainsi bénéficier de performances optimales.
 
 -  Serveur physique :
 
@@ -71,13 +71,13 @@ Proxmox 5.x est une excellente base de virtualisation libre, mais d'autres solut
    -  optionnel : vm « cloud » avec ``seafile`` et ``nginx``
 
    
-Solution basée sur un serveur classique (non virtualisé)
+Solution basée sur un serveur classique non virtualisé
 ........................................................   
 
 Pour les petites structures type collège ne disposant pas d'un serveur permettant la mise en place de la virtualisation, Il sera possible migrer le SE3 en SE4FS alors que le S4AD sera lancé dans un conteneur LXC.
 
-Modalités d'installation de Sambaedu4
--------------------------------------
+Modalités d'installation
+------------------------
 
 A partir d'un SE3 existant
 ..........................
@@ -100,8 +100,8 @@ Si vous n'aviez pas de serveur Sambaedu et que vous désirez réaliser une insta
 Note : Une page type dimaker sera développée à termes
 
 
-Annexe : Documentations en rapport avec le développement de SE4
-------------------------------------------------------
+Annexe : Documentations en rapport avec le développement
+--------------------------------------------------------
 
 -  `communication avec AD - API <documentation/developpement/API.md>`__
 -  `Notes diverses <documentation/developpement/notes.md>`__
