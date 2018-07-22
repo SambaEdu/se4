@@ -83,11 +83,11 @@ A partir d'un SE3 existant
 ..........................
 
 La migration s'appuie pleinement sur le paquet `sambaedu-config. <https://github.com/SambaEdu/sambaedu-config>`__ 
-Les deux options d'installations y sont décrites :
+Les deux options d'installation y sont décrites :
 
 - Virtualiser SE4FS et SE4AD sur deux machines installées automatiquement `via un fichier preseed <https://github.com/SambaEdu/se4/blob/master/documentation/installation/gen-preseed-se4AD.rst#g%C3%A9n%C3%A9ration-dun-preseed-et-installation-automatique-dun-serveur-se4-ad>`__ - **solution recommandée**
 
-- Installer SE4-AD dans un `container LXC <https://github.com/SambaEdu/se4/blob/master/documentation/installation/install-lxc-se4AD.rst#proc%C3%A9dure-dinstallation-automatique-dun-container-lxc-se4-ad>`__ sur le SE3 avant de le migrer en SE4-FS - **solution réservée au petites structures ne pouvant virtualiser**
+- Installer SE4-AD dans un `container LXC <https://github.com/SambaEdu/se4/blob/master/documentation/installation/install-lxc-se4AD.rst#proc%C3%A9dure-dinstallation-automatique-dun-container-lxc-se4-ad>`__ sur le SE3 avant de le migrer en SE4-FS - **solution réservée aux petites structures**
 
 Cas d'un nouvelle installation
 ..............................
