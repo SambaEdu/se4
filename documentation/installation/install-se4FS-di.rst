@@ -1,6 +1,6 @@
-========================================================================
-Installation automatique d'un serveur ``SE4-Files Server`` ou SE4-FS
-========================================================================
+==================================================================================
+Installation automatique d'un serveur ``SE4-FS`` phase 1 : partie Debian Installer
+==================================================================================
 
 
 .. sectnum::
@@ -10,8 +10,12 @@ Installation automatique d'un serveur ``SE4-Files Server`` ou SE4-FS
 Introduction
 ============
 
-Ce document a pour but de décrire précisément la phase d'installation automatique d'un serveur ``SE4 Files server`` en utilisant un fichier ``preseed``. `Ce fichier aura été généré au préalable, soit sur le serveur <gen-preseed-se4AD.rst>__`
-``Se3`` contenant les données d'origine en cas d'une migration ou bien depuis le serveur Dimaker en cas de nouvelle installation.
+Ce document a pour but de décrire précisément la phase d'installation automatique d'un serveur ``SE4 Files server`` ou  ``SE4-FS`` en utilisant un fichier ``preseed``. 
+
+`communication avec AD - API <documentation/developpement/API.md>`__
+
+`Ce fichier aura été généré au préalable, soit sur le serveur <gen-preseed-se4AD.rst>`__
+``Se3`` contenant les données d'origine en cas d'une migration ou bien depuis le serveur `Dimaker en cas de nouvelle installation.
 
 L’installation automatique du serveur SE4-FS peut se faire selon les modalités suivantes :
 
