@@ -177,100 +177,20 @@ Vous pouvez donc effectuer l'installation de deux façons :
 
 
 
-Installation du SE4-AD ou SE4-FS en utilisant son fichier ``preseed``
-=====================================================================
+Installation du SE4-AD ou SE4-FS à partir des fichiers ``preseed``
+==================================================================
 
-Il s'agit maintenant d'utiliser les fichiers ``preseed`` généré précédemment. **Leur utilisation étant identique, seul le cas  du SE4-AD sera détaillé**.
-
-
-Choix du support d'installation
--------------------------------
-
-Il faut commencer par démarrer l'installation du futur serveur ``Se4-AD``, soit par un boot ``PXE``, soit sur son support ``CD`` ou clé ``USB``. Seul ce boot initial va différer, la suite sera commune puisque l'on chargera le même fichier ``preseed``.
+Il s'agit maintenant d'utiliser les fichiers ``preseed`` généré précédemment. **Leur utilisation sera identique mais il faudra commencer impérativement par du SE4-AD**.
 
 
-Lancer l'installation depuis un ``CD`` ou une clé ``USB``
-.........................................................
+Chaque installation est documentée séparément et de façon détaillée. 
 
-Si vous optez pour cette solution, Il faudra donner l'``url`` du fichier ``preseed`` en passant par le mode avancé :
+Ainsi  : 
 
-.. Code::
+* Pour le serveur ``SE4-AD``, `on pourra se reporter à cette documentation <documentation/installation/install-se4AD-di.rst>`__
 
- auto url=http://ip-du-serveur-se3/diconf/se4ad.preseed
-
-.. figure:: images/se4_preseed_cdboot1.png
+* Pour le serveur ``SE4-FS``, `on pourra se reporter à cette documentation <documentation/installation/install-se4FS-di.rst>`__
 
 
-Une des possibilités est d'appuyer sur la touche ``Echap`` et de saisir la ligne suivante en adaptant l'``ip`` du ``Se3`` et en faisant attention que le clavier est configuré en ``qwerty`` au boot alors que vous utilisez sans doute un clavier ``azerty``.
-
-.. figure:: images/se4_preseed_cdboot2.png
-
-
-Lancer l'installation en utilisant le boot ``PXE``
-..................................................
-
-Si vous optez pour cette solution, il suffit d'effectuer un boot ``PXE`` et de choisir l'entrée ``Maintenance`` 
-
-.. figure:: images/se4_preseed_boot1.png
-
-puis ``Installation`` et enfin ``Netboot Debian Stretch SE4-AD (amd64)``. Seule l'architecture ``amd64`` est supportée.
-
-.. figure:: images/se4_preseed_tftp_install.png
-
-
-Déroulement de la suite de l'installation : cas du SE4-AD
--------------------------------------------------------------
-
-Quelque soit la méthode employée (``PXE`` / ``CD`` / clé ``USB``), une fois le fichier ``preseed`` chargé, la suite est automatique. Vous trouverez, ci-dessous, quelques commentaires sur certaines étapes de cette installation.
-
-
-Partitionnement
-................
-
-**Attention :** lors de cette étape toutes les données du disque sont effacées sans avertissement.
-
-Les 3 partitions ci-dessous sont créés. Selon la taille du disque disponible, l'outil de partitionnement va moduler les tailles des partitions selon l'espace disque tout en respectant les règles suivantes :
-
-* Partition Racine ``/`` d'un minimum de 5Go, 10Go de préférence voire 20Go s'il reste de la place
-* Partition ``/var`` , 10Go de préférence et plus s'il reste de la place disponible
-* Partition ``Swap`` de 16Go ou 200% de la ``ram`` au minimum
-
-
-Installation du système
-.......................
-
-On commence par l'installation du système de base.
-
-.. figure:: images/se4_preseed_base.png
-
-La suite consiste à installer les logiciels complémentaires. Cela prend quelques minutes et fluctue selon le débit de votre connexion internet.
-
-.. figure:: images/se4_preseed_softs.png
-
-
-Configuration de ``Grub``
-.........................
-
-``Grub`` est installé afin de rendre le système bootable.
-
-.. figure:: images/se4_preseed_grub.png
-
-
-Fin de l'installation
---------------------- 
-
-Vient enfin le message final, signalant que le serveur est prêt à rebooter.
-
-.. figure:: images/se4_preseed_final.png
-
-À cette étape, vous disposez d'une ``Debian Stretch`` installée contenant tous les anciens fichiers de configuration de l'ancien annuaire.
-
-Il vous reste à lancer cette machine et vous y connecter en tant que ``root`` afin d'en finaliser sa configuration automatique. Pour cela, on se reportera à la documentation_ détaillant les étapes nécessaires à l'obtention de votre ``SE4-AD`` pleinement fonctionnel.
-
-.. _documentation: install-se4AD.rst
-
-Une documentation similaire  détaille quant à elle la `finalisation de l'installation du serveur SE4-FS`_
-
-.. _finalisation de l'installation du serveur SE4-FS: install-se4FS.rst
 
 

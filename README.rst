@@ -93,11 +93,11 @@ Cas d'un nouvelle installation
 ..............................
 
 Si vous n'aviez pas de serveur Sambaedu et que vous désirez réaliser une installation Sambaedu4, c'est parfaitement possible mais uniquement en mode virtualisé.
-- La première machine à installer sera SE4AD (Debian Stretch). Le plus simple sera d'utiliser un fichier preseed comme celui ci
-** todo : donner  le lien** puis d'en modifier le contenu
-- Restera ensuite Se4-FS selon les mêmes modalités **todo** 
 
-Note : Une page type dimaker sera développée à termes
+- La première machine à installer sera SE4AD (Debian Stretch de base). 32Go de stockage suffisent pour cette machine. Une fois la machine installée sous debian. Il suffira de récupérer le script d'installation SE4AD à cette adresse : https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/var/www/diconf/install_se4ad_phase2.sh avant de le lancer
+- Restera ensuite Se4-FS selon les mêmes modalités : installation Debian Stretch de base puis lancement du script d'installation SE4FS :  https://raw.githubusercontent.com/SambaEdu/sambaedu-config/master/sources/var/www/diconf/install_se4fs_phase2.sh
+
+.. Note:: Il est prévu qu'une page de type dimaker soit développée afin d'automatiser ces installations.
 
 
 Annexe : Documentations en rapport avec le développement
