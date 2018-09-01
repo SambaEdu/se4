@@ -180,16 +180,16 @@ Vous pouvez donc effectuer l'installation de deux façons :
 Installation du SE4-AD ou SE4-FS à partir des fichiers ``preseed``
 ==================================================================
 
-Il s'agit maintenant d'utiliser les fichiers ``preseed`` généré précédemment. **Leur utilisation sera identique mais il faudra commencer impérativement par du SE4-AD**.
+Il s'agit maintenant d'utiliser les fichiers ``preseed`` généré précédemment. **Leur utilisation sera identique pour les deux serveurs mais il faudra commencer impérativement par SE4-AD**.
 
 
 Chaque installation est documentée séparément et de façon détaillée. 
 
 Ainsi  : 
 
-* Pour le serveur ``SE4-AD``, `on pourra se reporter à cette documentation <documentation/installation/install-se4AD-di.rst>`__
+* Pour le serveur ``SE4-AD``, `on pourra se reporter à cette documentation <install-se4AD-di.rst>`__
 
-* Pour le serveur ``SE4-FS``, `on pourra se reporter à cette documentation <documentation/installation/install-se4FS-di.rst>`__
+* Pour le serveur ``SE4-FS``, `on pourra se reporter à cette documentation <install-se4FS-di.rst>`__
 
 
 
