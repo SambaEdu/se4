@@ -52,7 +52,7 @@ Comme l'équipe Samba le préconise, le serveur AD et le serveur de fichiers son
 Solution basée sur la virtualisation
 ....................................
 
-Deux types de serveurs sont donnés ci-dessous à titre d'exemple. Bien dimentionner son serveur est primordial si l'on veut mettre en place la virtualisation dans les meilleures conditions et ainsi bénéficier de performances optimales.
+Deux types de serveurs sont donnés ci-dessous à titre d'exemple. Bien dimensionner son serveur est primordial si l'on veut mettre en place la virtualisation dans les meilleures conditions et ainsi bénéficier de performances optimales.
 
 -  Serveur physique :
 
