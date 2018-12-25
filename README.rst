@@ -107,7 +107,7 @@ Annexe : Documentations en rapport avec le développement
 -  `Notes diverses <documentation/developpement/notes.md>`__
 -  `Règles d'utilisations et structures des fichiers de
    conf <documentation/developpement/Fichiers_de_conf.md>`__
--  `Install\_proxmox - configuration matériel <documentation/developpement/Install_proxmox.md>`__
+-  `Install\_proxmox - configuration matériel <https://github.com/SambaEdu/se3-docs/blob/master/se3-virtualisation/proxmox.md>`__
 -  `Modèle de données manipulé par SambaEdu <documentation/developpement/Modele.md>`__
 -  `Structure du paquet debian SE4 <documentation/developpement/Paquets%20Debian.md>`__
 -  `Supprimer Mysql pour les paramètres <documentation/developpement/Virer_mysql.md>`__
