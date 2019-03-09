@@ -1,4 +1,0 @@
-<?php
-echo "dtq";
-phpinfo();
-?>
