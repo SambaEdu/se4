@@ -1,8 +1,0 @@
-# fichiers du paquet sambadu-config
-usr/share/doc/sambaedu-config/sambaedu.conf.example
-usr/share/sambaedu/includes/config.inc.sh
-usr/share/sambaedu/includes/utils.inc.sh
-#usr/share/sambaedu/sbin/gen_se4preseed.sh
-#usr/share/sambaedu/sbin/install_se4lxc.sh
-#usr/share/sambaedu/sbin/lxc-mac-generator
-
